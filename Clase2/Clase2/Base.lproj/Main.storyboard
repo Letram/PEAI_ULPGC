@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Clase2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="55" translatesAutoresizingMaskIntoConstraints="NO" id="SDK-3a-crF">
+                                <rect key="frame" x="79.5" y="248.5" width="216" height="190.5"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dfd-bf-bcp" userLabel="TextField">
+                                        <rect key="frame" x="0.0" y="0.0" width="216" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpB-Gl-9v9">
+                                        <rect key="frame" x="87.5" y="85" width="41" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="109" translatesAutoresizingMaskIntoConstraints="NO" id="2Eq-x7-Ui5">
+                                        <rect key="frame" x="0.0" y="160.5" width="216" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsl-0r-U8l">
+                                                <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                                <state key="normal" title="Button1"/>
+                                                <connections>
+                                                    <action selector="buttonPressedByTag:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mg1-mu-KR5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6O-Mr-uBV">
+                                                <rect key="frame" x="161" y="0.0" width="55" height="30"/>
+                                                <state key="normal" title="Button2"/>
+                                                <connections>
+                                                    <action selector="buttonPressedByTag:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uAt-RQ-Hq6"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dfd-bf-bcp" firstAttribute="centerX" secondItem="SDK-3a-crF" secondAttribute="centerX" id="3V9-Y2-qDv"/>
+                                    <constraint firstItem="dfd-bf-bcp" firstAttribute="width" secondItem="SDK-3a-crF" secondAttribute="width" id="Qfc-69-tCS"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="SDK-3a-crF" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="FL1-76-IWY"/>
+                            <constraint firstItem="SDK-3a-crF" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="oRc-aG-4va"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="HNl-u1-p6f" appends="YES" id="5hT-PE-zNH"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="dfd-bf-bcp" id="YRS-BU-nTM"/>
+                        <outlet property="textLabel" destination="FpB-Gl-9v9" id="cIh-iN-FYb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="HNl-u1-p6f">
+                    <connections>
+                        <action selector="tapGestureDone2:" destination="BYZ-38-t0r" id="fKY-D3-Mh7"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+        </scene>
+    </scenes>
+</document>
