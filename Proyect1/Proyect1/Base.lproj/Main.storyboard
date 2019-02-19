@@ -34,8 +34,8 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfg-fF-Xbz">
                                 <rect key="frame" x="19" y="41" width="337.5" height="605"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">En el juego intervienen dos jugadores por turnos. En cada turno, un jugador tira repetidamente un dado, acumulando la puntuación obtenida en cada tirada  asta que saca un 1 o decide recoger la puntuación acumulada y sumarla a su puntuación global. Gana el jugador que primero alcanza 100 puntos en su puntuación global. 
-Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que pasa al otro jugador, y la puntuación acumulada en ese turno no se suma a su puntuación global.</mutableString>
+                                <string key="text">En el juego intervienen dos jugadores por turnos. En cada turno, un jugador tira repetidamente un dado, acumulando la puntuación obtenida en cada tirada  asta que saca un 1 o decide recoger la puntuación acumulada y sumarla a su puntuación global. Gana el jugador que primero alcanza 100 puntos en su puntuación global. 
+Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que pasa al otro jugador, y la puntuación acumulada en ese turno no se suma a su puntuación global.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -66,46 +66,91 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z6K-4t-dup" userLabel="buttonStuff">
-                                <rect key="frame" x="0.0" y="512" width="375" height="128"/>
-                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6K-4t-dup" userLabel="buttonView">
+                                <rect key="frame" x="0.0" y="484.5" width="375" height="150.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="165" translatesAutoresizingMaskIntoConstraints="NO" id="h65-lo-wyn">
+                                        <rect key="frame" x="65" y="8" width="244" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7km-vX-YSU">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <state key="normal" title="Roll"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wfm-69-iA2">
+                                                <rect key="frame" x="195" y="0.0" width="49" height="30"/>
+                                                <state key="normal" title="Collect"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gSv-95-ABM" userLabel="playerStuff">
-                                <rect key="frame" x="0.0" y="20" width="375" height="122.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gSv-95-ABM" userLabel="playersView">
+                                <rect key="frame" x="0.0" y="116" width="375" height="86.5"/>
                                 <color key="backgroundColor" red="0.4768151914" green="1" blue="0.73277602990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4L6-t5-iMA" userLabel="imageStuff">
-                                <rect key="frame" x="0.0" y="167" width="375" height="333"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4L6-t5-iMA" userLabel="diceAndPlayerView">
+                                <rect key="frame" x="0.0" y="218.5" width="375" height="250"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPX-Rm-DBa">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="XPX-Rm-DBa" userLabel="diceImage">
+                                        <rect key="frame" x="94" y="31.5" width="187.5" height="187.5"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="XPX-Rm-DBa" secondAttribute="height" multiplier="1:1" id="Ugu-QX-Cov"/>
+                                        </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="P1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zI4-oX-BMI" userLabel="playerLabel">
+                                        <rect key="frame" x="68" y="115" width="18" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76k-aP-xw7" userLabel="accScoreLabel">
+                                        <rect key="frame" x="289.5" y="115" width="31.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.016980362929999999" green="0.030272461380000001" blue="0.98665529819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="4L6-t5-iMA" secondAttribute="height" multiplier="1:1" id="U6v-ey-57e"/>
+                                    <constraint firstItem="zI4-oX-BMI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4L6-t5-iMA" secondAttribute="leading" constant="20" symbolic="YES" id="GTa-gH-pbo"/>
+                                    <constraint firstItem="XPX-Rm-DBa" firstAttribute="width" secondItem="4L6-t5-iMA" secondAttribute="width" multiplier="0.5" id="Gp3-Fs-K2X"/>
+                                    <constraint firstItem="zI4-oX-BMI" firstAttribute="centerY" secondItem="4L6-t5-iMA" secondAttribute="centerY" id="PgP-Bv-esA"/>
+                                    <constraint firstItem="XPX-Rm-DBa" firstAttribute="leading" secondItem="zI4-oX-BMI" secondAttribute="trailing" constant="8" id="PzZ-sN-rKx"/>
+                                    <constraint firstItem="XPX-Rm-DBa" firstAttribute="centerX" secondItem="4L6-t5-iMA" secondAttribute="centerX" id="RpB-pz-a08"/>
+                                    <constraint firstAttribute="width" secondItem="4L6-t5-iMA" secondAttribute="height" multiplier="1.5:1" id="Wur-Hn-kmA"/>
+                                    <constraint firstItem="76k-aP-xw7" firstAttribute="leading" secondItem="XPX-Rm-DBa" secondAttribute="trailing" constant="8" id="aWc-fe-PDT"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="76k-aP-xw7" secondAttribute="trailing" constant="20" symbolic="YES" id="jT1-hk-Lqe"/>
+                                    <constraint firstItem="XPX-Rm-DBa" firstAttribute="centerY" secondItem="4L6-t5-iMA" secondAttribute="centerY" id="s3N-Ta-nHM"/>
+                                    <constraint firstItem="76k-aP-xw7" firstAttribute="centerY" secondItem="4L6-t5-iMA" secondAttribute="centerY" id="tqb-KR-0EI"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4L6-t5-iMA" firstAttribute="top" secondItem="gSv-95-ABM" secondAttribute="bottom" constant="10" id="8Zz-mx-QyD"/>
+                            <constraint firstItem="4L6-t5-iMA" firstAttribute="top" secondItem="gSv-95-ABM" secondAttribute="bottom" constant="16" id="3Mw-68-RDb"/>
+                            <constraint firstItem="gSv-95-ABM" firstAttribute="leading" secondItem="mD1-d7-SQb" secondAttribute="leading" id="Ads-mc-rSf"/>
                             <constraint firstItem="4L6-t5-iMA" firstAttribute="width" secondItem="99P-CJ-oK8" secondAttribute="width" id="GaN-Px-Aig"/>
-                            <constraint firstItem="gSv-95-ABM" firstAttribute="top" secondItem="mD1-d7-SQb" secondAttribute="top" id="RMq-mZ-TC9"/>
-                            <constraint firstItem="mD1-d7-SQb" firstAttribute="bottom" secondItem="Z6K-4t-dup" secondAttribute="bottom" constant="27" id="Uik-RW-Azt"/>
+                            <constraint firstItem="Z6K-4t-dup" firstAttribute="top" secondItem="4L6-t5-iMA" secondAttribute="bottom" constant="16" id="RH0-AZ-Jfp"/>
+                            <constraint firstItem="gSv-95-ABM" firstAttribute="top" secondItem="mD1-d7-SQb" secondAttribute="top" constant="96" id="RMq-mZ-TC9"/>
                             <constraint firstItem="gSv-95-ABM" firstAttribute="centerX" secondItem="mD1-d7-SQb" secondAttribute="centerX" id="X5x-jR-gTn"/>
+                            <constraint firstItem="mD1-d7-SQb" firstAttribute="bottom" secondItem="Z6K-4t-dup" secondAttribute="bottom" constant="32" id="Y1d-ad-K4W"/>
                             <constraint firstItem="4L6-t5-iMA" firstAttribute="centerX" secondItem="mD1-d7-SQb" secondAttribute="centerX" id="brw-K4-rcr"/>
-                            <constraint firstItem="Z6K-4t-dup" firstAttribute="top" secondItem="4L6-t5-iMA" secondAttribute="bottom" constant="12" id="c6l-dR-xTr"/>
                             <constraint firstItem="gSv-95-ABM" firstAttribute="width" secondItem="mD1-d7-SQb" secondAttribute="width" id="hhu-Lt-ODk"/>
-                            <constraint firstItem="Z6K-4t-dup" firstAttribute="width" secondItem="99P-CJ-oK8" secondAttribute="width" id="jPv-05-GlH"/>
+                            <constraint firstItem="Z6K-4t-dup" firstAttribute="leading" secondItem="gSv-95-ABM" secondAttribute="leading" id="iYg-hM-uV3"/>
+                            <constraint firstItem="Z6K-4t-dup" firstAttribute="width" secondItem="gSv-95-ABM" secondAttribute="width" id="jPv-05-GlH"/>
                             <constraint firstItem="Z6K-4t-dup" firstAttribute="centerX" secondItem="mD1-d7-SQb" secondAttribute="centerX" id="n9K-zi-7dm"/>
+                            <constraint firstItem="4L6-t5-iMA" firstAttribute="centerY" secondItem="mD1-d7-SQb" secondAttribute="centerY" id="nGW-HJ-UUd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mD1-d7-SQb"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbm-9b-nrF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="80.799999999999997" y="-565.36731634182911"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="1" width="200" height="200"/>
+    </resources>
 </document>
