@@ -295,12 +295,12 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="qmr-aL-3WN"/>
-                                <exclude reference="CRY-6X-U1p"/>
-                                <exclude reference="Ims-vf-bfI"/>
-                                <exclude reference="Rjz-AX-3vl"/>
                                 <exclude reference="CxQ-Lo-YTF"/>
                                 <exclude reference="DBz-ka-vmC"/>
                                 <exclude reference="nZ3-GH-iQd"/>
+                                <exclude reference="CRY-6X-U1p"/>
+                                <exclude reference="Ims-vf-bfI"/>
+                                <exclude reference="Rjz-AX-3vl"/>
                                 <exclude reference="294-vX-px4"/>
                                 <exclude reference="86O-Ya-lc7"/>
                             </mask>
@@ -309,27 +309,27 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
                             <mask key="constraints">
                                 <exclude reference="Y1d-ad-K4W"/>
                                 <include reference="qmr-aL-3WN"/>
+                                <include reference="CxQ-Lo-YTF"/>
+                                <include reference="DBz-ka-vmC"/>
+                                <exclude reference="RMq-mZ-TC9"/>
                                 <exclude reference="3Mw-68-RDb"/>
                                 <include reference="CRY-6X-U1p"/>
                                 <exclude reference="nGW-HJ-UUd"/>
                                 <exclude reference="r9M-AA-i2d"/>
-                                <include reference="CxQ-Lo-YTF"/>
-                                <include reference="DBz-ka-vmC"/>
-                                <exclude reference="RMq-mZ-TC9"/>
                                 <include reference="86O-Ya-lc7"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="Y1d-ad-K4W"/>
-                                <exclude reference="3Mw-68-RDb"/>
-                                <include reference="Ims-vf-bfI"/>
-                                <include reference="Rjz-AX-3vl"/>
-                                <exclude reference="brw-K4-rcr"/>
                                 <include reference="RMq-mZ-TC9"/>
                                 <exclude reference="X5x-jR-gTn"/>
                                 <exclude reference="hhu-Lt-ODk"/>
                                 <include reference="nZ3-GH-iQd"/>
+                                <exclude reference="3Mw-68-RDb"/>
+                                <include reference="Ims-vf-bfI"/>
+                                <include reference="Rjz-AX-3vl"/>
+                                <exclude reference="brw-K4-rcr"/>
                                 <include reference="294-vX-px4"/>
                                 <include reference="86O-Ya-lc7"/>
                                 <exclude reference="RH0-AZ-Jfp"/>
@@ -343,6 +343,7 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
                         <outlet property="accScoreLabel" destination="76k-aP-xw7" id="HDI-3D-3XA"/>
                         <outlet property="collectBtn" destination="Wfm-69-iA2" id="hzI-X6-y85"/>
                         <outlet property="currentPlayerLabel" destination="zI4-oX-BMI" id="38t-rs-21n"/>
+                        <outlet property="dice" destination="XPX-Rm-DBa" id="71R-Sl-lDc"/>
                         <outlet property="p1ScoreLabel" destination="DAh-EV-5Nu" id="NTU-Nx-qwU"/>
                         <outlet property="p2ScoreLabel" destination="Tig-ai-ECE" id="pEn-zu-RBe"/>
                         <outlet property="progressBar1" destination="xab-yy-aww" id="OZ1-e4-lP8"/>
