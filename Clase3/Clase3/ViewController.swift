@@ -72,14 +72,14 @@ class ViewController: UIViewController, ViewController2Delegate {
         destination.newValue = "Valor puesto desde otra ventana"
         destination.delegate = self
     }
-    
+    /*
     //es una funcion que se usa para pasar información cuando VOLVEMOS de una pantalla hacia otra. Es en el sentido contrario al segue
     @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
         let source = unwindSegue.source as! ViewController2
         actionLabel.text = source.newValue
         
     }
-    
+    */
     //esto se ha puesto para implementar la interfaz de viewController2Delegate
     func endAndReturn(_ result: String, controller: ViewController2) {
         actionLabel.text = result

@@ -1,0 +1,15 @@
+/* Class = "UIButton"; normalTitle = "Roll"; ObjectID = "7km-vX-YSU"; */
+"7km-vX-YSU.normalTitle" = "Tirar";
+
+/* Class = "UILabel"; text = "Player 1"; ObjectID = "Crk-66-6Dx"; */
+"Crk-66-6Dx.text" = "Jugador 1";
+
+/* Class = "UILabel"; text = "Player 2"; ObjectID = "u7B-Lg-h5M"; */
+"u7B-Lg-h5M.text" = "Jugador 2";
+
+/* Class = "UIButton"; normalTitle = "Collect"; ObjectID = "Wfm-69-iA2"; */
+"Wfm-69-iA2.normalTitle" = "Recoger";
+
+/* Class = "UILabel"; text = "Reglas del juego"; ObjectID = "y8t-7O-hBY"; */
+"y8t-7O-hBY.text" = "Game rules";
+

@@ -8,20 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		FB0DECEB2214A731000BBCA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0DECEA2214A731000BBCA3 /* AppDelegate.swift */; };
-		FB0DECED2214A731000BBCA3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0DECEC2214A731000BBCA3 /* ViewController.swift */; };
+		FB0DECED2214A731000BBCA3 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0DECEC2214A731000BBCA3 /* GameController.swift */; };
 		FB0DECF02214A731000BBCA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB0DECEE2214A731000BBCA3 /* Main.storyboard */; };
 		FB0DECF22214A731000BBCA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB0DECF12214A731000BBCA3 /* Assets.xcassets */; };
 		FB0DECF52214A731000BBCA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB0DECF32214A731000BBCA3 /* LaunchScreen.storyboard */; };
+		FB155FD22225A62900742302 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB155FD12225A62900742302 /* InstructionsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FB0DECE72214A730000BBCA3 /* Proyect1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proyect1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0DECEA2214A731000BBCA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FB0DECEC2214A731000BBCA3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FB0DECEC2214A731000BBCA3 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		FB0DECEF2214A731000BBCA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB0DECF12214A731000BBCA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB0DECF42214A731000BBCA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB0DECF62214A731000BBCA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB155FD12225A62900742302 /* InstructionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsController.swift; sourceTree = "<group>"; };
+		FB155FD32225BCB200742302 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +58,9 @@
 			isa = PBXGroup;
 			children = (
 				FB0DECEA2214A731000BBCA3 /* AppDelegate.swift */,
-				FB0DECEC2214A731000BBCA3 /* ViewController.swift */,
+				FB0DECEC2214A731000BBCA3 /* GameController.swift */,
 				FB0DECEE2214A731000BBCA3 /* Main.storyboard */,
+				FB155FD12225A62900742302 /* InstructionsController.swift */,
 				FB0DECF12214A731000BBCA3 /* Assets.xcassets */,
 				FB0DECF32214A731000BBCA3 /* LaunchScreen.storyboard */,
 				FB0DECF62214A731000BBCA3 /* Info.plist */,
@@ -135,7 +139,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB0DECED2214A731000BBCA3 /* ViewController.swift in Sources */,
+				FB0DECED2214A731000BBCA3 /* GameController.swift in Sources */,
+				FB155FD22225A62900742302 /* InstructionsController.swift in Sources */,
 				FB0DECEB2214A731000BBCA3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +152,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FB0DECEF2214A731000BBCA3 /* Base */,
+				FB155FD32225BCB200742302 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

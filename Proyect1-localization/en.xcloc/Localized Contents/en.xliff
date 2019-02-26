@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Proyect1/Base.lproj/Main.storyboard" datatype="plaintext" source-language="en">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="10.1" build-num="10B61"/>
+    </header>
+    <body>
+      <trans-unit id="7km-vX-YSU.normalTitle">
+        <source>Roll</source>
+        <note>Class = "UIButton"; normalTitle = "Roll"; ObjectID = "7km-vX-YSU";</note>
+      </trans-unit>
+      <trans-unit id="76k-aP-xw7.text">
+        <source>000</source>
+        <note>Class = "UILabel"; text = "000"; ObjectID = "76k-aP-xw7";</note>
+      </trans-unit>
+      <trans-unit id="Crk-66-6Dx.text">
+        <source>Player 1</source>
+        <note>Class = "UILabel"; text = "Player 1"; ObjectID = "Crk-66-6Dx";</note>
+      </trans-unit>
+      <trans-unit id="DAh-EV-5Nu.text">
+        <source>000</source>
+        <note>Class = "UILabel"; text = "000"; ObjectID = "DAh-EV-5Nu";</note>
+      </trans-unit>
+      <trans-unit id="Tig-ai-ECE.text">
+        <source>000</source>
+        <note>Class = "UILabel"; text = "000"; ObjectID = "Tig-ai-ECE";</note>
+      </trans-unit>
+      <trans-unit id="Wfm-69-iA2.normalTitle">
+        <source>Collect</source>
+        <note>Class = "UIButton"; normalTitle = "Collect"; ObjectID = "Wfm-69-iA2";</note>
+      </trans-unit>
+      <trans-unit id="bUG-B9-KJ7.normalTitle">
+        <source>Jugar</source>
+        <note>Class = "UIButton"; normalTitle = "Jugar"; ObjectID = "bUG-B9-KJ7";</note>
+      </trans-unit>
+      <trans-unit id="bfg-fF-Xbz.text">
+        <source>En el juego intervienen dos jugadores por turnos. En cada turno, un jugador tira repetidamente un dado, acumulando la puntuación obtenida en cada tirada  hasta que saca un 1 o decide recoger la puntuación acumulada y sumarla a su puntuación global. Gana el jugador que primero alcanza 100 puntos en su puntuación global. 
+Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que pasa al otro jugador, y la puntuación acumulada en ese turno no se suma a su puntuación global.</source>
+        <note>Class = "UITextView"; text = "En el juego intervienen dos jugadores por turnos. En cada turno, un jugador tira repetidamente un dado, acumulando la puntuación obtenida en cada tirada  hasta que saca un 1 o decide recoger la puntuación acumulada y sumarla a su puntuación global. Gana el jugador que primero alcanza 100 puntos en su puntuación global. \nSi el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que pasa al otro jugador, y la puntuación acumulada en ese turno no se suma a su puntuación global."; ObjectID = "bfg-fF-Xbz";</note>
+      </trans-unit>
+      <trans-unit id="u7B-Lg-h5M.text">
+        <source>Player 2</source>
+        <note>Class = "UILabel"; text = "Player 2"; ObjectID = "u7B-Lg-h5M";</note>
+      </trans-unit>
+      <trans-unit id="y8t-7O-hBY.text">
+        <source>Reglas del juego</source>
+        <note>Class = "UILabel"; text = "Reglas del juego"; ObjectID = "y8t-7O-hBY";</note>
+      </trans-unit>
+      <trans-unit id="zI4-oX-BMI.text">
+        <source>P1</source>
+        <note>Class = "UILabel"; text = "P1"; ObjectID = "zI4-oX-BMI";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Proyect1/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="10.1" build-num="10B61"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GameController: UIViewController {
 
     
     @IBOutlet weak var p1ScoreLabel: UILabel!
@@ -24,8 +24,9 @@ class ViewController: UIViewController {
     var accScore = 0
     var scores = [0.0,0.0]
     var rollsNumber = 0
+    var duration = 1
     
-    let goal = 20.0
+    let goal = 10.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,36 +34,25 @@ class ViewController: UIViewController {
         gameSetup()
     }
 
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        //gameSetup()
-    }
-
     @IBAction func onRollBtn(_ sender: UIButton) {
         dice.startAnimating()
-        UIView.animate(withDuration: 1, animations: {
-            // put here the code you would like to animate
-            for _ in 0...10 {
-                self.dice.image = self.dice.animationImages![Int(arc4random() % 6)]
-            }
-        }, completion: {(finished:Bool) in
-            // the code you put here will be compiled once the animation finishes
-            self.dice.stopAnimating()
-            let roll = arc4random_uniform(6) + 1
-            self.dice.image = UIImage(named: roll.description)
-            self.accScore = (roll == 1) ? 0 : self.accScore + Int(roll)
-            if(self.accScore == 0 || self.accScore + Int(self.scores[self.currentPlayer-1]) >= Int(self.goal)){
-                self.collect()
-            } else {
-                if(!self.collectBtn.isEnabled){
-                    self.collectBtn.isEnabled = true
-                }
-                self.updateTexts()
-            }
-        })
+        Timer.scheduledTimer(timeInterval: TimeInterval(duration), target: self, selector: #selector(self.stop), userInfo: nil, repeats: false)
     }
     
+    @objc func stop(){
+        self.dice.stopAnimating()
+        let roll = arc4random_uniform(6) + 1
+        self.dice.image = UIImage(named: roll.description)
+        self.accScore = (roll == 1) ? 0 : self.accScore + Int(roll)
+        if(self.accScore == 0 || self.accScore + Int(self.scores[self.currentPlayer-1]) >= Int(self.goal)){
+            self.collect()
+        } else {
+            if(!self.collectBtn.isEnabled){
+                self.collectBtn.isEnabled = true
+            }
+            self.updateTexts()
+        }
+    }
     @IBAction func onCollectBtn(_ sender: UIButton) {
         collect()
     }
@@ -80,7 +70,8 @@ class ViewController: UIViewController {
         })
         //TODO perform segue when clicking on "Cancel"
         alert.addAction(UIAlertAction(title: "Exit", style: .cancel){_ in
-            self.navigationController?.popViewController(animated: true)
+            self.reset()
+            self.performSegue(withIdentifier: "unwindToInstructions", sender: self)
         })
         present(alert, animated: true)
     }
@@ -126,6 +117,30 @@ class ViewController: UIViewController {
     func reset(){
         accScore = 0
         scores = [0.0,0.0]
+        updateTexts()
+    }
+    
+    // MARK: - Codificación/Decodificación del estado
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+
+        coder.encode(scores[0], forKey: "SCORES_0")
+        coder.encode(scores[1], forKey: "SCORES_1")
+        coder.encode(accScore, forKey: "ACCSCORE")
+        coder.encode(currentPlayer, forKey: "CURRENT_PLAYER")
+        coder.encode(duration, forKey:"ANIMATION_DURATION")
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        scores[0] = coder.decodeDouble(forKey: "SCORES_0")
+        scores[1] = coder.decodeDouble(forKey: "SCORES_1")
+        accScore = coder.decodeInteger(forKey: "ACCSCORE")
+        currentPlayer = coder.decodeInteger(forKey: "CURRENT_PLAYER")
+        duration = coder.decodeInteger(forKey: "ANIMATION_DURATION")
+        
         updateTexts()
     }
 }
