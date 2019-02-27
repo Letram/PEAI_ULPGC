@@ -7,34 +7,37 @@
     <body>
       <trans-unit id="7km-vX-YSU.normalTitle">
         <source>Roll</source>
-	<target>Tirar</target>
+        <target>Tirar</target>
         <note>Class = "UIButton"; normalTitle = "Roll"; ObjectID = "7km-vX-YSU";</note>
       </trans-unit>
       <trans-unit id="76k-aP-xw7.text">
         <source>000</source>
+        <target>000</target>
         <note>Class = "UILabel"; text = "000"; ObjectID = "76k-aP-xw7";</note>
       </trans-unit>
       <trans-unit id="Crk-66-6Dx.text">
         <source>Player 1</source>
-	<target>Jugador 1</target>
+        <target>Jugador 1</target>
         <note>Class = "UILabel"; text = "Player 1"; ObjectID = "Crk-66-6Dx";</note>
       </trans-unit>
       <trans-unit id="DAh-EV-5Nu.text">
         <source>000</source>
+        <target>000</target>
         <note>Class = "UILabel"; text = "000"; ObjectID = "DAh-EV-5Nu";</note>
       </trans-unit>
       <trans-unit id="Tig-ai-ECE.text">
         <source>000</source>
+        <target>000</target>
         <note>Class = "UILabel"; text = "000"; ObjectID = "Tig-ai-ECE";</note>
       </trans-unit>
       <trans-unit id="Wfm-69-iA2.normalTitle">
         <source>Collect</source>
-	<target>Recoger</target>
+        <target>Recoger</target>
         <note>Class = "UIButton"; normalTitle = "Collect"; ObjectID = "Wfm-69-iA2";</note>
       </trans-unit>
       <trans-unit id="bUG-B9-KJ7.normalTitle">
-        <source>Play</source>
-	<target>Jugar</target>
+        <source>Jugar</source>
+        <target>Play</target>
         <note>Class = "UIButton"; normalTitle = "Jugar"; ObjectID = "bUG-B9-KJ7";</note>
       </trans-unit>
       <trans-unit id="bfg-fF-Xbz.text">
@@ -44,16 +47,17 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
       </trans-unit>
       <trans-unit id="u7B-Lg-h5M.text">
         <source>Player 2</source>
-	<target>Jugador 2</target>
+        <target>Jugador 2</target>
         <note>Class = "UILabel"; text = "Player 2"; ObjectID = "u7B-Lg-h5M";</note>
       </trans-unit>
       <trans-unit id="y8t-7O-hBY.text">
         <source>Reglas del juego</source>
-	<target>Game rules</target>
+        <target>Game Rules</target>
         <note>Class = "UILabel"; text = "Reglas del juego"; ObjectID = "y8t-7O-hBY";</note>
       </trans-unit>
       <trans-unit id="zI4-oX-BMI.text">
         <source>P1</source>
+        <target>J1</target>
         <note>Class = "UILabel"; text = "P1"; ObjectID = "zI4-oX-BMI";</note>
       </trans-unit>
     </body>
@@ -66,6 +70,53 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
       <trans-unit id="CFBundleName">
         <source>$(PRODUCT_NAME)</source>
         <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Proyect1/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="es">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="10.1" build-num="10B61"/>
+    </header>
+    <body>
+      <trans-unit id="End of game">
+        <source>End of game</source>
+        <target>Fin de la partida</target>
+        <note>End of game</note>
+      </trans-unit>
+      <trans-unit id="End of turn">
+        <source>End of turn</source>
+        <target>Fin del turno</target>
+        <note>End of turn</note>
+      </trans-unit>
+      <trans-unit id="Exit">
+        <source>Exit</source>
+        <target>Salir</target>
+        <note>Exit</note>
+      </trans-unit>
+      <trans-unit id="Next player is: P">
+        <source>Next player is: P</source>
+        <target>El siguiente jugador es: J</target>
+        <note>Next player</note>
+      </trans-unit>
+      <trans-unit id="OK">
+        <source>OK</source>
+        <target>OK</target>
+        <note>Ok</note>
+      </trans-unit>
+      <trans-unit id="P">
+        <source>P</source>
+        <target>J</target>
+        <note>Player initial</note>
+      </trans-unit>
+      <trans-unit id="Play again">
+        <source>Play again</source>
+        <target>Nueva partida</target>
+        <note>Play again</note>
+      </trans-unit>
+      <trans-unit id="The winner is: P">
+        <source>The winner is: P</source>
+        <target>Y el ganador es: J</target>
+        <note>Win text</note>
       </trans-unit>
     </body>
   </file>

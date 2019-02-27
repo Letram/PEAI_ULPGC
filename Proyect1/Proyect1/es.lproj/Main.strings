@@ -1,8 +1,20 @@
 /* Class = "UIButton"; normalTitle = "Roll"; ObjectID = "7km-vX-YSU"; */
 "7km-vX-YSU.normalTitle" = "Tirar";
 
+/* Class = "UILabel"; text = "000"; ObjectID = "76k-aP-xw7"; */
+"76k-aP-xw7.text" = "000";
+
+/* Class = "UIButton"; normalTitle = "Jugar"; ObjectID = "bUG-B9-KJ7"; */
+"bUG-B9-KJ7.normalTitle" = "Play";
+
 /* Class = "UILabel"; text = "Player 1"; ObjectID = "Crk-66-6Dx"; */
 "Crk-66-6Dx.text" = "Jugador 1";
+
+/* Class = "UILabel"; text = "000"; ObjectID = "DAh-EV-5Nu"; */
+"DAh-EV-5Nu.text" = "000";
+
+/* Class = "UILabel"; text = "000"; ObjectID = "Tig-ai-ECE"; */
+"Tig-ai-ECE.text" = "000";
 
 /* Class = "UILabel"; text = "Player 2"; ObjectID = "u7B-Lg-h5M"; */
 "u7B-Lg-h5M.text" = "Jugador 2";
@@ -11,5 +23,8 @@
 "Wfm-69-iA2.normalTitle" = "Recoger";
 
 /* Class = "UILabel"; text = "Reglas del juego"; ObjectID = "y8t-7O-hBY"; */
-"y8t-7O-hBY.text" = "Game rules";
+"y8t-7O-hBY.text" = "Game Rules";
+
+/* Class = "UILabel"; text = "P1"; ObjectID = "zI4-oX-BMI"; */
+"zI4-oX-BMI.text" = "J1";
 

@@ -19,6 +19,7 @@ class GameController: UIViewController {
     @IBOutlet weak var progressBar1: UIProgressView!
     @IBOutlet weak var progressBar2: UIProgressView!
     @IBOutlet weak var dice: UIImageView!
+    @IBOutlet weak var rollBtn: UIButton!
     
     var currentPlayer = 1
     var accScore = 0
@@ -27,6 +28,18 @@ class GameController: UIViewController {
     var duration = 1
     
     let goal = 10.0
+    
+    let winText = NSLocalizedString("The winner is: P", comment: "Win text")
+    let endOfTurn = NSLocalizedString("End of turn", comment: "End of turn")
+    let nextPlayer = NSLocalizedString("Next player is: P", comment: "Next player")
+    let endOfGame = NSLocalizedString("End of game", comment: "End of game")
+    let ok = NSLocalizedString("OK", comment: "Ok")
+    let playAgain = NSLocalizedString("Play again", comment:"Play again")
+    let exit = NSLocalizedString("Exit", comment: "Exit")
+    let playerInitial = NSLocalizedString("P", comment: "Player initial")
+    
+    let blue = UIColor.blue
+    let red = UIColor.red
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,12 +77,12 @@ class GameController: UIViewController {
         changeCurrentPlayer()
     }
     func gameEnded(currentPlayer: Int) -> Void {
-        let alert = UIAlertController(title: "End of game", message: "Winner is P\(currentPlayer)!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Play Again", style: .default) {_ in
+        let alert = UIAlertController(title: endOfGame, message: winText + currentPlayer.description, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: playAgain, style: .default) {_ in
             self.reset()
         })
         //TODO perform segue when clicking on "Cancel"
-        alert.addAction(UIAlertAction(title: "Exit", style: .cancel){_ in
+        alert.addAction(UIAlertAction(title: exit, style: .cancel){_ in
             self.reset()
             self.performSegue(withIdentifier: "unwindToInstructions", sender: self)
         })
@@ -79,20 +92,28 @@ class GameController: UIViewController {
         currentPlayer = currentPlayer == 1 ? 2 : 1
         resetCounters()
         updateTexts()
-        let alert = UIAlertController(title: "End of turn", message: "Next player is: P\(currentPlayer)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: endOfTurn, message: nextPlayer + currentPlayer.description, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: ok, style: .default))
         present(alert, animated: true)
     }
     
     func updateTexts(){
-        currentPlayerLabel.text = "P" + currentPlayer.description
-        accScoreLabel.text = accScore.description
+        var attributes = [NSAttributedString.Key: AnyObject]()
+        attributes[.foregroundColor] = currentPlayer == 1 ? blue : red
+
+        currentPlayerLabel.attributedText = NSAttributedString(string: playerInitial + currentPlayer.description, attributes: attributes)
+        accScoreLabel.attributedText = NSAttributedString(string: accScore.description, attributes: attributes)
         
         p1ScoreLabel.text = Int(scores[0]).description
         progressBar1.setProgress(Float(scores[0]/goal), animated: true)
         
         p2ScoreLabel.text = Int(scores[1]).description
         progressBar2.setProgress(Float(scores[1]/goal), animated: true)
+        
+        rollBtn.tintColor = currentPlayer == 1 ? blue : red
+        collectBtn.tintColor = rollBtn.tintColor
+        
+        
     }
     func resetCounters(){
         accScore = 0

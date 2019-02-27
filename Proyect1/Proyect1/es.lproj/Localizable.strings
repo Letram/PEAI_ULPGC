@@ -1,0 +1,24 @@
+/* End of game */
+"End of game" = "Fin de la partida";
+
+/* End of turn */
+"End of turn" = "Fin del turno";
+
+/* Exit */
+"Exit" = "Salir";
+
+/* Next player */
+"Next player is: P" = "El siguiente jugador es: J";
+
+/* Ok */
+"OK" = "OK";
+
+/* Player initial */
+"P" = "J";
+
+/* Play again */
+"Play again" = "Nueva partida";
+
+/* Win text */
+"The winner is: P" = "Y el ganador es: J";
+

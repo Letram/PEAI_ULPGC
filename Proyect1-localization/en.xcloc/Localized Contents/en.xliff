@@ -63,4 +63,43 @@ Si el jugador que tiene el turno saca un 1 en una tirada, pierde el turno, que p
       </trans-unit>
     </body>
   </file>
+  <file original="Proyect1/en.lproj/Localizable.strings" datatype="plaintext" source-language="en">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="10.1" build-num="10B61"/>
+    </header>
+    <body>
+      <trans-unit id="End of game">
+        <source>End of game</source>
+        <note>End of game</note>
+      </trans-unit>
+      <trans-unit id="End of turn">
+        <source>End of turn</source>
+        <note>End of turn</note>
+      </trans-unit>
+      <trans-unit id="Exit">
+        <source>Exit</source>
+        <note>Exit</note>
+      </trans-unit>
+      <trans-unit id="Next player is: P">
+        <source>Next player is: P</source>
+        <note>Next player</note>
+      </trans-unit>
+      <trans-unit id="OK">
+        <source>OK</source>
+        <note>Ok</note>
+      </trans-unit>
+      <trans-unit id="P">
+        <source>P</source>
+        <note>Player initial</note>
+      </trans-unit>
+      <trans-unit id="Play again">
+        <source>Play again</source>
+        <note>Play again</note>
+      </trans-unit>
+      <trans-unit id="The winner is: P">
+        <source>The winner is: P</source>
+        <note>Win text</note>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
