@@ -26,6 +26,7 @@ class GameController: UIViewController {
     var scores = [0.0,0.0]
     var rollsNumber = 0
     var duration = 1
+    var last_dice = -1
     
     let goal = 10.0
     
@@ -55,6 +56,7 @@ class GameController: UIViewController {
     @objc func stop(){
         self.dice.stopAnimating()
         let roll = arc4random_uniform(6) + 1
+        last_dice = Int(roll)
         self.dice.image = UIImage(named: roll.description)
         self.accScore = (roll == 1) ? 0 : self.accScore + Int(roll)
         if(self.accScore == 0 || self.accScore + Int(self.scores[self.currentPlayer-1]) >= Int(self.goal)){
@@ -151,6 +153,7 @@ class GameController: UIViewController {
         coder.encode(accScore, forKey: "ACCSCORE")
         coder.encode(currentPlayer, forKey: "CURRENT_PLAYER")
         coder.encode(duration, forKey:"ANIMATION_DURATION")
+        coder.encode(last_dice, forKey:"LAST_DICE")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -161,7 +164,10 @@ class GameController: UIViewController {
         accScore = coder.decodeInteger(forKey: "ACCSCORE")
         currentPlayer = coder.decodeInteger(forKey: "CURRENT_PLAYER")
         duration = coder.decodeInteger(forKey: "ANIMATION_DURATION")
-        
+        last_dice = coder.decodeInteger(forKey: "LAST_DICE")
+        if(last_dice != -1){
+            self.dice.image = UIImage(named: last_dice.description)
+        }
         updateTexts()
     }
 }
