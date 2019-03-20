@@ -1,19 +1,18 @@
 //
-//  SubjectViewController.swift
-//  coredataExample
+//  CustomerListViewController.swift
+//  Project2
 //
-//  Created by Alumno on 19/03/2019.
+//  Created by Alumno on 20/03/2019.
 //  Copyright © 2019 eii. All rights reserved.
 //
 
 import UIKit
-
 import CoreData
 
-class SubjectViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    
-    var context: NSManagedObjectContext? = nil
+class CustomerListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
+    var context: NSManagedObjectContext? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,45 +21,33 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        insert(year: 1, name: "Álgebra")
-        insert(year: 1, name: "Cálculo")
-        insert(year: 2, name: "Programación II")
-        insert(year: 2, name: "Estadística")
-        insert(year: 2, name: "Álgebra")
-        insert(year: 3, name: "Computadores")
-        insert(year: 2, name: "Cálculo II")
-    }
-
-    //MARK: - Consultas
-    func insert(year: Int, name: String) {
-        
-        if (!(fetched.fetchedObjects?.contains(where: {(subject: Subject) -> Bool in
-            return subject.name == name
-        }))!){
-            let subject = Subject(context: fetched.managedObjectContext)
-            subject.year = Int16(year)
-            subject.name = name
-            
-            context?.insert(subject)
-            do{
-                try context?.save()
-            } catch {
-                //Algo fue mal
-            }
-        }
     }
     
+    //MARK: - Consultas
+    func insert(address: String, name: String) {
+        
+        let customer = Customer(context: fetched.managedObjectContext)
+        customer.address = address
+        customer.name = name
+        
+        context?.insert(customer)
+        do{
+            try context?.save()
+        } catch {
+            //Algo fue mal
+        }
+    }
+
     //MARK: - Operaciones relacionadas con la delegación de de las consultas
-    var fetched: NSFetchedResultsController<Subject> {
+    var fetched: NSFetchedResultsController<Customer> {
         if _fetched == nil{
-            let request: NSFetchRequest<Subject> = Subject.fetchRequest()
+            let request: NSFetchRequest<Customer> = Customer.fetchRequest()
             
             //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let year = NSSortDescriptor(key: "year", ascending: true)
             let name = NSSortDescriptor(key: "name", ascending: true)
             
             //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [year, name]
+            request.sortDescriptors = [name]
             
             //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
             //request.predicate = NSPredicate(format: "name = %@", [])
@@ -69,7 +56,7 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
             _fetched = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context!,
-                sectionNameKeyPath: "year",
+                sectionNameKeyPath: "",
                 cacheName: "cache")
             
             //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
@@ -85,7 +72,7 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
         return _fetched!
     }
     
-    var _fetched: NSFetchedResultsController<Subject>? = nil
+    var _fetched: NSFetchedResultsController<Customer>? = nil
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.reloadData()
@@ -94,8 +81,7 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
-        //Tenemos que llamar a fetched, no al _fetched ya que ese es solo un atributo de configuración. El otro es el atributo de la consulta.
+        // #warning Incomplete implementation, return the number of sections
         return fetched.sections?.count ?? 0
     }
 
@@ -106,19 +92,15 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "subjectCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customerCell", for: indexPath)
 
         // Configure the cell...
-        
-        //el fetched object at nos devuelve un objecto asignatura. Tenemos que acceder a sus cosas.
         cell.textLabel?.text = fetched.object(at: indexPath).name
-
+        cell.detailTextLabel?.text = fetched.object(at: indexPath).address
+        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetched.sections?[section].indexTitle
-    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -154,14 +136,26 @@ class SubjectViewController: UITableViewController, NSFetchedResultsControllerDe
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let vc = segue.destination as? CustomerDetailsViewController
+        switch segue.identifier {
+        case "edit":
+            let tableIndex = tableView.indexPathForSelectedRow
+            vc?.customer = fetched.object(at: tableIndex!)
+            break
+        default:
+            break
+        }
     }
-    */
+    
+    @IBAction func unwindInsert(segue: UIStoryboardSegue){
+        let vc = segue.source as? CustomerDetailsViewController
+        insert(address: (vc?.customerName!.text)!, name: (vc?.customerAddress!.text)!)
+    }
 
 }
