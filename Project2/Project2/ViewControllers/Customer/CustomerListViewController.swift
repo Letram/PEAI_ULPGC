@@ -16,7 +16,6 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
             self.tableView.setEditing(false, animated:true)
             editButton.title = "Edit"
         }else{
-            
             self.tableView.setEditing(true, animated:true)
             editButton.title = "Done"
         }
@@ -58,6 +57,15 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
             try context?.save()
         } catch{
             print("Update error")
+        }
+    }
+    
+    func delete(customer: Customer){
+        context?.delete(customer)
+        do{
+            try context?.save()
+        }catch{
+            print("Delete error")
         }
     }
     
@@ -132,32 +140,19 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+            
+            let aux = fetched.object(at: indexPath)
+            //tableView.deleteRows(at: [indexPath], with: .fade)
+            delete(customer: aux)
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+            
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
@@ -166,7 +161,6 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         let vc = segue.destination as? CustomerDetailsViewController
-        print(segue.identifier ?? "None")
         switch segue.identifier {
         case "edit":
             let tableIndex = tableView.indexPathForSelectedRow

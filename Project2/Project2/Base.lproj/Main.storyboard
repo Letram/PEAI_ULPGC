@@ -193,7 +193,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Lyz-9B-zEv" kind="show" id="qPp-Bm-Irg"/>
+                                    <segue destination="Lyz-9B-zEv" kind="show" identifier="edit" id="qPp-Bm-Irg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -204,13 +204,20 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Products" id="dgs-2Q-8ht">
                         <barButtonItem key="backBarButtonItem" title="Cancel" id="GYf-aw-hUt"/>
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="m1S-4q-rsY"/>
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="m1S-4q-rsY">
+                            <connections>
+                                <action selector="editBtnTapped:" destination="iMF-re-fao" id="o26-TG-ZKj"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="+" id="ksT-Dz-uzE">
                             <connections>
-                                <segue destination="Lyz-9B-zEv" kind="show" id="TBd-wq-b24"/>
+                                <segue destination="Lyz-9B-zEv" kind="show" identifier="" id="TBd-wq-b24"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editBtn" destination="m1S-4q-rsY" id="tZW-sv-qqj"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJC-Cf-wSW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -283,11 +290,23 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Edit product" id="A5A-cd-gSb">
-                        <barButtonItem key="rightBarButtonItem" title="done" id="bMM-F4-VTX"/>
+                        <barButtonItem key="rightBarButtonItem" title="done" id="bMM-F4-VTX">
+                            <connections>
+                                <action selector="doneBtnTapped:" destination="Lyz-9B-zEv" id="bzB-fb-HwJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="editBtn" destination="bMM-F4-VTX" id="nWa-lG-Iq2"/>
+                        <outlet property="productDescriptionField" destination="dtM-7h-9a1" id="5Jq-St-1Qd"/>
+                        <outlet property="productNameField" destination="rhw-Kq-S6l" id="JMp-mO-ote"/>
+                        <outlet property="productPriceField" destination="I0M-S9-70S" id="WMk-GC-Mlg"/>
+                        <segue destination="1vY-1E-Lpv" kind="unwind" identifier="unwindToProductList" unwindAction="unwindToProductListWithSource:" id="gc9-6E-A2z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w0a-lf-v1o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1vY-1E-Lpv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4889" y="134"/>
         </scene>
