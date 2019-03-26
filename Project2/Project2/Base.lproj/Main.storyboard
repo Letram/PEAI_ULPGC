@@ -43,7 +43,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="b5y-rp-hrl" kind="show" id="1j6-LV-kXx"/>
+                                    <segue destination="b5y-rp-hrl" kind="show" identifier="edit" id="1j6-LV-kXx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -54,13 +54,20 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Customers" id="veP-zM-ilQ">
                         <barButtonItem key="backBarButtonItem" title="Cancel" id="aZI-uN-FVz"/>
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="KLp-1h-bka"/>
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="KLp-1h-bka">
+                            <connections>
+                                <action selector="editBtnTapped:" destination="wyW-BL-Zca" id="2eW-gm-TFU"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="+" id="UoH-LW-REB">
                             <connections>
                                 <segue destination="b5y-rp-hrl" kind="show" id="5a8-tZ-uiZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="KLp-1h-bka" id="SA9-sd-Px6"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ix-tC-aqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -504,6 +511,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="wj4-on-1DC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GGa-Nr-ko5">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -560,6 +568,6 @@
         <segue reference="gGM-i4-8Me"/>
         <segue reference="DY9-IY-FKR"/>
         <segue reference="qPp-Bm-Irg"/>
-        <segue reference="5a8-tZ-uiZ"/>
+        <segue reference="1j6-LV-kXx"/>
     </inferredMetricsTieBreakers>
 </document>

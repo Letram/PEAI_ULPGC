@@ -10,9 +10,13 @@ import UIKit
 
 class CustomerDetailsViewController: UIViewController {
 
-    var customer: Customer? = nil
+    var customerNameText = ""
+    var customerAddressText = ""
+    var isForUpdate = false
     
     @IBAction func doneBtnPressed(_ sender: UIBarButtonItem) {
+        customerNameText = customerName.text!
+        customerAddressText = customerAddress.text!
         performSegue(withIdentifier: "unwindInsertWithSegue", sender: self)
     }
     @IBOutlet weak var customerAddress: UITextField!
@@ -21,10 +25,8 @@ class CustomerDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        customerName.text = customer?.name
-        customerAddress.text = customer?.address
-        
+        customerAddress.text = customerAddressText
+        customerName.text = customerNameText
     }
     
 

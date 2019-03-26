@@ -10,7 +10,18 @@ import UIKit
 import CoreData
 
 class CustomerListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBAction func editBtnTapped(_ sender: Any) {
+        if(self.tableView.isEditing){
+            self.tableView.setEditing(false, animated:true)
+            editButton.title = "Edit"
+        }else{
+            
+            self.tableView.setEditing(true, animated:true)
+            editButton.title = "Done"
+        }
+    }
+    
     var context: NSManagedObjectContext? = nil
     
     override func viewDidLoad() {
@@ -27,17 +38,29 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     func insert(address: String, name: String) {
         
         let customer = Customer(context: fetched.managedObjectContext)
-        customer.address = address
         customer.name = name
+        customer.address = address
+        //customer.orders = NSOrderedSet(array: [])
         
         context?.insert(customer)
         do{
             try context?.save()
         } catch {
+            print("Insert error")
             //Algo fue mal
         }
     }
 
+    func update(customer: Customer, name: String, address: String){
+        customer.name = name
+        customer.address = address
+        do{
+            try context?.save()
+        } catch{
+            print("Update error")
+        }
+    }
+    
     //MARK: - Operaciones relacionadas con la delegación de de las consultas
     var fetched: NSFetchedResultsController<Customer> {
         if _fetched == nil{
@@ -56,7 +79,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
             _fetched = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context!,
-                sectionNameKeyPath: "",
+                sectionNameKeyPath: nil,
                 cacheName: "cache")
             
             //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
@@ -143,10 +166,13 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         let vc = segue.destination as? CustomerDetailsViewController
+        print(segue.identifier ?? "None")
         switch segue.identifier {
         case "edit":
             let tableIndex = tableView.indexPathForSelectedRow
-            vc?.customer = fetched.object(at: tableIndex!)
+            vc?.customerNameText = fetched.object(at: tableIndex!).name!
+            vc?.customerAddressText = fetched.object(at: tableIndex!).address ?? "none"
+            vc?.isForUpdate = true
             break
         default:
             break
@@ -155,7 +181,13 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     
     @IBAction func unwindInsert(segue: UIStoryboardSegue){
         let vc = segue.source as? CustomerDetailsViewController
-        insert(address: (vc?.customerName!.text)!, name: (vc?.customerAddress!.text)!)
+        if (vc?.isForUpdate ?? false){
+            let aux = fetched.object(at: tableView.indexPathForSelectedRow!)
+            update(customer: aux, name: (vc?.customerNameText)!, address: (vc?.customerAddressText)!)
+            vc?.isForUpdate = false
+        }else{
+            insert(address: (vc?.customerAddressText)!, name: (vc?.customerNameText)!)
+        }
     }
 
 }
