@@ -28,12 +28,14 @@ class ProductDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        updateTexts()
+    }
+    
+    func updateTexts(){
         productPriceField.text = productPriceText
         productDescriptionField.text = productDescriptionText
         productNameField.text = productNameText
     }
-    
-
     
     // MARK: - Navigation
 
@@ -49,5 +51,25 @@ class ProductDetailsViewController: UIViewController {
         productDescriptionText = productDescriptionField.text!
         productPriceText = productPriceField.text!
         performSegue(withIdentifier: "unwindToProductList", sender: self)
+    }
+    
+    // MARK: - Codificación/Decodificación del estado
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        coder.encode(productNameText, forKey: "PRODUCT_NAME")
+        coder.encode(productDescriptionText, forKey: "PRODUCT_DESCRIPTION")
+        coder.encode(productPriceText, forKey: "PRODUCT_PRICE")
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        productNameText = coder.decodeObject(forKey: "PRODUCT_NAME") as! String
+        productDescriptionText = coder.decodeObject(forKey: "PRODUCT_DESCRIPTION") as! String
+        productPriceText = coder.decodeObject(forKey: "PRODUCT_PRICE") as! String
+        
+        updateTexts()
     }
 }

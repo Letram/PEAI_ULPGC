@@ -112,4 +112,28 @@ class OrderDetailsViewController: UIViewController {
         date = datePicker.date
         performSegue(withIdentifier: "unwindToOrderList", sender: self)
     }
-}
+    
+    // MARK: - Codificación/Decodificación del estado
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        coder.encode(code, forKey: "ORDER_CODE")
+        coder.encode(date, forKey: "ORDER_DATE")
+        //coder.encode(productPriceText, forKey: "ORDER_CUSTOMER")
+        //coder.encode(productPriceText, forKey: "ORDER_PRODUCT")
+        coder.encode(totalPrice, forKey: "ORDER_TOTAL")
+        coder.encode(quantity, forKey: "ORDER_QUANTITY")
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        code = coder.decodeObject(forKey: "ORDER_CODE") as! String
+        date = coder.decodeObject(forKey: "ORDER_DATE") as? Date
+        totalPrice = coder.decodeObject(forKey: "ORDER_CODE") as! Decimal
+        quantity = Int16(coder.decodeInt32(forKey: "ORDER_CODE"))
+        //customer
+        //product
+        updateTexts()
+    }}

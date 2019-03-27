@@ -23,21 +23,30 @@ class CustomerDetailsViewController: UIViewController {
     @IBOutlet weak var customerName: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateTexts()
+    }
+    
+    func updateTexts(){
         customerAddress.text = customerAddressText
         customerName.text = customerNameText
     }
     
+    // MARK: - Codificación/Decodificación del estado
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        
+        coder.encode(customerNameText, forKey: "CUSTOMER_NAME")
+        coder.encode(customerAddressText, forKey: "CUSTOMER_ADDRESS")
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        customerNameText = coder.decodeObject(forKey: "CUSTOMER_NAME") as! String
+        customerAddressText = coder.decodeObject(forKey: "CUSTOMER_ADDRESS") as! String
 
+        updateTexts()
+    }
 }
