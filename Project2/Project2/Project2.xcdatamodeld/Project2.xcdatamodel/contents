@@ -3,7 +3,7 @@
     <entity name="Customer" representedClassName="Customer" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Order" inverseName="customer" inverseEntity="Order" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Order" inverseName="customer" inverseEntity="Order" syncable="YES"/>
     </entity>
     <entity name="Order" representedClassName="Order" syncable="YES" codeGenerationType="class">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,11 +17,11 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="productDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="order" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Order" inverseName="product" inverseEntity="Order" syncable="YES"/>
+        <relationship name="order" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Order" inverseName="product" inverseEntity="Order" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Customer" positionX="635.7421875" positionY="-281.41796875" width="128" height="90"/>
         <element name="Order" positionX="213.52734375" positionY="-311.34765625" width="128" height="135"/>
-        <element name="Product" positionX="-234.69140625" positionY="-281.52734375" width="128" height="103"/>
-        <element name="Customer" positionX="635.7421875" positionY="-281.41796875" width="128" height="88"/>
+        <element name="Product" positionX="-234.69140625" positionY="-281.52734375" width="128" height="105"/>
     </elements>
 </model>

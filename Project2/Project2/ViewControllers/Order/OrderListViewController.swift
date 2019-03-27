@@ -11,6 +11,16 @@ import CoreData
 
 class OrderListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
+    @IBOutlet weak var editBtn: UIBarButtonItem!
+    @IBAction func editBtnTapped(_ sender: UIBarButtonItem) {
+        if(self.tableView.isEditing){
+            self.tableView.setEditing(false, animated:true)
+            editBtn.title = "Edit"
+        }else{
+            self.tableView.setEditing(true, animated:true)
+            editBtn.title = "Done"
+        }
+    }
     var context: NSManagedObjectContext? = nil
 
     override func viewDidLoad() {
@@ -23,17 +33,59 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    /*
+    //MARK: - Consultas
+    func insert(code: String, customer: Customer, product: Product, price: Decimal, quantity: Int16, date: Date) {
+        
+        let order = Order(context: fetched.managedObjectContext)
+        order.code = code
+        order.customer = customer
+        order.product = product
+        order.total = price as NSDecimalNumber
+        order.quantity = quantity
+        order.date = date
+        
+        context?.insert(order)
+        do{
+            try context?.save()
+        } catch {
+            print("Insert error")
+            //Algo fue mal
+        }
+    }
+    
+    func update(order: Order, code: String, customer: Customer, product: Product, price: Decimal, quantity: Int16, date: Date){
+        order.code = code
+        order.customer = customer
+        order.product = product
+        order.total = price as NSDecimalNumber
+        order.quantity = quantity
+        order.date = date
+        do{
+            try context?.save()
+        } catch{
+            print("Update error")
+        }
+    }
+    
+    func delete(order: Order){
+        context?.delete(order)
+        do{
+            try context?.save()
+        }catch{
+            print("Delete error")
+        }
+    }
+    
     //MARK: - Operaciones relacionadas con la delegación de de las consultas
-    var fetched: NSFetchedResultsController<Customer> {
+    var fetched: NSFetchedResultsController<Order> {
         if _fetched == nil{
-            let request: NSFetchRequest<Customer> = Customer.fetchRequest()
+            let request: NSFetchRequest<Order> = Order.fetchRequest()
             
             //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let nameOrder = NSSortDescriptor(key: "name", ascending: true)
-            
+            let orderByCode = NSSortDescriptor(key: "code", ascending: true)
+            let orderByCustomerName = NSSortDescriptor(key: "customer.name", ascending: true)
             //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [nameOrder]
+            request.sortDescriptors = [orderByCustomerName, orderByCode]
             
             //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
             //request.predicate = NSPredicate(format: "name = %@", [])
@@ -42,7 +94,7 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
             _fetched = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: context!,
-                sectionNameKeyPath: "",
+                sectionNameKeyPath: "customer.name",
                 cacheName: "cache")
             
             //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
@@ -57,7 +109,7 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         }
         return _fetched!
     }
-    */
+    
     var _fetched: NSFetchedResultsController<Order>? = nil
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -67,66 +119,69 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         //since we are not grouping customers we are grouping them in only 1 group
-        return 1
+        return fetched.sections?.count ?? 0
     }
-/*
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetched.sections?[section].numberOfObjects ?? 0
     }
-*/
-    /*
+
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath)
 
         // Configure the cell...
-
+        cell.textLabel!.text = fetched.object(at: indexPath).code
+        cell.detailTextLabel?.text = fetched.object(at: indexPath).product?.name
+        
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return fetched.sections?[section].name
     }
-    */
-
-    /*
+    
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            delete(order: fetched.object(at: indexPath))
+        }
     }
-    */
+    
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let vc = segue.destination as! OrderDetailsViewController
+        if(segue.identifier == "create" || segue.identifier == "edit"){
+            vc.context = context
+            if(segue.identifier == "edit"){
+                let currentOrder: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
+                vc.code = currentOrder.code!
+                vc.date = currentOrder.date
+                vc.customer = currentOrder.customer
+                vc.product = currentOrder.product
+                vc.quantity = currentOrder.quantity
+                vc.totalPrice = currentOrder.total! as Decimal
+                vc.isForUpdate = true
+            }
+        }
     }
-    */
+
+    @IBAction func unwindToOrderList(segue: UIStoryboardSegue){
+        let vc = segue.source as! OrderDetailsViewController
+        if(!vc.isForUpdate){
+            insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+        } else {
+            let aux: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
+            update(order: aux, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            vc.isForUpdate = false
+        }
+    }
 
 }
