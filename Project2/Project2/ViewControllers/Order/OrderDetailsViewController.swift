@@ -24,8 +24,21 @@ class OrderDetailsViewController: UIViewController {
     var code: String = ""
     var quantity: Int16 = 0
     var totalPrice: Decimal = 0
-    var customer: Customer? = nil
-    var product: Product? = nil
+    var customer: Customer? = nil {
+        didSet{
+            updateTexts()
+        }
+    }
+    
+    var product: Product? = nil {
+        didSet{
+            checkStepper()
+            updateTexts()
+        }
+    }
+    
+    var order: Order? = nil
+    
     var date: Date? = nil
     var isForUpdate = false
     
@@ -39,17 +52,17 @@ class OrderDetailsViewController: UIViewController {
     }
     
     @IBAction func stepperTapped(_ sender: UIStepper) {
+
         quantity = Int16(sender.value)
-        
         updateTexts()
     }
     
     func checkStepper(){
         if(product == nil){
-            stepper.minimumValue = 0
-            stepper.maximumValue = 0
+            stepper?.minimumValue = 0
+            stepper?.maximumValue = 0
         } else {
-            stepper.maximumValue = 999
+            stepper?.maximumValue = 999
         }
     }
     
@@ -89,11 +102,11 @@ class OrderDetailsViewController: UIViewController {
     
     func updateTexts(){
         checkNewPrice()
-        priceField.text = totalPrice.description
-        qField.text = quantity.description
-        customerSelected.text = customer?.name
-        productSelected.text = product?.name
-        codeField.text = code
+        priceField?.text = totalPrice.description
+        qField?.text = quantity.description
+        customerSelected?.text = customer?.name
+        productSelected?.text = product?.name
+        codeField?.text = code
     }
     
     func checkNewPrice(){
@@ -118,22 +131,59 @@ class OrderDetailsViewController: UIViewController {
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
         
+        saveVars()
+        
         coder.encode(code, forKey: "ORDER_CODE")
         coder.encode(date, forKey: "ORDER_DATE")
-        //coder.encode(productPriceText, forKey: "ORDER_CUSTOMER")
-        //coder.encode(productPriceText, forKey: "ORDER_PRODUCT")
-        coder.encode(totalPrice, forKey: "ORDER_TOTAL")
-        coder.encode(quantity, forKey: "ORDER_QUANTITY")
+        
+        let productID = self.product?.objectID
+        coder.encode(productID?.uriRepresentation(), forKey: "ORDER_PRODUCT")
+        
+        let customerID = self.customer?.objectID
+        coder.encode(customerID?.uriRepresentation(), forKey: "ORDER_CUSTOMER")
+        
+        let orderID = self.order?.objectID
+        coder.encode(orderID?.uriRepresentation(), forKey: "ORDER")
+        
+        coder.encode(totalPrice.description, forKey: "ORDER_TOTAL")
+        coder.encode(quantity.description, forKey: "ORDER_QUANTITY")
+        coder.encode(isForUpdate, forKey: "ORDER_UPDATE")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
         super.decodeRestorableState(with: coder)
         
+        self.context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
         code = coder.decodeObject(forKey: "ORDER_CODE") as! String
         date = coder.decodeObject(forKey: "ORDER_DATE") as? Date
-        totalPrice = coder.decodeObject(forKey: "ORDER_CODE") as! Decimal
-        quantity = Int16(coder.decodeInt32(forKey: "ORDER_CODE"))
-        //customer
-        //product
-        updateTexts()
+        totalPrice = Decimal(string: coder.decodeObject(forKey: "ORDER_TOTAL") as! String) ?? 0
+        quantity = Int16(coder.decodeObject(forKey: "ORDER_QUANTITY") as! String) ?? 0
+        
+        stepper?.minimumValue = Double(quantity)
+        stepper?.minimumValue = 0
+        isForUpdate = coder.decodeBool(forKey: "ORDER_UPDATE")
+        let productURI = coder.decodeObject(forKey: "ORDER_PRODUCT") as? URL
+        let customerURI = coder.decodeObject(forKey: "ORDER_CUSTOMER") as? URL
+        let orderURI = coder.decodeObject(forKey: "ORDER") as? URL
+        
+        if productURI != nil {
+            let productID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: productURI!)
+            self.context?.perform {
+                self.product = self.context?.object(with: productID!) as? Product
+            }
+        }
+        if customerURI != nil {
+            let customerID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: customerURI!)
+            self.context?.perform {
+                self.customer = self.context?.object(with: customerID!) as? Customer
+            }
+        }
+        if orderURI != nil {
+            let orderID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: orderURI!)
+            self.context?.perform {
+                self.order = self.context?.object(with: orderID!) as? Order
+            }
+        }
+        datePicker.date = date!
     }}

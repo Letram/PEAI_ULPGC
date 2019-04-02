@@ -36,8 +36,8 @@ class CustomerDetailsViewController: UIViewController {
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
         
-        coder.encode(customerNameText, forKey: "CUSTOMER_NAME")
-        coder.encode(customerAddressText, forKey: "CUSTOMER_ADDRESS")
+        coder.encode(customerName.text, forKey: "CUSTOMER_NAME")
+        coder.encode(customerAddress.text, forKey: "CUSTOMER_ADDRESS")
 
     }
     

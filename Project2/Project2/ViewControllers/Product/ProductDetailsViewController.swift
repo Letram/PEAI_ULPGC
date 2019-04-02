@@ -58,9 +58,9 @@ class ProductDetailsViewController: UIViewController {
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
         
-        coder.encode(productNameText, forKey: "PRODUCT_NAME")
-        coder.encode(productDescriptionText, forKey: "PRODUCT_DESCRIPTION")
-        coder.encode(productPriceText, forKey: "PRODUCT_PRICE")
+        coder.encode(productNameField.text, forKey: "PRODUCT_NAME")
+        coder.encode(productDescriptionField.text, forKey: "PRODUCT_DESCRIPTION")
+        coder.encode(productPriceField.text, forKey: "PRODUCT_PRICE")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {

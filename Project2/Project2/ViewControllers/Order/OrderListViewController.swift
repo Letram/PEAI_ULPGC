@@ -164,10 +164,11 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
                 let currentOrder: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
                 vc.code = currentOrder.code!
                 vc.date = currentOrder.date
-                vc.customer = currentOrder.customer
-                vc.product = currentOrder.product
                 vc.quantity = currentOrder.quantity
                 vc.totalPrice = currentOrder.total! as Decimal
+                vc.customer = currentOrder.customer
+                vc.product = currentOrder.product
+                vc.order = currentOrder
                 vc.isForUpdate = true
             }
         }
@@ -178,8 +179,8 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         if(!vc.isForUpdate){
             insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
         } else {
-            let aux: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
-            update(order: aux, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            //let aux: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
+            update(order: vc.order!, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
             vc.isForUpdate = false
         }
     }
