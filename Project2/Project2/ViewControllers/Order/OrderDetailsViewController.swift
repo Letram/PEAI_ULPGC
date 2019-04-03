@@ -46,7 +46,6 @@ class OrderDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         datePicker.date = date ?? Date()
-        stepper.value = Double(quantity)
         checkStepper()
         updateTexts()
     }
@@ -121,9 +120,19 @@ class OrderDetailsViewController: UIViewController {
         quantity = Int16(qField.text!)!
     }
     @IBAction func doneBtnTapped(_ sender: UIBarButtonItem) {
-        code = codeField.text!
-        date = datePicker.date
-        performSegue(withIdentifier: "unwindToOrderList", sender: self)
+        if(!orderValid()){}
+        else{
+            code = codeField.text!
+            date = datePicker.date
+            performSegue(withIdentifier: "unwindToOrderList", sender: self)
+        }
+    }
+    
+    func orderValid() -> Bool{
+        if(customer == nil || product == nil || codeField.text == "" ){
+            return false
+        }
+        return true
     }
     
     // MARK: - Codificación/Decodificación del estado
@@ -162,6 +171,7 @@ class OrderDetailsViewController: UIViewController {
         
         stepper?.minimumValue = Double(quantity)
         stepper?.minimumValue = 0
+ 
         isForUpdate = coder.decodeBool(forKey: "ORDER_UPDATE")
         let productURI = coder.decodeObject(forKey: "ORDER_PRODUCT") as? URL
         let customerURI = coder.decodeObject(forKey: "ORDER_CUSTOMER") as? URL
@@ -185,5 +195,6 @@ class OrderDetailsViewController: UIViewController {
                 self.order = self.context?.object(with: orderID!) as? Order
             }
         }
+        stepper.value = Double(quantity)
         datePicker.date = date!
     }}

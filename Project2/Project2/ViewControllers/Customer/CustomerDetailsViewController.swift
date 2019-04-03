@@ -15,9 +15,14 @@ class CustomerDetailsViewController: UIViewController {
     var isForUpdate = false
     
     @IBAction func doneBtnPressed(_ sender: UIBarButtonItem) {
-        customerNameText = customerName.text!
-        customerAddressText = customerAddress.text!
-        performSegue(withIdentifier: "unwindInsertWithSegue", sender: self)
+        if(!customerValid()){
+            
+        }
+        else{
+            customerNameText = customerName.text!
+            customerAddressText = customerAddress.text!
+            performSegue(withIdentifier: "unwindInsertWithSegue", sender: self)
+        }
     }
     @IBOutlet weak var customerAddress: UITextField!
     @IBOutlet weak var customerName: UITextField!
@@ -31,6 +36,12 @@ class CustomerDetailsViewController: UIViewController {
         customerName.text = customerNameText
     }
     
+    func customerValid() -> Bool{
+        if(customerName.text! == "" || customerAddress.text! == ""){
+            return false
+        }
+        return true
+    }
     // MARK: - Codificación/Decodificación del estado
     
     override func encodeRestorableState(with coder: NSCoder) {

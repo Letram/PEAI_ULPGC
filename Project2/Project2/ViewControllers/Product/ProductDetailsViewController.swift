@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension String{
+    func matches(_ regex: String) -> Bool{
+        return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+    }
+}
+
 class ProductDetailsViewController: UIViewController {
 
     var productNameText: String = ""
@@ -47,12 +53,28 @@ class ProductDetailsViewController: UIViewController {
     }
  */
     @IBAction func doneBtnTapped(_ sender: Any) {
-        productNameText = productNameField.text!
-        productDescriptionText = productDescriptionField.text!
-        productPriceText = productPriceField.text!
-        performSegue(withIdentifier: "unwindToProductList", sender: self)
+        if(!productValid()){
+            
+        }
+        else{
+            productNameText = productNameField.text!
+            productDescriptionText = productDescriptionField.text!
+            productPriceText = productPriceField.text!
+            performSegue(withIdentifier: "unwindToProductList", sender: self)
+        }
     }
     
+    func productValid() -> Bool{
+        if(productNameField.text == "" || productDescriptionField.text == "" || !numeric(value: productPriceField.text!) || productPriceField.text == ""){
+            return false
+        }
+        return true
+    }
+    
+    func numeric(value: String) -> Bool{
+        return value.matches("[0-9]*(,.){0,1}[0-9]?")
+    }
+
     // MARK: - Codificación/Decodificación del estado
     
     override func encodeRestorableState(with coder: NSCoder) {
