@@ -29,6 +29,45 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if(customerSelected != nil){
+            let indexPath = lookForCustomer(customer: customerSelected!)
+            self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.top)
+        } else if (productSelected != nil){
+            let indexPath = lookForProduct(product: productSelected!)
+            self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.top)
+        }
+    }
+    func lookForCustomer(customer: Customer) -> IndexPath{
+        var indexPath = NSIndexPath()
+        for section in 0..<self.tableView.numberOfSections{
+            
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+                
+                let indexPathAux = NSIndexPath(row: row, section: section)
+                if(customerFetched.object(at: indexPathAux as IndexPath) == customer){
+                    indexPath = indexPathAux
+                }
+            }
+        }
+        return indexPath as IndexPath
+    }
+    
+    func lookForProduct(product: Product) -> IndexPath{
+        var indexPath = NSIndexPath()
+        for section in 0..<self.tableView.numberOfSections{
+            
+            for row in 0..<tableView.numberOfRows(inSection: section) {
+                
+                let indexPathAux = NSIndexPath(row: row, section: section)
+                if(productFetched.object(at: indexPathAux as IndexPath) == product){
+                    indexPath = indexPathAux
+                }
+            }
+        }
+        return indexPath as IndexPath
+    }
+    
     @IBAction func doneBtnTapped(_ sender: UIButton) {
         if(entitySelected == "Customer"){
             customerSelected = customerFetched.object(at: tableView.indexPathForSelectedRow!)
@@ -119,6 +158,13 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
+    func setCustomer(entity: Customer?){
+        customerSelected = entity
+    }
+    
+    func setProduct(entity: Product?){
+        productSelected = entity
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
