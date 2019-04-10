@@ -20,6 +20,7 @@ class OrderDetailsViewController: UIViewController {
     @IBOutlet weak var productSelected: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var code: String = ""
     var quantity: Int16 = 0
@@ -45,6 +46,10 @@ class OrderDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // setup keyboard event
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+        
         datePicker.date = date ?? Date()
         if isForUpdate {
             stepper.minimumValue = Double(quantity)
@@ -52,6 +57,22 @@ class OrderDetailsViewController: UIViewController {
         }
         checkStepper()
         updateTexts()
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification){
+        
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
     
     @IBAction func stepperTapped(_ sender: UIStepper) {
