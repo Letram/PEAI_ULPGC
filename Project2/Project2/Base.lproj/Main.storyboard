@@ -131,8 +131,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="customerAddress" destination="dCa-Bt-c1Y" id="XAv-BG-8EN"/>
-                        <outlet property="customerName" destination="cMK-LU-lEV" id="GMf-YK-t0P"/>
+                        <outlet property="customerAddressField" destination="dCa-Bt-c1Y" id="xct-jc-wza"/>
+                        <outlet property="customerNameField" destination="cMK-LU-lEV" id="Bwl-dN-RoF"/>
                         <segue destination="Yzr-a2-Rh7" kind="unwind" identifier="unwindInsertWithSegue" unwindAction="unwindInsertWithSegue:" id="bnI-OU-Lcw"/>
                     </connections>
                 </viewController>
@@ -626,7 +626,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1LS-Ar-7tJ"/>
+        <segue reference="gGM-i4-8Me"/>
         <segue reference="DY9-IY-FKR"/>
         <segue reference="qPp-Bm-Irg"/>
         <segue reference="1j6-LV-kXx"/>

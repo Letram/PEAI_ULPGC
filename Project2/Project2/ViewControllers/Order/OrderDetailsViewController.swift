@@ -46,6 +46,10 @@ class OrderDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         datePicker.date = date ?? Date()
+        if isForUpdate {
+            stepper.minimumValue = Double(quantity)
+            stepper.minimumValue = 0
+        }
         checkStepper()
         updateTexts()
     }
