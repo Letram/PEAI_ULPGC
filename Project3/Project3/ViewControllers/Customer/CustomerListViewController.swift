@@ -30,7 +30,16 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
 
         
         customerService.delegate = self
-        
+        getAll()
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    //MARK: - Consultas
+    func getAll(){
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         customerService.getAll(){ results, errorMsg in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -40,14 +49,8 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
             if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
             
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    //MARK: - Consultas
     func insert(address: String, name: String) {
         
         var params: [String: Any] = [:]
@@ -56,38 +59,32 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         params["name"] = name
         
         customerService.insert(params: params){ insertedID, errorMsg in
-            
-        }
-        /*
-        let customer = Customer(context: fetched.managedObjectContext)
-        customer.name = name
-        customer.address = address
-        //customer.orders = NSOrderedSet(array: [])
-        context?.insert(customer)
-        do{
-            try context?.save()
-        } catch {
-            print("Insert error")
-        }
-        */
-    }
-
-    func update(customer: Customer, name: String, address: String){
-        customer.name = name
-        customer.address = address
-        do{
-            try context?.save()
-        } catch{
-            print("Update error")
+            self.getAll()
         }
     }
     
-    func delete(customer: Customer){
-        context?.delete(customer)
-        do{
-            try context?.save()
-        }catch{
-            print("Delete error")
+    func update(name: String, address: String, idCustomer: Int){
+        var params: [String: Any] = [:]
+        
+        params["name"] = name
+        params["address"] = address
+        params["IDCustomer"] = idCustomer
+        
+        customerService.update(params: params){ updateResult, errorMsg in
+            if updateResult {
+                self.getAll()
+            }
+        }
+    }
+
+    func delete(IDCustomer: Int){
+        let params = ["IDCustomer" : IDCustomer]
+        
+        customerService.delete(params: params) { deleteResult, errorMsg in
+            print(deleteResult)
+            if deleteResult {
+                self.getAll()
+            }
         }
     }
     
@@ -149,9 +146,8 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let aux = fetched.object(at: indexPath)
-            //tableView.deleteRows(at: [indexPath], with: .fade)
-            delete(customer: aux)
+            let aux = queryResults[indexPath.row].IDCustomer
+            delete(IDCustomer: aux)
         }
     }
 
@@ -165,8 +161,9 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         switch segue.identifier {
         case "edit":
             let tableIndex = tableView.indexPathForSelectedRow
-            vc?.customerNameText = fetched.object(at: tableIndex!).name!
-            vc?.customerAddressText = fetched.object(at: tableIndex!).address ?? "none"
+            vc?.customerNameText = queryResults[(tableIndex?.row)!].name
+            vc?.customerAddressText = queryResults[(tableIndex?.row)!].address
+            vc?.IDCustomer = queryResults[(tableIndex?.row)!].IDCustomer
             vc?.isForUpdate = true
             break
         default:
@@ -177,8 +174,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     @IBAction func unwindInsert(segue: UIStoryboardSegue){
         let vc = segue.source as? CustomerDetailsViewController
         if (vc?.isForUpdate ?? false){
-            let aux = fetched.object(at: tableView.indexPathForSelectedRow!)
-            update(customer: aux, name: (vc?.customerNameText)!, address: (vc?.customerAddressText)!)
+            update(name: (vc?.customerNameText)!, address: (vc?.customerAddressText)!, idCustomer: (vc?.IDCustomer)!)
             vc?.isForUpdate = false
         }else{
             insert(address: (vc?.customerAddressText)!, name: (vc?.customerNameText)!)

@@ -12,6 +12,7 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
 
     var customerNameText = ""
     var customerAddressText = ""
+    var IDCustomer: Int?
     var isForUpdate = false
     
     @IBAction func doneBtnPressed(_ sender: UIBarButtonItem) {
