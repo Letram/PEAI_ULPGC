@@ -8,25 +8,19 @@
 
 import Foundation
 
-class CustomerQueryService : QueryService{
-    typealias JsonDict = [String: Any]
-    
-    typealias customerQueryResult = ([CustomerModel], String) -> ()
-    typealias customerInsertResult = (Int, String) -> ()
-    typealias customerUpdateResult = (Bool, String) -> ()
-    typealias customerDeleteResult = (Bool, String) -> ()
-    
+class CustomerQueryService : CustomerQueryServiceInterface{
+   
     let defaultSession = URLSession(configuration: .default)
     
     var delegate: CustomerListViewController? = nil
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
     var customers: [CustomerModel] = []
-    
+    var insertedId: Int? = nil
     func getAll(completion: @escaping customerQueryResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: WebData.CUSTOMER_GETALL, relativeTo: WebData.SERVER_URL)!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_GETALL))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "GET"
         
@@ -35,7 +29,6 @@ class CustomerQueryService : QueryService{
         
         // Tarea asíncrona para recuperar el contenido de una url.
         dataTask = session.dataTask(with: req, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
-            
             if let error = error {
                 self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
             }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
@@ -69,19 +62,46 @@ class CustomerQueryService : QueryService{
             return
         }
         for customerObj in customerArray {
-            if let customerAux = customerObj as? JsonDict,
-                let previewName = customerAux["name"] as? String,
-                let previewAddress = customerAux["address"] as? String,
-                let previewUid = customerAux["IDCustomer"] as? Int
-            {
-                customers.append(CustomerModel(name: previewName, address: previewAddress, uid: previewUid))
-            } else {
+            print(customerObj)
+            if let customerAux = customerObj as? JsonDict{
+                let previewName = customerAux["name"] as? String
+                let previewAddress = customerAux["address"] as? String
+                let previewUid = customerAux["IDCustomer"] as? String
+                customers.append(CustomerModel(name: previewName!, address: previewAddress!, uid: Int(previewUid!)!))
+            }
+            
+            else {
                 errorMessage += "Problem parsing customerAux\n"
             }
         }
     }
     
     func insert(params: JsonDict, completion: @escaping customerInsertResult) {
+        dataTask?.cancel()
+        
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_INSERT))!)
+        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpMethod = "POST"
+        print(params)
+        // Shared session es para peticiones básicas que no necesitan configuración
+        let session = URLSession.shared
+        
+        // Tarea asíncrona para recuperar el contenido de una url.
+        dataTask = session.dataTask(with: req, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
+            if let error = error {
+                self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
+            }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                self.insertCustomerResponse(data)
+                DispatchQueue.main.async {
+                    completion(self.insertedId!, self.errorMessage)
+                }
+            }
+        })
+        // Se lanza la tarea
+        dataTask?.resume()
+    }
+    
+    func insertCustomerResponse(_ data: Data?){
         
     }
     

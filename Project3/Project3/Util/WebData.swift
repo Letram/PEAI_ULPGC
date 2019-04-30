@@ -16,5 +16,4 @@ class WebData {
     static let CUSTOMER_UPDATE = "UpdateCustomer"
     static let CUSTOMER_DELETE = "DeleteCustomer"
     
-    
 }

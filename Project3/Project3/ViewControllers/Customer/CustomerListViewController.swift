@@ -23,7 +23,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     
     var context: NSManagedObjectContext? = nil
     
-    let customerService: CustomerQueryService = CustomerQueryService()
+    let customerService = CustomerQueryService()
     var queryResults: [CustomerModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +32,11 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         customerService.delegate = self
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        customerService.getAll(){results, errorMsg in
+        customerService.getAll(){ results, errorMsg in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            if let results: [CustomerModel] = results {
-                self.queryResults = results
-                self.tableView.reloadData()
-                self.tableView.setContentOffset(CGPoint.zero, animated: false)
-            }
+            self.queryResults = results
+            self.tableView.reloadData()
+            self.tableView.setContentOffset(CGPoint.zero, animated: false)
             if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
             
         }
@@ -52,6 +50,15 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
     //MARK: - Consultas
     func insert(address: String, name: String) {
         
+        var params: [String: Any] = [:]
+        
+        params["address"] = address
+        params["name"] = name
+        
+        customerService.insert(params: params){ insertedID, errorMsg in
+            
+        }
+        /*
         let customer = Customer(context: fetched.managedObjectContext)
         customer.name = name
         customer.address = address
@@ -62,6 +69,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         } catch {
             print("Insert error")
         }
+        */
     }
 
     func update(customer: Customer, name: String, address: String){

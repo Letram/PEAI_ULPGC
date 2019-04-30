@@ -3,11 +3,11 @@ import Foundation
 class CustomerModel {
     let name: String
     let address: String
-    let uid: Int
+    let IDCustomer: Int
     
     init(name: String, address: String, uid: Int) {
         self.name = name
         self.address = address
-        self.uid = uid
+        self.IDCustomer = uid
     }
 }

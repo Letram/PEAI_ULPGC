@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		FB64265E2270CD2C00421E27 /* CustomerQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */; };
-		FB6426602270CD4600421E27 /* QueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265F2270CD4600421E27 /* QueryService.swift */; };
+		FB6426602270CD4600421E27 /* CustomerQueryServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */; };
 		FB6426632270CFF600421E27 /* WebData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6426622270CFF600421E27 /* WebData.swift */; };
 		FB6426662270D8C100421E27 /* CustomerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6426652270D8C100421E27 /* CustomerModel.swift */; };
 		FBC644202242A7FA0062095A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC6441F2242A7FA0062095A /* AppDelegate.swift */; };
 		FBC644222242A7FB0062095A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644212242A7FB0062095A /* ViewController.swift */; };
 		FBC644252242A7FB0062095A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBC644232242A7FB0062095A /* Main.storyboard */; };
-		FBC644282242A7FB0062095A /* Project2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FBC644262242A7FB0062095A /* Project2.xcdatamodeld */; };
+		FBC644282242A7FB0062095A /* Project3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FBC644262242A7FB0062095A /* Project3.xcdatamodeld */; };
 		FBC6442A2242A8000062095A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBC644292242A8000062095A /* Assets.xcassets */; };
 		FBC6442D2242A8000062095A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBC6442B2242A8000062095A /* LaunchScreen.storyboard */; };
 		FBC644392242C17D0062095A /* CustomerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644382242C17D0062095A /* CustomerListViewController.swift */; };
@@ -24,14 +24,16 @@
 		FBC644432242C3050062095A /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644422242C3050062095A /* OrderDetailsViewController.swift */; };
 		FBC644452242C3170062095A /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644442242C3170062095A /* OrderListViewController.swift */; };
 		FBC644472242C32B0062095A /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644462242C32B0062095A /* SelectViewController.swift */; };
+		FBD0225822786EE3000630FE /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD0225722786EE3000630FE /* ProductModel.swift */; };
+		FBD0225A22786F07000630FE /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD0225922786F07000630FE /* OrderModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQueryService.swift; sourceTree = "<group>"; };
-		FB64265F2270CD4600421E27 /* QueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryService.swift; sourceTree = "<group>"; };
+		FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQueryServiceInterface.swift; sourceTree = "<group>"; };
 		FB6426622270CFF600421E27 /* WebData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebData.swift; sourceTree = "<group>"; };
 		FB6426652270D8C100421E27 /* CustomerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerModel.swift; sourceTree = "<group>"; };
-		FBC6441C2242A7FA0062095A /* Project2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBC6441C2242A7FA0062095A /* Project3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC6441F2242A7FA0062095A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBC644212242A7FB0062095A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FBC644242242A7FB0062095A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,6 +48,8 @@
 		FBC644422242C3050062095A /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		FBC644442242C3170062095A /* OrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
 		FBC644462242C32B0062095A /* SelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
+		FBD0225722786EE3000630FE /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		FBD0225922786F07000630FE /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +66,7 @@
 		FB6426612270CFD900421E27 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				FB64265F2270CD4600421E27 /* QueryService.swift */,
+				FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */,
 				FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */,
 				FB6426622270CFF600421E27 /* WebData.swift */,
 			);
@@ -73,6 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				FB6426652270D8C100421E27 /* CustomerModel.swift */,
+				FBD0225722786EE3000630FE /* ProductModel.swift */,
+				FBD0225922786F07000630FE /* OrderModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -80,7 +86,7 @@
 		FBC644132242A7FA0062095A = {
 			isa = PBXGroup;
 			children = (
-				FBC6441E2242A7FA0062095A /* Project2 */,
+				FBC6441E2242A7FA0062095A /* Project3 */,
 				FBC6441D2242A7FA0062095A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,12 +94,12 @@
 		FBC6441D2242A7FA0062095A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FBC6441C2242A7FA0062095A /* Project2.app */,
+				FBC6441C2242A7FA0062095A /* Project3.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FBC6441E2242A7FA0062095A /* Project2 */ = {
+		FBC6441E2242A7FA0062095A /* Project3 */ = {
 			isa = PBXGroup;
 			children = (
 				FB6426642270D8B000421E27 /* Models */,
@@ -105,9 +111,9 @@
 				FBC644292242A8000062095A /* Assets.xcassets */,
 				FBC6442B2242A8000062095A /* LaunchScreen.storyboard */,
 				FBC6442E2242A8000062095A /* Info.plist */,
-				FBC644262242A7FB0062095A /* Project2.xcdatamodeld */,
+				FBC644262242A7FB0062095A /* Project3.xcdatamodeld */,
 			);
-			path = Project2;
+			path = Project3;
 			sourceTree = "<group>";
 		};
 		FBC644342242C1460062095A /* ViewControllers */ = {
@@ -151,9 +157,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FBC6441B2242A7FA0062095A /* Project2 */ = {
+		FBC6441B2242A7FA0062095A /* Project3 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FBC644312242A8000062095A /* Build configuration list for PBXNativeTarget "Project2" */;
+			buildConfigurationList = FBC644312242A8000062095A /* Build configuration list for PBXNativeTarget "Project3" */;
 			buildPhases = (
 				FBC644182242A7FA0062095A /* Sources */,
 				FBC644192242A7FA0062095A /* Frameworks */,
@@ -163,9 +169,9 @@
 			);
 			dependencies = (
 			);
-			name = Project2;
+			name = Project3;
 			productName = Project2;
-			productReference = FBC6441C2242A7FA0062095A /* Project2.app */;
+			productReference = FBC6441C2242A7FA0062095A /* Project3.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -183,7 +189,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FBC644172242A7FA0062095A /* Build configuration list for PBXProject "Project2" */;
+			buildConfigurationList = FBC644172242A7FA0062095A /* Build configuration list for PBXProject "Project3" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -196,7 +202,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FBC6441B2242A7FA0062095A /* Project2 */,
+				FBC6441B2242A7FA0062095A /* Project3 */,
 			);
 		};
 /* End PBXProject section */
@@ -223,8 +229,10 @@
 				FBC644432242C3050062095A /* OrderDetailsViewController.swift in Sources */,
 				FB6426632270CFF600421E27 /* WebData.swift in Sources */,
 				FBC644452242C3170062095A /* OrderListViewController.swift in Sources */,
+				FBD0225822786EE3000630FE /* ProductModel.swift in Sources */,
+				FBD0225A22786F07000630FE /* OrderModel.swift in Sources */,
 				FB64265E2270CD2C00421E27 /* CustomerQueryService.swift in Sources */,
-				FB6426602270CD4600421E27 /* QueryService.swift in Sources */,
+				FB6426602270CD4600421E27 /* CustomerQueryServiceInterface.swift in Sources */,
 				FBC6443F2242C2C20062095A /* ProductDetailsViewController.swift in Sources */,
 				FBC644392242C17D0062095A /* CustomerListViewController.swift in Sources */,
 				FBC644222242A7FB0062095A /* ViewController.swift in Sources */,
@@ -232,7 +240,7 @@
 				FBC644412242C2F60062095A /* CustomerDetailsViewController.swift in Sources */,
 				FB6426662270D8C100421E27 /* CustomerModel.swift in Sources */,
 				FBC6443D2242C2A30062095A /* ProductListViewController.swift in Sources */,
-				FBC644282242A7FB0062095A /* Project2.xcdatamodeld in Sources */,
+				FBC644282242A7FB0062095A /* Project3.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,12 +388,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CTLLY45L74;
-				INFOPLIST_FILE = Project2/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Project3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = es.eii.ulpgc.Project2;
+				PRODUCT_BUNDLE_IDENTIFIER = es.eii.ulpgc.Project3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -398,12 +406,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CTLLY45L74;
-				INFOPLIST_FILE = Project2/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Project3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = es.eii.ulpgc.Project2;
+				PRODUCT_BUNDLE_IDENTIFIER = es.eii.ulpgc.Project3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,7 +421,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FBC644172242A7FA0062095A /* Build configuration list for PBXProject "Project2" */ = {
+		FBC644172242A7FA0062095A /* Build configuration list for PBXProject "Project3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FBC6442F2242A8000062095A /* Debug */,
@@ -422,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FBC644312242A8000062095A /* Build configuration list for PBXNativeTarget "Project2" */ = {
+		FBC644312242A8000062095A /* Build configuration list for PBXNativeTarget "Project3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FBC644322242A8000062095A /* Debug */,
@@ -434,13 +442,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FBC644262242A7FB0062095A /* Project2.xcdatamodeld */ = {
+		FBC644262242A7FB0062095A /* Project3.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				FBC644272242A7FB0062095A /* Project2.xcdatamodel */,
 			);
 			currentVersion = FBC644272242A7FB0062095A /* Project2.xcdatamodel */;
-			path = Project2.xcdatamodeld;
+			path = Project3.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

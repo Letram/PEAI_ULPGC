@@ -8,15 +8,15 @@
 
 import Foundation
 
-protocol QueryService{
+protocol CustomerQueryServiceInterface{
     typealias customerQueryResult = ([CustomerModel], String) -> ()
     typealias customerInsertResult = (Int, String) -> ()
     typealias customerUpdateResult = (Bool, String) -> ()
     typealias customerDeleteResult = (Bool, String) -> ()
-    typealias jsonDict = [String: Any]
+    typealias JsonDict = [String: Any]
     
     func getAll(completion: @escaping customerQueryResult)
-    func insert(params: jsonDict, completion: @escaping customerInsertResult)
-    func update(params: jsonDict, completion: @escaping customerUpdateResult)
-    func delete(params: jsonDict, completion: @escaping customerDeleteResult)
+    func insert(params: JsonDict, completion: @escaping customerInsertResult)
+    func update(params: JsonDict, completion: @escaping customerUpdateResult)
+    func delete(params: JsonDict, completion: @escaping customerDeleteResult)
 }
