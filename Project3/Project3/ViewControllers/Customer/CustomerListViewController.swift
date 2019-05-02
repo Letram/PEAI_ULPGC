@@ -1,15 +1,7 @@
-//
-//  CustomerListViewController.swift
-//  Project2
-//
-//  Created by Alumno on 20/03/2019.
-//  Copyright © 2019 eii. All rights reserved.
-//
-
 import UIKit
 import CoreData
 
-class CustomerListViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class CustomerListViewController: UITableViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBAction func editBtnTapped(_ sender: Any) {
         if(self.tableView.isEditing){
@@ -20,9 +12,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
             editButton.title = "Done"
         }
     }
-    
-    var context: NSManagedObjectContext? = nil
-    
+        
     let customerService = CustomerQueryService()
     var queryResults: [CustomerModel] = []
     override func viewDidLoad() {
@@ -31,11 +21,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         
         customerService.delegate = self
         getAll()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     //MARK: - Consultas
@@ -43,7 +29,7 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         customerService.getAll(){ results, errorMsg in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            self.queryResults = results
+            self.queryResults = results as! [CustomerModel]
             self.tableView.reloadData()
             self.tableView.setContentOffset(CGPoint.zero, animated: false)
             if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
@@ -81,54 +67,14 @@ class CustomerListViewController: UITableViewController, NSFetchedResultsControl
         let params = ["IDCustomer" : IDCustomer]
         
         customerService.delete(params: params) { deleteResult, errorMsg in
-            print(deleteResult)
             if deleteResult {
                 self.getAll()
             }
         }
     }
-    
-    //MARK: - Operaciones relacionadas con la delegación de de las consultas
-    var fetched: NSFetchedResultsController<Customer> {
-        if _fetched == nil{
-            let request: NSFetchRequest<Customer> = Customer.fetchRequest()
-            //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let name = NSSortDescriptor(key: "name", ascending: true)
-            
-            //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [name]
-            
-            //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
-            //request.predicate = NSPredicate(format: "name = %@", [])
-            
-            //Este es el encargado de hacer la consulta a la base de datos. Nos da los resultados ya de tal manera que fácil poder tratarlos como una tabla. Es mucho mejor que hacer un request.perform() o parecido que me devolvería un array plano. Fetched y _fetched tienen las mismas características (uno está dentro del otro)
-            _fetched = NSFetchedResultsController(
-                fetchRequest: request,
-                managedObjectContext: context!,
-                sectionNameKeyPath: nil,
-                cacheName: "cache")
-            //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
-            _fetched?.delegate = self
-            do{
-                //Llevamos a cabo la operación
-                try _fetched?.performFetch()
-            } catch {
-                //Hay algún problema en el fetch
-            }
-        }
-        return _fetched!
-    }
-    
-    var _fetched: NSFetchedResultsController<Customer>? = nil
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.reloadData()
-    }
-    
-    // MARK: - Table view data source
 
+    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return queryResults.count
     }
 

@@ -1,11 +1,3 @@
-//
-//  ProductDetailsViewController.swift
-//  Project2
-//
-//  Created by Alumno on 20/03/2019.
-//  Copyright © 2019 eii. All rights reserved.
-//
-
 import UIKit
 
 extension String{
@@ -19,6 +11,7 @@ class ProductDetailsViewController: UIViewController {
     var productNameText: String = ""
     var productDescriptionText: String = ""
     var productPriceText: String = ""
+    var productID: Int?
     var isForUpdate = false
 
     
@@ -102,6 +95,7 @@ class ProductDetailsViewController: UIViewController {
         coder.encode(productNameField.text, forKey: "PRODUCT_NAME")
         coder.encode(productDescriptionField.text, forKey: "PRODUCT_DESCRIPTION")
         coder.encode(productPriceField.text, forKey: "PRODUCT_PRICE")
+        coder.encode(productID, forKey: "PRODUCT_ID")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -110,6 +104,7 @@ class ProductDetailsViewController: UIViewController {
         productNameText = coder.decodeObject(forKey: "PRODUCT_NAME") as! String
         productDescriptionText = coder.decodeObject(forKey: "PRODUCT_DESCRIPTION") as! String
         productPriceText = coder.decodeObject(forKey: "PRODUCT_PRICE") as! String
+        productID = coder.decodeObject(forKey: "PRODUCT_ID") as? Int
         
         updateTexts()
     }

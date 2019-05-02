@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		FB64265E2270CD2C00421E27 /* CustomerQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */; };
-		FB6426602270CD4600421E27 /* CustomerQueryServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */; };
+		FB6426602270CD4600421E27 /* QueryServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265F2270CD4600421E27 /* QueryServiceInterface.swift */; };
 		FB6426632270CFF600421E27 /* WebData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6426622270CFF600421E27 /* WebData.swift */; };
 		FB6426662270D8C100421E27 /* CustomerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6426652270D8C100421E27 /* CustomerModel.swift */; };
+		FBC4E857227B0D5600FAEAB5 /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC4E856227B0D5600FAEAB5 /* DBModel.swift */; };
+		FBC4E859227B0FFF00FAEAB5 /* ProductQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC4E858227B0FFF00FAEAB5 /* ProductQueryService.swift */; };
+		FBC4E85B227B30E800FAEAB5 /* OrderQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC4E85A227B30E800FAEAB5 /* OrderQueryService.swift */; };
 		FBC644202242A7FA0062095A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC6441F2242A7FA0062095A /* AppDelegate.swift */; };
 		FBC644222242A7FB0062095A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644212242A7FB0062095A /* ViewController.swift */; };
 		FBC644252242A7FB0062095A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBC644232242A7FB0062095A /* Main.storyboard */; };
@@ -30,9 +33,12 @@
 
 /* Begin PBXFileReference section */
 		FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQueryService.swift; sourceTree = "<group>"; };
-		FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQueryServiceInterface.swift; sourceTree = "<group>"; };
+		FB64265F2270CD4600421E27 /* QueryServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryServiceInterface.swift; sourceTree = "<group>"; };
 		FB6426622270CFF600421E27 /* WebData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebData.swift; sourceTree = "<group>"; };
 		FB6426652270D8C100421E27 /* CustomerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerModel.swift; sourceTree = "<group>"; };
+		FBC4E856227B0D5600FAEAB5 /* DBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
+		FBC4E858227B0FFF00FAEAB5 /* ProductQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductQueryService.swift; sourceTree = "<group>"; };
+		FBC4E85A227B30E800FAEAB5 /* OrderQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderQueryService.swift; sourceTree = "<group>"; };
 		FBC6441C2242A7FA0062095A /* Project3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC6441F2242A7FA0062095A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBC644212242A7FB0062095A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,9 +72,11 @@
 		FB6426612270CFD900421E27 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				FB64265F2270CD4600421E27 /* CustomerQueryServiceInterface.swift */,
+				FB64265F2270CD4600421E27 /* QueryServiceInterface.swift */,
 				FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */,
 				FB6426622270CFF600421E27 /* WebData.swift */,
+				FBC4E858227B0FFF00FAEAB5 /* ProductQueryService.swift */,
+				FBC4E85A227B30E800FAEAB5 /* OrderQueryService.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -79,6 +87,7 @@
 				FB6426652270D8C100421E27 /* CustomerModel.swift */,
 				FBD0225722786EE3000630FE /* ProductModel.swift */,
 				FBD0225922786F07000630FE /* OrderModel.swift */,
+				FBC4E856227B0D5600FAEAB5 /* DBModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,12 +236,14 @@
 			files = (
 				FBC644472242C32B0062095A /* SelectViewController.swift in Sources */,
 				FBC644432242C3050062095A /* OrderDetailsViewController.swift in Sources */,
+				FBC4E85B227B30E800FAEAB5 /* OrderQueryService.swift in Sources */,
 				FB6426632270CFF600421E27 /* WebData.swift in Sources */,
+				FBC4E857227B0D5600FAEAB5 /* DBModel.swift in Sources */,
 				FBC644452242C3170062095A /* OrderListViewController.swift in Sources */,
 				FBD0225822786EE3000630FE /* ProductModel.swift in Sources */,
 				FBD0225A22786F07000630FE /* OrderModel.swift in Sources */,
 				FB64265E2270CD2C00421E27 /* CustomerQueryService.swift in Sources */,
-				FB6426602270CD4600421E27 /* CustomerQueryServiceInterface.swift in Sources */,
+				FB6426602270CD4600421E27 /* QueryServiceInterface.swift in Sources */,
 				FBC6443F2242C2C20062095A /* ProductDetailsViewController.swift in Sources */,
 				FBC644392242C17D0062095A /* CustomerListViewController.swift in Sources */,
 				FBC644222242A7FB0062095A /* ViewController.swift in Sources */,
@@ -240,6 +251,7 @@
 				FBC644412242C2F60062095A /* CustomerDetailsViewController.swift in Sources */,
 				FB6426662270D8C100421E27 /* CustomerModel.swift in Sources */,
 				FBC6443D2242C2A30062095A /* ProductListViewController.swift in Sources */,
+				FBC4E859227B0FFF00FAEAB5 /* ProductQueryService.swift in Sources */,
 				FBC644282242A7FB0062095A /* Project3.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

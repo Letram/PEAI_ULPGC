@@ -20,11 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Tenemos que escalar desde fuera hasta dentro para inyectarle a la vista que queremos el contexto para usar el coreadata. En este caso tenemos que llegar hasta el viewcontroller de las asignaturas para inyectarle el contexto y usar el coredata
         
-        //Customer core-data injection
-        (((window?.rootViewController as! UITabBarController).viewControllers![0] as! UINavigationController).viewControllers[0] as! CustomerListViewController).context = persistentContainer.viewContext
-        
-        //Product core-data injection
-        (((window?.rootViewController as! UITabBarController).viewControllers![1] as! UINavigationController).viewControllers[0] as!ProductListViewController).context = persistentContainer.viewContext
+
         
         //Order core-data injection
         (((window?.rootViewController as! UITabBarController).viewControllers![2] as! UINavigationController).viewControllers[0] as! OrderListViewController).context = persistentContainer.viewContext

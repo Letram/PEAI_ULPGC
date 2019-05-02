@@ -1,24 +1,21 @@
 //
-//  CustomerQueryService.swift
-//  Project2
+//  OrderQueryService.swift
+//  Project3
 //
-//  Created by Alumno on 24/04/2019.
+//  Created by Alumno on 02/05/2019.
 //  Copyright © 2019 eii. All rights reserved.
 //
 
 import Foundation
 
-class CustomerQueryService : QueryServiceInterface{
-   
+class OrderQueryService: QueryServiceInterface {
+    
     let defaultSession = URLSession(configuration: .default)
     
-    var delegate: CustomerListViewController? = nil
+    var delegate: OrderListViewController? = nil
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
-    
-    var customers: [CustomerModel] = []
-    static var staticCustomers: [CustomerModel] = []
-    
+    var orders: [OrderModel] = []
     var insertedId: Int? = nil
     var updateResultReq: Bool? = false
     var deleteResultReq: Bool? = false
@@ -26,7 +23,7 @@ class CustomerQueryService : QueryServiceInterface{
     func getAll(completion: @escaping queryResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_GETALL))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.ORDER_GETALL))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "GET"
         
@@ -40,7 +37,7 @@ class CustomerQueryService : QueryServiceInterface{
             }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 self.updateResults(data)
                 DispatchQueue.main.async {
-                    completion(self.customers, self.errorMessage)
+                    completion(self.orders, self.errorMessage)
                 }
             }
         })
@@ -50,7 +47,7 @@ class CustomerQueryService : QueryServiceInterface{
     
     func updateResults(_ data: Data){
         var response: JsonDict?
-        customers.removeAll()
+        orders.removeAll()
         
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -63,29 +60,48 @@ class CustomerQueryService : QueryServiceInterface{
             errorMessage += "GetAll problem!"
             return
         }
-        guard let customerArray = response!["data"] as? [Any] else {
+        guard let orderArray = response!["data"] as? [Any] else {
             errorMessage += "Dictionary does not contain results key\n"
             return
         }
-        for customerObj in customerArray {
-            print(customerObj)
-            if let customerAux = customerObj as? JsonDict{
-                let previewName = customerAux["name"] as? String
-                let previewAddress = customerAux["address"] as? String
-                let previewUid = customerAux["IDCustomer"] as? String
-                customers.append(CustomerModel(name: previewName!, address: previewAddress!, uid: Int(previewUid!)!))
+        for orderObj in orderArray {
+            if let orderAux = orderObj as? JsonDict{
+                
+                let dateFormat = DateFormatter()
+                dateFormat.dateFormat = "yyyy-MM-dd"
+                
+                let previewCustomerName = orderAux["customerName"] as? String
+                let previewProductName = orderAux["productName"] as? String
+                let previewOid = orderAux["IDProduct"] as? String
+                let previewPid = orderAux["price"] as? String
+                let previewUid = orderAux["IDCustomer"] as? String
+                let previewCode = orderAux["code"] as? String
+                let previewQty = orderAux["quantity"] as? String
+                let previewPrice = orderAux["price"] as? String
+                let previewDate = orderAux["date"] as? String
+                orders.append(OrderModel(
+                    IDCustomer: Int(previewUid!)!,
+                    IDProduct: Int(previewPid!)!,
+                    IDOrder: Int(previewOid!)!,
+                    customerName: previewCustomerName!,
+                    productName: previewProductName!,
+                    code: previewCode!,
+                    quantity: Int(previewQty!)!,
+                    date: dateFormat.date(from: previewDate!)!,
+                    price: Float(previewPrice!)!)
+                )
             }
+                
             else {
                 errorMessage += "Problem parsing customerAux\n"
             }
-            CustomerQueryService.staticCustomers = customers
         }
     }
     
     func insert(params: JsonDict, completion: @escaping insertResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_INSERT))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_INSERT))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "POST"
         do{
@@ -99,7 +115,7 @@ class CustomerQueryService : QueryServiceInterface{
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.insertCustomerResponse(data)
+                    self.insertProductResponse(data)
                     DispatchQueue.main.async {
                         completion(self.insertedId!, self.errorMessage)
                     }
@@ -107,13 +123,13 @@ class CustomerQueryService : QueryServiceInterface{
             })
             // Se lanza la tarea
             dataTask?.resume()
-
+            
         } catch {
             print("Error")
         }
     }
     
-    func insertCustomerResponse(_ data: Data){
+    func insertProductResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -136,7 +152,7 @@ class CustomerQueryService : QueryServiceInterface{
     func update(params: JsonDict, completion: @escaping updateResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_UPDATE))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_UPDATE))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "PUT"
         do{
@@ -150,7 +166,7 @@ class CustomerQueryService : QueryServiceInterface{
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.updateCustomerResponse(data)
+                    self.updateProductResponse(data)
                     DispatchQueue.main.async {
                         completion(self.updateResultReq!, self.errorMessage)
                     }
@@ -164,7 +180,7 @@ class CustomerQueryService : QueryServiceInterface{
         }
     }
     
-    func updateCustomerResponse(_ data: Data){
+    func updateProductResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -186,13 +202,12 @@ class CustomerQueryService : QueryServiceInterface{
     
     func delete(params: JsonDict, completion: @escaping deleteResult) {
         dataTask?.cancel()
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.CUSTOMER_DELETE))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_DELETE))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "DELETE"
         do{
             let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
             req.httpBody = jsonData
-            print(jsonData.base64EncodedString())
             // Shared session es para peticiones básicas que no necesitan configuración
             let session = URLSession.shared
             
@@ -201,7 +216,7 @@ class CustomerQueryService : QueryServiceInterface{
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.deleteCustomerResponse(data)
+                    self.deleteProductResponse(data)
                     DispatchQueue.main.async {
                         completion(self.deleteResultReq!, self.errorMessage)
                     }
@@ -215,7 +230,7 @@ class CustomerQueryService : QueryServiceInterface{
         }
     }
     
-    func deleteCustomerResponse(_ data: Data){
+    func deleteProductResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict

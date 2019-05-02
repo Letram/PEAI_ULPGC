@@ -1,14 +1,6 @@
-//
-//  ProductModel.swift
-//  Project3
-//
-//  Created by Alumno on 30/04/2019.
-//  Copyright © 2019 eii. All rights reserved.
-//
-
 import Foundation
 
-class ProductModel {
+class ProductModel: DBModel {
     let name: String
     let description: String
     let price: Float
@@ -19,5 +11,5 @@ class ProductModel {
         self.description = description
         self.IDProduct = pid
         self.price = price
-}
+    }
 }

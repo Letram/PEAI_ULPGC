@@ -1,6 +1,6 @@
 import Foundation
 
-class CustomerModel {
+class CustomerModel: DBModel {
     let name: String
     let address: String
     let IDCustomer: Int
