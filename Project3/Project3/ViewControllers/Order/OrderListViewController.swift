@@ -1,11 +1,3 @@
-//
-//  OrderListViewController.swift
-//  Project2
-//
-//  Created by Alumno on 20/03/2019.
-//  Copyright © 2019 eii. All rights reserved.
-//
-
 import UIKit
 import CoreData
 
@@ -24,21 +16,67 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     var context: NSManagedObjectContext? = nil
     
     let orderService = OrderQueryService()
-    var queryResults: [OrderModel] = []
+    var queryResults: [CustomerOrders] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        orderService.getAll(){_,_ in 
-            print("hello there")
-        }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        getAll()
+        
     }
     
     //MARK: - Consultas
+    func getAll(){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        orderService.getAll(){ results, errorMsg in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            self.refreshProducts(newOrders: results as! [CustomerOrders])
+            if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
+            
+        }
+    }
+    
+    func insert(description: String, name: String, price: Float) {
+        
+        var params: [String: Any] = [:]
+        
+        params["description"] = description
+        params["name"] = name
+        params["price"] = price
+        
+        orderService.insert(params: params){ results, errorMsg in
+            self.refreshProducts(newOrders: results as! [CustomerOrders])
+        }
+    }
+    
+    func update(name: String, description: String, idProduct: Int, price: Float){
+        var params: [String: Any] = [:]
+        
+        params["name"] = name
+        params["description"] = description
+        params["IDProduct"] = idProduct
+        params["price"] = price
+        
+        orderService.update(params: params){ results, errorMsg in
+            self.refreshProducts(newOrders: results as! [CustomerOrders])
+        }
+    }
+    
+    func delete(IDProduct: Int){
+        let params = ["IDProduct" : IDProduct]
+        
+        orderService.delete(params: params) { results, errorMsg in
+            self.refreshProducts(newOrders: results as! [CustomerOrders])
+        }
+    }
+    
+    func refreshProducts(newOrders: [CustomerOrders]){
+        self.queryResults = newOrders
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
+    /*
     func insert(code: String, customer: Customer, product: Product, price: Decimal, quantity: Int16, date: Date) {
         
         let order = Order(context: fetched.managedObjectContext)
@@ -80,7 +118,7 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
             print("Delete error")
         }
     }
-    
+    */
     //MARK: - Operaciones relacionadas con la delegación de de las consultas
     var fetched: NSFetchedResultsController<Order> {
         if _fetched == nil{
@@ -124,11 +162,11 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         //since we are not grouping customers we are grouping them in only 1 group
-        return fetched.sections?.count ?? 0
+        return queryResults.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetched.sections?[section].numberOfObjects ?? 0
+        return queryResults[section].customerOrders.count
     }
 
     
@@ -136,21 +174,24 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         let cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel!.text = fetched.object(at: indexPath).code
-        cell.detailTextLabel?.text = fetched.object(at: indexPath).product?.name
+        
+        //TODO: Rebuild this not to get an error
+        print("row: \(indexPath.row) - item: \(indexPath.item)")
+        cell.textLabel!.text = queryResults[indexPath.row].customerOrders[indexPath.item].code
+        cell.detailTextLabel?.text = queryResults[indexPath.row].customerOrders[indexPath.item].product.name
         
         return cell
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetched.sections?[section].name
+        return queryResults[section].customerName
     }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            delete(order: fetched.object(at: indexPath))
+            //delete(order: fetched.object(at: indexPath))
         }
     }
     
@@ -182,9 +223,9 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue){
         let vc = segue.source as! OrderDetailsViewController
         if(!vc.isForUpdate){
-            insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            //insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
         } else {
-            update(order: vc.order!, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            //update(order: vc.order!, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
             vc.isForUpdate = false
         }
     }

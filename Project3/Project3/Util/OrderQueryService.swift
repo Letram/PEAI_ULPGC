@@ -15,7 +15,7 @@ class OrderQueryService: QueryServiceInterface {
     var delegate: OrderListViewController? = nil
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
-    var orders: [OrderModel] = []
+    var customerOrders: [CustomerOrders] = []
     var insertedId: Int? = nil
     var updateResultReq: Bool? = false
     var deleteResultReq: Bool? = false
@@ -48,9 +48,9 @@ class OrderQueryService: QueryServiceInterface {
             if let error = error {
                 self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
             }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                self.updateResults(data)
+                self.getOrdersReponse(data)
                 DispatchQueue.main.async {
-                    completion(self.orders, self.errorMessage)
+                    completion(self.customerOrders, self.errorMessage)
                 }
             }
         })
@@ -58,12 +58,12 @@ class OrderQueryService: QueryServiceInterface {
         dataTask?.resume()
     }
     
-    func updateResults(_ data: Data){
+    func getOrdersReponse(_ data: Data){
         let customers = CustomerQueryService.staticCustomers
         let products = ProductQueryService.staticProducts
         
         var response: JsonDict?
-        orders.removeAll()
+        customerOrders.removeAll()
         
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -80,12 +80,45 @@ class OrderQueryService: QueryServiceInterface {
             errorMessage += "Dictionary does not contain results key\n"
             return
         }
+        var orders: [OrderModel] = []
+        var lastCustomerName: String = ""
+        
         for orderObj in orderArray {
             if let orderAux = orderObj as? JsonDict{
-                print(orderAux.description)
                 let dateFormat = DateFormatter()
                 dateFormat.dateFormat = "yyyy-MM-dd"
+
+                let previewCustomerName: String? = orderAux["customerName"] as? String
                 
+                let previewOid: String? = orderAux["IDOrder"] as? String
+                let previewPid: String? = orderAux["IDProduct"] as? String
+                let previewUid: String? = orderAux["IDCustomer"] as? String
+                let previewCode: String? = orderAux["code"] as? String
+                let previewQty: String? = orderAux["quantity"] as? String
+                let previewDate: String? = orderAux["date"] as? String
+                
+                if(valid(pid: previewPid, uid: previewUid, date: previewDate)){
+                    let orderCustomer = customers.filter({$0.IDCustomer == Int(previewUid!)})
+                    let orderProduct = products.filter({$0.IDProduct == Int(previewPid!)})
+                    orders.append(OrderModel(
+                        customer: orderCustomer[0],
+                        product: orderProduct[0],
+                        date: dateFormat.date(from: previewDate!)!,
+                        code: previewCode!,
+                        quantity: Int(previewQty!)!,
+                        idOrder: Int(previewOid!)!)
+                    )
+                    if lastCustomerName == "" {
+                        lastCustomerName = previewCustomerName!
+                    } else if lastCustomerName != previewCustomerName! {
+                        customerOrders.append(CustomerOrders(customerName: lastCustomerName, customerOrders: orders))
+                        print("\(lastCustomerName) has \(orders.count) orders!")
+                        
+                        orders = []
+                        lastCustomerName = previewCustomerName!
+                    }
+                }
+/*
                 let previewCustomerName = orderAux["customerName"] as? String
                 let previewProductName = orderAux["productName"] as? String
                 let previewOid = orderAux["IDProduct"] as? String
@@ -106,12 +139,19 @@ class OrderQueryService: QueryServiceInterface {
                     date: dateFormat.date(from: previewDate!)!,
                     price: Float(previewPrice!)!)
                 )
+ */
             }
-                
             else {
                 errorMessage += "Problem parsing customerAux\n"
             }
         }
+    }
+    
+    private func valid(pid: String?, uid: String?, date: String?) -> Bool{
+        if let _ = pid, let _ = uid, let _ = date {
+            return true
+        }
+        return false
     }
     
     func insert(params: JsonDict, completion: @escaping insertResult) {
@@ -131,9 +171,9 @@ class OrderQueryService: QueryServiceInterface {
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.insertProductResponse(data)
+                    self.insertOrderResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.orders, self.errorMessage)
+                        completion(self.customerOrders, self.errorMessage)
                     }
                 }
             })
@@ -145,7 +185,7 @@ class OrderQueryService: QueryServiceInterface {
         }
     }
     
-    func insertProductResponse(_ data: Data){
+    func insertOrderResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -182,9 +222,9 @@ class OrderQueryService: QueryServiceInterface {
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.updateProductResponse(data)
+                    self.updateOrderResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.orders, self.errorMessage)
+                        completion(self.customerOrders, self.errorMessage)
                     }
                 }
             })
@@ -196,7 +236,7 @@ class OrderQueryService: QueryServiceInterface {
         }
     }
     
-    func updateProductResponse(_ data: Data){
+    func updateOrderResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -232,9 +272,9 @@ class OrderQueryService: QueryServiceInterface {
                 if let error = error {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    self.deleteProductResponse(data)
+                    self.deleteOrderResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.orders, self.errorMessage)
+                        completion(self.customerOrders, self.errorMessage)
                     }
                 }
             })
@@ -246,7 +286,7 @@ class OrderQueryService: QueryServiceInterface {
         }
     }
     
-    func deleteProductResponse(_ data: Data){
+    func deleteOrderResponse(_ data: Data){
         var response: JsonDict?
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict

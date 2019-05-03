@@ -27,6 +27,7 @@
 		FBC644432242C3050062095A /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644422242C3050062095A /* OrderDetailsViewController.swift */; };
 		FBC644452242C3170062095A /* OrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644442242C3170062095A /* OrderListViewController.swift */; };
 		FBC644472242C32B0062095A /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC644462242C32B0062095A /* SelectViewController.swift */; };
+		FBC8CED5227C90390071C310 /* CustomerOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8CED4227C90390071C310 /* CustomerOrders.swift */; };
 		FBD0225822786EE3000630FE /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD0225722786EE3000630FE /* ProductModel.swift */; };
 		FBD0225A22786F07000630FE /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD0225922786F07000630FE /* OrderModel.swift */; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		FBC644422242C3050062095A /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		FBC644442242C3170062095A /* OrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewController.swift; sourceTree = "<group>"; };
 		FBC644462242C32B0062095A /* SelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
+		FBC8CED4227C90390071C310 /* CustomerOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerOrders.swift; sourceTree = "<group>"; };
 		FBD0225722786EE3000630FE /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		FBD0225922786F07000630FE /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 				FBD0225722786EE3000630FE /* ProductModel.swift */,
 				FBD0225922786F07000630FE /* OrderModel.swift */,
 				FBC4E856227B0D5600FAEAB5 /* DBModel.swift */,
+				FBC8CED4227C90390071C310 /* CustomerOrders.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				FBC644432242C3050062095A /* OrderDetailsViewController.swift in Sources */,
 				FBC4E85B227B30E800FAEAB5 /* OrderQueryService.swift in Sources */,
 				FB6426632270CFF600421E27 /* WebData.swift in Sources */,
+				FBC8CED5227C90390071C310 /* CustomerOrders.swift in Sources */,
 				FBC4E857227B0D5600FAEAB5 /* DBModel.swift in Sources */,
 				FBC644452242C3170062095A /* OrderListViewController.swift in Sources */,
 				FBD0225822786EE3000630FE /* ProductModel.swift in Sources */,
