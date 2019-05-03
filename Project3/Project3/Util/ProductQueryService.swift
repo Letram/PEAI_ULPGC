@@ -9,12 +9,22 @@
 import Foundation
 
 class ProductQueryService: QueryServiceInterface{
+    
     let defaultSession = URLSession(configuration: .default)
     
     var delegate: ProductListViewController? = nil
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
-    var products: [ProductModel] = []
+    
+    var products: [ProductModel] = []{
+        didSet{
+            products = products.sorted(by: {$0.name < $1.name})
+            ProductQueryService.staticProducts = products
+        }
+    }
+    
+    static var staticProducts: [ProductModel] = []
+    
     var insertedId: Int? = nil
     var updateResultReq: Bool? = false
     var deleteResultReq: Bool? = false
@@ -46,7 +56,7 @@ class ProductQueryService: QueryServiceInterface{
     
     func updateResults(_ data: Data){
         var response: JsonDict?
-        products.removeAll()
+        self.products.removeAll()
         
         do {
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
@@ -69,9 +79,8 @@ class ProductQueryService: QueryServiceInterface{
                 let previewDescription = productAux["description"] as? String
                 let previewPid = productAux["IDProduct"] as? String
                 let previewPrice = productAux["price"] as? String
-                products.append(ProductModel(name: previewName!, description: previewDescription!, pid: Int(previewPid!)!, price: Float(previewPrice!)!))
+                self.products.append(ProductModel(name: previewName!, description: previewDescription!, pid: Int(previewPid!)!, price: Float(previewPrice!)!))
             }
-                
             else {
                 errorMessage += "Problem parsing customerAux\n"
             }
@@ -96,8 +105,12 @@ class ProductQueryService: QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.insertProductResponse(data)
+                    if self.insertedId != -1{
+                        let productAux = ProductModel(name: params["name"] as! String, description: params["description"] as! String, pid: self.insertedId!, price: params["price"] as! Float)
+                        self.products.append(productAux)
+                    }
                     DispatchQueue.main.async {
-                        completion(self.insertedId!, self.errorMessage)
+                        completion(self.products, self.errorMessage)
                     }
                 }
             })
@@ -115,15 +128,18 @@ class ProductQueryService: QueryServiceInterface{
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
         }catch let parseError as NSError {
             errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
+            insertedId = -1
             return
         }
         let fault = response!["fault"] as? Int
         if fault == 1{
             errorMessage += "Insert problem!"
+            insertedId = -1
             return
         }
         guard let insertedIdFromResponse = response!["data"] as? Int else {
             errorMessage += "Dictionary does not contain results key\n"
+            insertedId = -1
             return
         }
         insertedId = insertedIdFromResponse
@@ -147,8 +163,12 @@ class ProductQueryService: QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.updateProductResponse(data)
+                    if self.updateResultReq! {
+                        let productAux = ProductModel(name: params["name"] as! String, description: params["description"] as! String, pid: params["IDProduct"]! as! Int, price: params["price"] as! Float)
+                        self.products[self.products.firstIndex(where: {$0.IDProduct == params["IDProduct"] as! Int})!] = productAux
+                    }
                     DispatchQueue.main.async {
-                        completion(self.updateResultReq!, self.errorMessage)
+                        completion(self.products, self.errorMessage)
                     }
                 }
             })
@@ -197,8 +217,11 @@ class ProductQueryService: QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.deleteProductResponse(data)
+                    if self.deleteResultReq! {
+                        self.products = self.products.filter({$0.IDProduct != params["IDProduct"] as! Int})
+                    }
                     DispatchQueue.main.async {
-                        completion(self.deleteResultReq!, self.errorMessage)
+                        completion(self.products, self.errorMessage)
                     }
                 }
             })

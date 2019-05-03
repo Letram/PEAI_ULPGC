@@ -1,22 +1,19 @@
-//
-//  CustomerQueryService.swift
-//  Project2
-//
-//  Created by Alumno on 24/04/2019.
-//  Copyright © 2019 eii. All rights reserved.
-//
-
 import Foundation
 
 class CustomerQueryService : QueryServiceInterface{
-   
     let defaultSession = URLSession(configuration: .default)
     
     var delegate: CustomerListViewController? = nil
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
     
-    var customers: [CustomerModel] = []
+    var customers: [CustomerModel] = []{
+        didSet{
+            customers = customers.sorted(by: {$0.name < $1.name})
+            CustomerQueryService.staticCustomers = customers
+        }
+    }
+    
     static var staticCustomers: [CustomerModel] = []
     
     var insertedId: Int? = nil
@@ -40,7 +37,7 @@ class CustomerQueryService : QueryServiceInterface{
             }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 self.updateResults(data)
                 DispatchQueue.main.async {
-                    completion(self.customers, self.errorMessage)
+                    completion(self.customers as [CustomerModel], self.errorMessage)
                 }
             }
         })
@@ -78,7 +75,6 @@ class CustomerQueryService : QueryServiceInterface{
             else {
                 errorMessage += "Problem parsing customerAux\n"
             }
-            CustomerQueryService.staticCustomers = customers
         }
     }
     
@@ -100,8 +96,12 @@ class CustomerQueryService : QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.insertCustomerResponse(data)
+                    if(self.insertedId != -1){
+                        let customerAux = CustomerModel(name: params["name"] as! String, address: params["address"] as! String, uid: self.insertedId!)
+                        self.customers.append(customerAux)
+                    }
                     DispatchQueue.main.async {
-                        completion(self.insertedId!, self.errorMessage)
+                        completion(self.customers as [CustomerModel], self.errorMessage)
                     }
                 }
             })
@@ -119,15 +119,18 @@ class CustomerQueryService : QueryServiceInterface{
             response = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDict
         }catch let parseError as NSError {
             errorMessage += "JSONSerialization error: \(parseError.localizedDescription)\n"
+            insertedId = -1
             return
         }
         let fault = response!["fault"] as? Int
         if fault == 1{
             errorMessage += "Insert problem!"
+            insertedId = -1
             return
         }
         guard let insertedIdFromResponse = response!["data"] as? Int else {
             errorMessage += "Dictionary does not contain results key\n"
+            insertedId = -1
             return
         }
         insertedId = insertedIdFromResponse
@@ -151,8 +154,12 @@ class CustomerQueryService : QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.updateCustomerResponse(data)
+                    if self.updateResultReq! {
+                        let customerAux = CustomerModel(name: params["name"] as! String, address: params["address"] as! String, uid: params["IDCustomer"] as! Int )
+                        self.customers[self.customers.firstIndex(where: {$0.IDCustomer == params["IDCustomer"] as! Int})!] = customerAux
+                    }
                     DispatchQueue.main.async {
-                        completion(self.updateResultReq!, self.errorMessage)
+                        completion(self.customers, self.errorMessage)
                     }
                 }
             })
@@ -202,8 +209,11 @@ class CustomerQueryService : QueryServiceInterface{
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.deleteCustomerResponse(data)
+                    if self.deleteResultReq! {
+                        self.customers = self.customers.filter({$0.IDCustomer != params["IDCustomer"] as! Int})
+                    }
                     DispatchQueue.main.async {
-                        completion(self.deleteResultReq!, self.errorMessage)
+                        completion(self.customers, self.errorMessage)
                     }
                 }
             })

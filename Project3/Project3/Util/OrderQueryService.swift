@@ -20,8 +20,21 @@ class OrderQueryService: QueryServiceInterface {
     var updateResultReq: Bool? = false
     var deleteResultReq: Bool? = false
     
+    let customerService = CustomerQueryService()
+    let productService = ProductQueryService()
+    
+    var c_done: Bool = false
+    var p_done: Bool = false
+    
     func getAll(completion: @escaping queryResult) {
         dataTask?.cancel()
+        
+        customerService.getAll(){_,_ in
+            self.c_done = true
+        }
+        productService.getAll(){_,_ in
+            self.p_done = true
+        }
         
         var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.ORDER_GETALL))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -46,6 +59,9 @@ class OrderQueryService: QueryServiceInterface {
     }
     
     func updateResults(_ data: Data){
+        let customers = CustomerQueryService.staticCustomers
+        let products = ProductQueryService.staticProducts
+        
         var response: JsonDict?
         orders.removeAll()
         
@@ -66,7 +82,7 @@ class OrderQueryService: QueryServiceInterface {
         }
         for orderObj in orderArray {
             if let orderAux = orderObj as? JsonDict{
-                
+                print(orderAux.description)
                 let dateFormat = DateFormatter()
                 dateFormat.dateFormat = "yyyy-MM-dd"
                 
@@ -117,7 +133,7 @@ class OrderQueryService: QueryServiceInterface {
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.insertProductResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.insertedId!, self.errorMessage)
+                        completion(self.orders, self.errorMessage)
                     }
                 }
             })
@@ -168,7 +184,7 @@ class OrderQueryService: QueryServiceInterface {
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.updateProductResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.updateResultReq!, self.errorMessage)
+                        completion(self.orders, self.errorMessage)
                     }
                 }
             })
@@ -218,7 +234,7 @@ class OrderQueryService: QueryServiceInterface {
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.deleteProductResponse(data)
                     DispatchQueue.main.async {
-                        completion(self.deleteResultReq!, self.errorMessage)
+                        completion(self.orders, self.errorMessage)
                     }
                 }
             })

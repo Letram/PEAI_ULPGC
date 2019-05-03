@@ -28,9 +28,7 @@ class ProductListViewController: UITableViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         productService.getAll(){ results, errorMsg in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            self.queryResults = results as! [ProductModel]
-            self.tableView.reloadData()
-            self.tableView.setContentOffset(CGPoint.zero, animated: false)
+            self.refreshProducts(newProducts: results as! [ProductModel])
             if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
             
         }
@@ -44,8 +42,8 @@ class ProductListViewController: UITableViewController {
         params["name"] = name
         params["price"] = price
         
-        productService.insert(params: params){ insertedID, errorMsg in
-            self.getAll()
+        productService.insert(params: params){ results, errorMsg in
+            self.refreshProducts(newProducts: results as! [ProductModel])
         }
     }
     
@@ -57,21 +55,23 @@ class ProductListViewController: UITableViewController {
         params["IDProduct"] = idProduct
         params["price"] = price
         
-        productService.update(params: params){ updateResult, errorMsg in
-            if updateResult {
-                self.getAll()
-            }
+        productService.update(params: params){ results, errorMsg in
+            self.refreshProducts(newProducts: results as! [ProductModel])
         }
     }
     
     func delete(IDProduct: Int){
         let params = ["IDProduct" : IDProduct]
         
-        productService.delete(params: params) { deleteResult, errorMsg in
-            if deleteResult {
-                self.getAll()
-            }
+        productService.delete(params: params) { results, errorMsg in
+            self.refreshProducts(newProducts: results as! [ProductModel])
         }
+    }
+    
+    func refreshProducts(newProducts: [ProductModel]){
+        self.queryResults = newProducts
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPoint.zero, animated: false)
     }
     
     // MARK: - Table view data source

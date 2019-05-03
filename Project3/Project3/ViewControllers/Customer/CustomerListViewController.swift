@@ -18,7 +18,6 @@ class CustomerListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         customerService.delegate = self
         getAll()
 
@@ -29,9 +28,7 @@ class CustomerListViewController: UITableViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         customerService.getAll(){ results, errorMsg in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            self.queryResults = results as! [CustomerModel]
-            self.tableView.reloadData()
-            self.tableView.setContentOffset(CGPoint.zero, animated: false)
+            self.refreshCustomers(newCustomers: results as! [CustomerModel])
             if !errorMsg.isEmpty { print("Search error: " + errorMsg) }
             
         }
@@ -44,8 +41,8 @@ class CustomerListViewController: UITableViewController {
         params["address"] = address
         params["name"] = name
         
-        customerService.insert(params: params){ insertedID, errorMsg in
-            self.getAll()
+        customerService.insert(params: params){ results, errorMsg in
+            self.refreshCustomers(newCustomers: results as! [CustomerModel])
         }
     }
     
@@ -56,21 +53,23 @@ class CustomerListViewController: UITableViewController {
         params["address"] = address
         params["IDCustomer"] = idCustomer
         
-        customerService.update(params: params){ updateResult, errorMsg in
-            if updateResult {
-                self.getAll()
-            }
+        customerService.update(params: params){ results, errorMsg in
+            self.refreshCustomers(newCustomers: results as! [CustomerModel])
         }
     }
 
     func delete(IDCustomer: Int){
         let params = ["IDCustomer" : IDCustomer]
         
-        customerService.delete(params: params) { deleteResult, errorMsg in
-            if deleteResult {
-                self.getAll()
-            }
+        customerService.delete(params: params) { results, errorMsg in
+            self.refreshCustomers(newCustomers: results as! [CustomerModel])
         }
+    }
+    
+    func refreshCustomers(newCustomers: [CustomerModel]){
+        self.queryResults = newCustomers
+        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPoint.zero, animated: false)
     }
 
     // MARK: - Table view data source

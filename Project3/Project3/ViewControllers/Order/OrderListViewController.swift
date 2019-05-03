@@ -23,9 +23,14 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     }
     var context: NSManagedObjectContext? = nil
     
+    let orderService = OrderQueryService()
+    var queryResults: [OrderModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        orderService.getAll(){_,_ in 
+            print("hello there")
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -179,7 +184,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         if(!vc.isForUpdate){
             insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
         } else {
-            //let aux: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
             update(order: vc.order!, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
             vc.isForUpdate = false
         }
