@@ -114,15 +114,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
             print("Update error")
         }
     }
-    
-    func delete(order: Order){
-        context?.delete(order)
-        do{
-            try context?.save()
-        }catch{
-            print("Delete error")
-        }
-    }
     */
     //MARK: - Operaciones relacionadas con la delegación de de las consultas
     var fetched: NSFetchedResultsController<Order> {
@@ -211,11 +202,12 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         if(segue.identifier == "create" || segue.identifier == "edit"){
             vc.context = context
             if(segue.identifier == "edit"){
-                let currentOrder: Order = fetched.object(at: tableView.indexPathForSelectedRow!)
-                vc.code = currentOrder.code!
+                let currentOrder = queryResults[(tableView.indexPathForSelectedRow?.section)!].customerOrders[(tableView.indexPathForSelectedRow?.row)!]
+                vc.code = currentOrder.code
                 vc.date = currentOrder.date
-                vc.quantity = currentOrder.quantity
-                vc.totalPrice = currentOrder.total! as Decimal
+                vc.quantity = Int16(currentOrder.quantity)
+                let price: Float = Float(currentOrder.quantity) * currentOrder.product.price
+                vc.totalPrice = Decimal(Double(price))
                 vc.customer = currentOrder.customer
                 vc.product = currentOrder.product
                 vc.order = currentOrder
@@ -229,7 +221,10 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         if(!vc.isForUpdate){
             //insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
         } else {
-            //update(order: vc.order!, code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            let dateFormat = DateFormatter()
+            dateFormat.dateFormat = "yyyy-MM-dd"
+            
+            update(code: vc.code, date: dateFormat.string(from: vc.date!), idProduct: (vc.product?.IDProduct)!, idCustomer: (vc.customer?.IDCustomer)!, idOrder: (vc.order?.IDOrder)!, quantity: Int(vc.quantity))
             vc.isForUpdate = false
         }
     }

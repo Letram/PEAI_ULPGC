@@ -23,6 +23,9 @@ class OrderQueryService: QueryServiceInterface {
     let customerService = CustomerQueryService()
     let productService = ProductQueryService()
     
+    var customers = CustomerQueryService.staticCustomers
+    var products = ProductQueryService.staticProducts
+    
     var c_done: Bool = false
     var p_done: Bool = false
     
@@ -59,8 +62,8 @@ class OrderQueryService: QueryServiceInterface {
     }
     
     func getOrdersReponse(_ data: Data){
-        let customers = CustomerQueryService.staticCustomers
-        let products = ProductQueryService.staticProducts
+        self.customers = CustomerQueryService.staticCustomers
+        self.products = ProductQueryService.staticProducts
         
         var response: JsonDict?
         customerOrders.removeAll()
@@ -208,6 +211,26 @@ class OrderQueryService: QueryServiceInterface {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.updateOrderResponse(data)
+                    if self.updateResultReq! {
+                        let dateFormat = DateFormatter()
+                        dateFormat.dateFormat = "yyyy-MM-dd"
+                        
+                        let orderAux = OrderModel(
+                            customer: self.customers[self.customers.firstIndex(where: {$0.IDCustomer == params["IDCustomer"] as! Int})!],
+                            product: self.products[self.products.firstIndex(where: {$0.IDProduct == params["IDProduct"] as! Int})!],
+                            date: dateFormat.date(from: params["date"] as! String)!,
+                            code: params["code"] as! String,
+                            quantity: params["quantity"] as! Int,
+                            idOrder: params["IDOrder"] as! Int
+                        )
+                        for (customerOrderObj) in self.customerOrders{
+                            var customerOrdersOfObj = customerOrderObj.customerOrders
+                            if let orderIndex = customerOrdersOfObj.firstIndex(where: {$0.IDOrder == orderAux.IDOrder}){
+                                customerOrdersOfObj[orderIndex] = orderAux
+                            }
+                            customerOrderObj.customerOrders = customerOrdersOfObj
+                        }
+                    }
                     DispatchQueue.main.async {
                         completion(self.customerOrders, self.errorMessage)
                     }

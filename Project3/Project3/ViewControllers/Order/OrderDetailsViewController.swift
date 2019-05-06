@@ -25,20 +25,20 @@ class OrderDetailsViewController: UIViewController {
     var code: String = ""
     var quantity: Int16 = 0
     var totalPrice: Decimal = 0
-    var customer: Customer? = nil {
+    var customer: CustomerModel? = nil {
         didSet{
             updateTexts()
         }
     }
     
-    var product: Product? = nil {
+    var product: ProductModel? = nil {
         didSet{
             checkStepper()
             updateTexts()
         }
     }
     
-    var order: Order? = nil
+    var order: OrderModel? = nil
     
     var date: Date? = nil
     var isForUpdate = false
@@ -105,17 +105,18 @@ class OrderDetailsViewController: UIViewController {
             switch segue.identifier {
             case "productSegue":
                 vc.setFetch(entity: "Product")
-                vc.setProduct(entity: self.product ?? nil)
+                //vc.setProduct(entity: self.product ?? nil)
                 break
             default:
                 vc.setFetch(entity: "Customer")
-                vc.setCustomer(entity: self.customer ?? nil)
+                //vc.setCustomer(entity: self.customer ?? nil)
                 break
             }
         }
     }
     
     @IBAction func unwindToOrderDetails(segue: UIStoryboardSegue){
+        /*
         let vc = segue.source as! SelectViewController
         if(vc.entitySelected == "Customer"){
             customer = vc.customerSelected
@@ -124,6 +125,7 @@ class OrderDetailsViewController: UIViewController {
         }
         checkStepper()
         updateTexts()
+ */
     }
     
     func updateTexts(){
@@ -136,8 +138,11 @@ class OrderDetailsViewController: UIViewController {
     }
     
     func checkNewPrice(){
-        let decimalAux: NSDecimalNumber = product?.price ?? 0
-        totalPrice = (decimalAux as Decimal) * (NSDecimalNumber(value: quantity) as Decimal)
+        if(product != nil){
+            let priceDouble = Double((product?.price)!)
+            let decimalAux = NSDecimalNumber(floatLiteral: priceDouble)
+            totalPrice = (decimalAux as Decimal) * (NSDecimalNumber(value: quantity) as Decimal)
+        }
     }
     
     func saveVars(){
@@ -171,7 +176,7 @@ class OrderDetailsViewController: UIViewController {
         
         coder.encode(code, forKey: "ORDER_CODE")
         coder.encode(date, forKey: "ORDER_DATE")
-        
+        /*
         let productID = self.product?.objectID
         coder.encode(productID?.uriRepresentation(), forKey: "ORDER_PRODUCT")
         
@@ -180,7 +185,7 @@ class OrderDetailsViewController: UIViewController {
         
         let orderID = self.order?.objectID
         coder.encode(orderID?.uriRepresentation(), forKey: "ORDER")
-        
+        */
         coder.encode(totalPrice.description, forKey: "ORDER_TOTAL")
         coder.encode(quantity.description, forKey: "ORDER_QUANTITY")
         coder.encode(isForUpdate, forKey: "ORDER_UPDATE")
@@ -200,6 +205,7 @@ class OrderDetailsViewController: UIViewController {
         stepper?.minimumValue = 0
  
         isForUpdate = coder.decodeBool(forKey: "ORDER_UPDATE")
+        /*
         let productURI = coder.decodeObject(forKey: "ORDER_PRODUCT") as? URL
         let customerURI = coder.decodeObject(forKey: "ORDER_CUSTOMER") as? URL
         let orderURI = coder.decodeObject(forKey: "ORDER") as? URL
@@ -222,6 +228,7 @@ class OrderDetailsViewController: UIViewController {
                 self.order = self.context?.object(with: orderID!) as? Order
             }
         }
+ */
         stepper.value = Double(quantity)
         datePicker.date = date!
     }}
