@@ -105,18 +105,18 @@ class OrderDetailsViewController: UIViewController {
             switch segue.identifier {
             case "productSegue":
                 vc.setFetch(entity: "Product")
-                //vc.setProduct(entity: self.product ?? nil)
+                vc.setProduct(entity: self.product ?? nil)
                 break
             default:
                 vc.setFetch(entity: "Customer")
-                //vc.setCustomer(entity: self.customer ?? nil)
+                vc.setCustomer(entity: self.customer ?? nil)
                 break
             }
         }
     }
     
     @IBAction func unwindToOrderDetails(segue: UIStoryboardSegue){
-        /*
+        
         let vc = segue.source as! SelectViewController
         if(vc.entitySelected == "Customer"){
             customer = vc.customerSelected
@@ -125,7 +125,7 @@ class OrderDetailsViewController: UIViewController {
         }
         checkStepper()
         updateTexts()
- */
+ 
     }
     
     func updateTexts(){

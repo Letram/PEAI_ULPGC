@@ -13,8 +13,11 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var context: NSManagedObjectContext? = nil
     var entitySelected: String = "Customer"
-    var customerSelected: Customer? = nil
-    var productSelected: Product? = nil
+    var customerSelected: CustomerModel? = nil
+    var productSelected: ProductModel? = nil
+    
+    var customerResults: [CustomerModel] = []
+    var productResults: [ProductModel] = []
     
     //para un fetched de tipo genérico
     //var cosa: NSFetchedResultsController<NSFetchRequestResult>? = nil
@@ -22,6 +25,9 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        customerResults = CustomerQueryService.staticCustomers
+        productResults = ProductQueryService.staticProducts
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,6 +35,7 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    /*
     override func viewDidAppear(_ animated: Bool) {
         if(customerSelected != nil){
             let indexPath = lookForCustomer(customer: customerSelected!)
@@ -38,14 +45,15 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
             self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.top)
         }
     }
-    func lookForCustomer(customer: Customer) -> IndexPath{
+ */
+    func lookForCustomer(customer: CustomerModel) -> IndexPath{
         var indexPath = NSIndexPath()
         for section in 0..<self.tableView.numberOfSections{
             
             for row in 0..<tableView.numberOfRows(inSection: section) {
                 
                 let indexPathAux = NSIndexPath(row: row, section: section)
-                if(customerFetched.object(at: indexPathAux as IndexPath) == customer){
+                if(customerResults[indexPathAux.row].IDCustomer == customer.IDCustomer){
                     indexPath = indexPathAux
                 }
             }
@@ -53,14 +61,14 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         return indexPath as IndexPath
     }
     
-    func lookForProduct(product: Product) -> IndexPath{
+    func lookForProduct(product: ProductModel) -> IndexPath{
         var indexPath = NSIndexPath()
         for section in 0..<self.tableView.numberOfSections{
             
             for row in 0..<tableView.numberOfRows(inSection: section) {
                 
                 let indexPathAux = NSIndexPath(row: row, section: section)
-                if(productFetched.object(at: indexPathAux as IndexPath) == product){
+                if(productResults[indexPathAux.row].IDProduct == product.IDProduct){
                     indexPath = indexPathAux
                 }
             }
@@ -70,84 +78,11 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
     
     @IBAction func doneBtnTapped(_ sender: UIButton) {
         if(entitySelected == "Customer"){
-            customerSelected = customerFetched.object(at: tableView.indexPathForSelectedRow!)
+            customerSelected = customerResults[tableView.indexPathForSelectedRow!.row]
         }else{
-            productSelected = productFetched.object(at: tableView.indexPathForSelectedRow!)
+            productSelected = productResults[tableView.indexPathForSelectedRow!.row]
         }
         performSegue(withIdentifier: "unwindToOrderDetails", sender: self)
-    }
-    //MARK: - Operaciones relacionadas con la delegación de de las consultas
-    var customerFetched: NSFetchedResultsController<Customer> {
-        if _customerFetched == nil{
-            let request: NSFetchRequest<Customer> = Customer.fetchRequest()
-            
-            //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let name = NSSortDescriptor(key: "name", ascending: true)
-            
-            //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [name]
-            
-            //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
-            //request.predicate = NSPredicate(format: "name = %@", [])
-            
-            //Este es el encargado de hacer la consulta a la base de datos. Nos da los resultados ya de tal manera que fácil poder tratarlos como una tabla. Es mucho mejor que hacer un request.perform() o parecido que me devolvería un array plano. Fetched y _fetched tienen las mismas características (uno está dentro del otro)
-            _customerFetched = NSFetchedResultsController(
-                fetchRequest: request,
-                managedObjectContext: context!,
-                sectionNameKeyPath: nil,
-                cacheName: "cache") as? NSFetchedResultsController<NSFetchRequestResult>
-            
-            //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
-            _customerFetched?.delegate = self
-            
-            do{
-                //Llevamos a cabo la operación
-                try _customerFetched?.performFetch()
-            } catch {
-                //Hay algún problema en el fetch
-            }
-        }
-        return _customerFetched! as! NSFetchedResultsController<Customer>
-    }
-    
-    var productFetched: NSFetchedResultsController<Product> {
-        if _productFetched == nil{
-            let request: NSFetchRequest<Product> = Product.fetchRequest()
-            
-            //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let name = NSSortDescriptor(key: "name", ascending: true)
-            
-            //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [name]
-            
-            //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
-            //request.predicate = NSPredicate(format: "name = %@", [])
-            
-            //Este es el encargado de hacer la consulta a la base de datos. Nos da los resultados ya de tal manera que fácil poder tratarlos como una tabla. Es mucho mejor que hacer un request.perform() o parecido que me devolvería un array plano. Fetched y _fetched tienen las mismas características (uno está dentro del otro)
-            _productFetched = NSFetchedResultsController(
-                fetchRequest: request,
-                managedObjectContext: context!,
-                sectionNameKeyPath: nil,
-                cacheName: "cache") as? NSFetchedResultsController<NSFetchRequestResult>
-            
-            //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
-            _productFetched?.delegate = self
-            
-            do{
-                //Llevamos a cabo la operación
-                try _productFetched?.performFetch()
-            } catch {
-                //Hay algún problema en el fetch
-            }
-        }
-        return _productFetched! as! NSFetchedResultsController<Product>
-    }
-    
-    var _customerFetched: NSFetchedResultsController<NSFetchRequestResult>? = nil
-    var _productFetched: NSFetchedResultsController<NSFetchRequestResult>? = nil
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.reloadData()
     }
     
     func setFetch(entity: String){
@@ -158,44 +93,38 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
-    func setCustomer(entity: Customer?){
+    func setCustomer(entity: CustomerModel?){
         customerSelected = entity
     }
     
-    func setProduct(entity: Product?){
+    func setProduct(entity: ProductModel?){
         productSelected = entity
     }
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        if(entitySelected == "Customer"){
-            return customerFetched.sections?.count ?? 0
-        }
-        else{
-            return productFetched.sections?.count ?? 0
-        }
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if(entitySelected == "Customer"){
-            return customerFetched.sections?[section].numberOfObjects ?? 0
+            return customerResults.count
         }
         else{
-            return productFetched.sections?[section].numberOfObjects ?? 0
+            return productResults.count
         }
     }
-
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        //since we are not grouping customers we are grouping them in only 1 group
+        return 1
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "selectorCell", for: indexPath)
 
         // Configure the cell...
         if(entitySelected == "Customer"){
-            cell.textLabel?.text = customerFetched.object(at: indexPath).name
+            cell.textLabel?.text = customerResults[indexPath.row].name
         }
         else{
-            cell.textLabel?.text = productFetched.object(at: indexPath).name
+            cell.textLabel?.text = productResults[indexPath.row].name
         }
         return cell
     }

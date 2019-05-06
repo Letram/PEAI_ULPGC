@@ -70,7 +70,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         let params = ["IDOrder" : IDOrder]
         
         orderService.delete(params: params) { results, errorMsg in
-            print(results)
             self.refreshProducts(newOrders: results as! [CustomerOrders])
         }
     }
@@ -98,20 +97,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         } catch {
             print("Insert error")
             //Algo fue mal
-        }
-    }
-    
-    func update(order: Order, code: String, customer: Customer, product: Product, price: Decimal, quantity: Int16, date: Date){
-        order.code = code
-        order.customer = customer
-        order.product = product
-        order.total = price as NSDecimalNumber
-        order.quantity = quantity
-        order.date = date
-        do{
-            try context?.save()
-        } catch{
-            print("Update error")
         }
     }
     */
@@ -219,7 +204,10 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue){
         let vc = segue.source as! OrderDetailsViewController
         if(!vc.isForUpdate){
-            //insert(code: vc.code, customer: vc.customer!, product: vc.product!, price: vc.totalPrice, quantity: vc.quantity, date: vc.date!)
+            let dateFormat = DateFormatter()
+            dateFormat.dateFormat = "yyyy-MM-dd"
+            
+            insert(code: vc.code, date: dateFormat.string(from: vc.date!), idProduct: vc.product!.IDProduct, idCustomer: vc.customer!.IDCustomer, quantity: Int(vc.quantity))
         } else {
             let dateFormat = DateFormatter()
             dateFormat.dateFormat = "yyyy-MM-dd"
