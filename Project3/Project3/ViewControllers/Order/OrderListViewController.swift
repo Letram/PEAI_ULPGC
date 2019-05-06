@@ -36,36 +36,41 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         }
     }
     
-    func insert(description: String, name: String, price: Float) {
+    func insert(code: String, date: String, idProduct: Int, idCustomer: Int, quantity: Int) {
         
         var params: [String: Any] = [:]
         
-        params["description"] = description
-        params["name"] = name
-        params["price"] = price
+        params["code"] = code
+        params["date"] = date
+        params["IDProduct"] = idProduct
+        params["IDCustomer"] = idCustomer
+        params["quantity"] = quantity
         
         orderService.insert(params: params){ results, errorMsg in
             self.refreshProducts(newOrders: results as! [CustomerOrders])
         }
     }
     
-    func update(name: String, description: String, idProduct: Int, price: Float){
+    func update(code: String, date: String, idProduct: Int, idCustomer: Int, idOrder: Int, quantity: Int){
         var params: [String: Any] = [:]
         
-        params["name"] = name
-        params["description"] = description
+        params["code"] = code
+        params["date"] = date
         params["IDProduct"] = idProduct
-        params["price"] = price
+        params["IDCustomer"] = idCustomer
+        params["IDOrder"] = idOrder
+        params["quantity"] = quantity
         
         orderService.update(params: params){ results, errorMsg in
             self.refreshProducts(newOrders: results as! [CustomerOrders])
         }
     }
     
-    func delete(IDProduct: Int){
-        let params = ["IDProduct" : IDProduct]
+    func delete(IDOrder: Int){
+        let params = ["IDOrder" : IDOrder]
         
         orderService.delete(params: params) { results, errorMsg in
+            print(results)
             self.refreshProducts(newOrders: results as! [CustomerOrders])
         }
     }
@@ -176,9 +181,8 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         // Configure the cell...
         
         //TODO: Rebuild this not to get an error
-        print("row: \(indexPath.row) - item: \(indexPath.item)")
-        cell.textLabel!.text = queryResults[indexPath.row].customerOrders[indexPath.item].code
-        cell.detailTextLabel?.text = queryResults[indexPath.row].customerOrders[indexPath.item].product.name
+        cell.textLabel!.text = queryResults[indexPath.section].customerOrders[indexPath.row].code
+        cell.detailTextLabel?.text = queryResults[indexPath.section].customerOrders[indexPath.row].product.name
         
         return cell
     }
@@ -191,7 +195,7 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            //delete(order: fetched.object(at: indexPath))
+            delete(IDOrder: queryResults[indexPath.section].customerOrders[indexPath.row].IDOrder)
         }
     }
     

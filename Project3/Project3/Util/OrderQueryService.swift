@@ -83,7 +83,7 @@ class OrderQueryService: QueryServiceInterface {
         var orders: [OrderModel] = []
         var lastCustomerName: String = ""
         
-        for orderObj in orderArray {
+        for (index, orderObj) in orderArray.enumerated() {
             if let orderAux = orderObj as? JsonDict{
                 let dateFormat = DateFormatter()
                 dateFormat.dateFormat = "yyyy-MM-dd"
@@ -98,6 +98,15 @@ class OrderQueryService: QueryServiceInterface {
                 let previewDate: String? = orderAux["date"] as? String
                 
                 if(valid(pid: previewPid, uid: previewUid, date: previewDate)){
+                    if lastCustomerName == "" {
+                        lastCustomerName = previewCustomerName!
+                    } else if lastCustomerName != previewCustomerName! {
+                        customerOrders.append(CustomerOrders(customerName: lastCustomerName, customerOrders: orders))
+                        print("\(lastCustomerName) has \(orders.count) orders!")
+                        
+                        orders = []
+                        lastCustomerName = previewCustomerName!
+                    }
                     let orderCustomer = customers.filter({$0.IDCustomer == Int(previewUid!)})
                     let orderProduct = products.filter({$0.IDProduct == Int(previewPid!)})
                     orders.append(OrderModel(
@@ -108,9 +117,7 @@ class OrderQueryService: QueryServiceInterface {
                         quantity: Int(previewQty!)!,
                         idOrder: Int(previewOid!)!)
                     )
-                    if lastCustomerName == "" {
-                        lastCustomerName = previewCustomerName!
-                    } else if lastCustomerName != previewCustomerName! {
+                    if(index == orderArray.count-1){
                         customerOrders.append(CustomerOrders(customerName: lastCustomerName, customerOrders: orders))
                         print("\(lastCustomerName) has \(orders.count) orders!")
                         
@@ -118,31 +125,9 @@ class OrderQueryService: QueryServiceInterface {
                         lastCustomerName = previewCustomerName!
                     }
                 }
-/*
-                let previewCustomerName = orderAux["customerName"] as? String
-                let previewProductName = orderAux["productName"] as? String
-                let previewOid = orderAux["IDProduct"] as? String
-                let previewPid = orderAux["price"] as? String
-                let previewUid = orderAux["IDCustomer"] as? String
-                let previewCode = orderAux["code"] as? String
-                let previewQty = orderAux["quantity"] as? String
-                let previewPrice = orderAux["price"] as? String
-                let previewDate = orderAux["date"] as? String
-                orders.append(OrderModel(
-                    IDCustomer: Int(previewUid!)!,
-                    IDProduct: Int(previewPid!)!,
-                    IDOrder: Int(previewOid!)!,
-                    customerName: previewCustomerName!,
-                    productName: previewProductName!,
-                    code: previewCode!,
-                    quantity: Int(previewQty!)!,
-                    date: dateFormat.date(from: previewDate!)!,
-                    price: Float(previewPrice!)!)
-                )
- */
             }
             else {
-                errorMessage += "Problem parsing customerAux\n"
+                errorMessage += "Problem parsing orderAux\n"
             }
         }
     }
@@ -157,7 +142,7 @@ class OrderQueryService: QueryServiceInterface {
     func insert(params: JsonDict, completion: @escaping insertResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_INSERT))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.ORDER_INSERT))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "POST"
         do{
@@ -208,7 +193,7 @@ class OrderQueryService: QueryServiceInterface {
     func update(params: JsonDict, completion: @escaping updateResult) {
         dataTask?.cancel()
         
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_UPDATE))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.ORDER_UPDATE))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "PUT"
         do{
@@ -258,7 +243,7 @@ class OrderQueryService: QueryServiceInterface {
     
     func delete(params: JsonDict, completion: @escaping deleteResult) {
         dataTask?.cancel()
-        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.PRODUCT_DELETE))!)
+        var req = URLRequest(url: URL(string: ((WebData.SERVER_URL?.absoluteString)! + WebData.ORDER_DELETE))!)
         req.addValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpMethod = "DELETE"
         do{
@@ -273,6 +258,13 @@ class OrderQueryService: QueryServiceInterface {
                     self.errorMessage += "Datatask error: " + (error.localizedDescription) + "\n"
                 }else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     self.deleteOrderResponse(data)
+                    if self.deleteResultReq! {
+                        for (customerOrderObj) in self.customerOrders{
+                            var customerOrdersOfObj = customerOrderObj.customerOrders
+                            customerOrdersOfObj = customerOrdersOfObj.filter({$0.IDOrder != params["IDOrder"] as! Int})
+                            customerOrderObj.customerOrders = customerOrdersOfObj
+                        }
+                    }
                     DispatchQueue.main.async {
                         completion(self.customerOrders, self.errorMessage)
                     }

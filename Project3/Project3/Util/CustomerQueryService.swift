@@ -65,7 +65,6 @@ class CustomerQueryService : QueryServiceInterface{
             return
         }
         for customerObj in customerArray {
-            print(customerObj)
             if let customerAux = customerObj as? JsonDict{
                 let previewName = customerAux["name"] as? String
                 let previewAddress = customerAux["address"] as? String
