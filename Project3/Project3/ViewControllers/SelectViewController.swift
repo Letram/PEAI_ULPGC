@@ -77,6 +77,14 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     @IBAction func doneBtnTapped(_ sender: UIButton) {
+        if(tableView.indexPathForSelectedRow == nil){
+            let alert = UIAlertController(title: "Select a customer/product first", message: nil, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+            return
+        }
         if(entitySelected == "Customer"){
             customerSelected = customerResults[tableView.indexPathForSelectedRow!.row]
         }else{

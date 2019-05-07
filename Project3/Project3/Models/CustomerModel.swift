@@ -1,9 +1,9 @@
 import Foundation
 
 class CustomerModel: DBModel {
-    let name: String
-    let address: String
-    let IDCustomer: Int
+    var name: String
+    var address: String
+    var IDCustomer: Int
     
     init(name: String, address: String, uid: Int) {
         self.name = name

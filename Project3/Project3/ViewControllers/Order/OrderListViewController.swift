@@ -80,65 +80,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         self.tableView.setContentOffset(CGPoint.zero, animated: false)
     }
     
-    /*
-    func insert(code: String, customer: Customer, product: Product, price: Decimal, quantity: Int16, date: Date) {
-        
-        let order = Order(context: fetched.managedObjectContext)
-        order.code = code
-        order.customer = customer
-        order.product = product
-        order.total = price as NSDecimalNumber
-        order.quantity = quantity
-        order.date = date
-        
-        context?.insert(order)
-        do{
-            try context?.save()
-        } catch {
-            print("Insert error")
-            //Algo fue mal
-        }
-    }
-    */
-    //MARK: - Operaciones relacionadas con la delegación de de las consultas
-    var fetched: NSFetchedResultsController<Order> {
-        if _fetched == nil{
-            let request: NSFetchRequest<Order> = Order.fetchRequest()
-            
-            //Anotamos cómo queremos que se ordenen los campos de la tabla
-            let orderByCode = NSSortDescriptor(key: "code", ascending: true)
-            let orderByCustomerName = NSSortDescriptor(key: "customer.name", ascending: true)
-            //Se los añadimos a la req en el orden que queramos. Primero se ordenarán por año y luego por nombre.
-            request.sortDescriptors = [orderByCustomerName, orderByCode]
-            
-            //Le podemos aplicamos a la req un filtro. El %@ es un parámetro que se sustituye por lo que pogamos en el segundo parámentro. Tomaría en cuenta solo los campos de la tabla que cumplan con el formato que le pasamos en el predicado.
-            //request.predicate = NSPredicate(format: "name = %@", [])
-            
-            //Este es el encargado de hacer la consulta a la base de datos. Nos da los resultados ya de tal manera que fácil poder tratarlos como una tabla. Es mucho mejor que hacer un request.perform() o parecido que me devolvería un array plano. Fetched y _fetched tienen las mismas características (uno está dentro del otro)
-            _fetched = NSFetchedResultsController(
-                fetchRequest: request,
-                managedObjectContext: context!,
-                sectionNameKeyPath: "customer.name",
-                cacheName: "cache")
-            
-            //El delegado de la consulta (encargado de hacer las operaciones cuando las consultas se llevan a cabo) dijimos que era esta propia clase (con el fetchedResultControllerDelegate)
-            _fetched?.delegate = self
-            
-            do{
-                //Llevamos a cabo la operación
-                try _fetched?.performFetch()
-            } catch {
-                //Hay algún problema en el fetch
-            }
-        }
-        return _fetched!
-    }
-    
-    var _fetched: NSFetchedResultsController<Order>? = nil
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.reloadData()
-    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -156,7 +97,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
 
         // Configure the cell...
         
-        //TODO: Rebuild this not to get an error
         cell.textLabel!.text = queryResults[indexPath.section].customerOrders[indexPath.row].code
         cell.detailTextLabel?.text = queryResults[indexPath.section].customerOrders[indexPath.row].product.name
         
