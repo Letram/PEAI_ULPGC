@@ -74,7 +74,8 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
         
         coder.encode(customerName.text, forKey: "CUSTOMER_NAME")
         coder.encode(customerAddress.text, forKey: "CUSTOMER_ADDRESS")
-
+        coder.encode(IDCustomer, forKey: "CUSTOMER_ID")
+        coder.encode(isForUpdate, forKey: "FOR_UPDATE")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -82,6 +83,8 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
         
         customerNameText = coder.decodeObject(forKey: "CUSTOMER_NAME") as! String
         customerAddressText = coder.decodeObject(forKey: "CUSTOMER_ADDRESS") as! String
+        isForUpdate = coder.decodeBool(forKey: "FOR_UPDATE")
+        IDCustomer = coder.decodeObject(forKey: "CUSTOMER_ID") as? Int
 
         updateTexts()
     }

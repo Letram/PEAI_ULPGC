@@ -176,16 +176,37 @@ class OrderDetailsViewController: UIViewController {
         
         coder.encode(code, forKey: "ORDER_CODE")
         coder.encode(date, forKey: "ORDER_DATE")
-        /*
-        let productID = self.product?.objectID
-        coder.encode(productID?.uriRepresentation(), forKey: "ORDER_PRODUCT")
         
-        let customerID = self.customer?.objectID
-        coder.encode(customerID?.uriRepresentation(), forKey: "ORDER_CUSTOMER")
         
-        let orderID = self.order?.objectID
-        coder.encode(orderID?.uriRepresentation(), forKey: "ORDER")
-        */
+        //todo: encapsular en una funcion aparte para tenerlo más mono
+        let jsonEncoder = JSONEncoder()
+        
+        do{
+            if(customer != nil){
+                let jsonData = try jsonEncoder.encode(customer)
+                let jsonString: String = String(data: jsonData, encoding: .utf8)!
+                print("Encoded customer: \(jsonString)")
+                coder.encode(jsonString, forKey: "ORDER_CUSTOMER")
+            }
+            
+            if(product != nil){
+                let jsonData = try jsonEncoder.encode(product)
+                let jsonString = String(data: jsonData, encoding: .utf8)!
+                print("Encoded product: \(jsonString)")
+                coder.encode(jsonString, forKey: "ORDER_PRODUCT")
+            }
+            
+            if(order != nil){
+                let jsonData = try jsonEncoder.encode(order)
+                let jsonString = String(data: jsonData, encoding: .utf8)!
+                print("Encoded order: \(jsonString)")
+                coder.encode(jsonString, forKey: "ORDER")
+            }
+            
+        } catch let parseError as NSError {
+            print("JSONSerialization error: \(parseError.localizedDescription)\n")
+        }
+ 
         coder.encode(totalPrice.description, forKey: "ORDER_TOTAL")
         coder.encode(quantity.description, forKey: "ORDER_QUANTITY")
         coder.encode(isForUpdate, forKey: "ORDER_UPDATE")
@@ -193,6 +214,7 @@ class OrderDetailsViewController: UIViewController {
     
     override func decodeRestorableState(with coder: NSCoder) {
         super.decodeRestorableState(with: coder)
+        
         
         self.context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -205,30 +227,38 @@ class OrderDetailsViewController: UIViewController {
         stepper?.minimumValue = 0
  
         isForUpdate = coder.decodeBool(forKey: "ORDER_UPDATE")
-        /*
-        let productURI = coder.decodeObject(forKey: "ORDER_PRODUCT") as? URL
-        let customerURI = coder.decodeObject(forKey: "ORDER_CUSTOMER") as? URL
-        let orderURI = coder.decodeObject(forKey: "ORDER") as? URL
         
-        if productURI != nil {
-            let productID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: productURI!)
-            self.context?.perform {
-                self.product = self.context?.object(with: productID!) as? Product
+        //todo: encapsular en una funcion aparte para tenerlo más mono
+        let jsonDecoder = JSONDecoder()
+        do {
+            var coderData = coder.decodeObject(forKey: "ORDER_CUSTOMER")
+            if(coderData != nil){
+                let jsonString = coderData as! String
+                let jsonData = jsonString.data(using: .utf8)
+                
+                self.customer = try jsonDecoder.decode(CustomerModel.self, from: jsonData!)
             }
-        }
-        if customerURI != nil {
-            let customerID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: customerURI!)
-            self.context?.perform {
-                self.customer = self.context?.object(with: customerID!) as? Customer
+            
+            coderData = coder.decodeObject(forKey: "ORDER_PRODUCT")
+            if(coderData != nil) {
+                let jsonString = coderData as! String
+                let jsonData = jsonString.data(using: .utf8)
+                
+                self.product = try jsonDecoder.decode(ProductModel.self, from: jsonData!)
             }
-        }
-        if orderURI != nil {
-            let orderID = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: orderURI!)
-            self.context?.perform {
-                self.order = self.context?.object(with: orderID!) as? Order
+
+            coderData = coder.decodeObject(forKey: "ORDER")
+            if(coderData != nil){
+                let jsonString = coderData as! String
+                let jsonData = jsonString.data(using: .utf8)
+                
+                self.order = try jsonDecoder.decode(OrderModel.self, from: jsonData!)
             }
+            
+            print("cast succesful")
+        } catch let parseError as NSError {
+            print("JSONSerialization error: \(parseError.localizedDescription)\n")
         }
- */
         stepper.value = Double(quantity)
         datePicker.date = date!
     }}

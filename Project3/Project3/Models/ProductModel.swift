@@ -1,6 +1,6 @@
 import Foundation
 
-class ProductModel: DBModel {
+class ProductModel: DBModel, Codable {
     var name: String
     var description: String
     var price: Float

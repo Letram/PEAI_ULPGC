@@ -1,6 +1,6 @@
 import Foundation
 
-class OrderModel: DBModel {
+class OrderModel: DBModel, Codable {
     
     var customer: CustomerModel
     var product: ProductModel

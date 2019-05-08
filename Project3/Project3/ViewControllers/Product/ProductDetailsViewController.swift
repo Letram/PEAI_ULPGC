@@ -96,6 +96,7 @@ class ProductDetailsViewController: UIViewController {
         coder.encode(productDescriptionField.text, forKey: "PRODUCT_DESCRIPTION")
         coder.encode(productPriceField.text, forKey: "PRODUCT_PRICE")
         coder.encode(productID, forKey: "PRODUCT_ID")
+        coder.encode(isForUpdate, forKey: "FOR_UPDATE")
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -105,7 +106,7 @@ class ProductDetailsViewController: UIViewController {
         productDescriptionText = coder.decodeObject(forKey: "PRODUCT_DESCRIPTION") as! String
         productPriceText = coder.decodeObject(forKey: "PRODUCT_PRICE") as! String
         productID = coder.decodeObject(forKey: "PRODUCT_ID") as? Int
-        
+        isForUpdate = coder.decodeBool(forKey: "FOR_UPDATE")
         updateTexts()
     }
 }
