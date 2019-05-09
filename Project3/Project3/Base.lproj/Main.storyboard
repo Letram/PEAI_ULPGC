@@ -13,7 +13,7 @@
         <!--Customers-->
         <scene sceneID="gs6-4d-EsV">
             <objects>
-                <tableViewController storyboardIdentifier="CustomerList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wyW-BL-Zca" customClass="CustomerListViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CustomerList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wyW-BL-Zca" customClass="CustomerListViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="IjC-Vq-juq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +76,7 @@
         <!--Edit customer-->
         <scene sceneID="FJq-Lp-4xl">
             <objects>
-                <viewController storyboardIdentifier="EditCustomer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b5y-rp-hrl" customClass="CustomerDetailsViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditCustomer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b5y-rp-hrl" customClass="CustomerDetailsViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Soq-jd-hLZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,7 +185,7 @@
         <!--Products-->
         <scene sceneID="XEm-es-kiy">
             <objects>
-                <tableViewController storyboardIdentifier="ProductList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iMF-re-fao" customClass="ProductListViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProductList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iMF-re-fao" customClass="ProductListViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tdb-8l-H2J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -248,7 +248,7 @@
         <!--Edit product-->
         <scene sceneID="eON-SA-JYU">
             <objects>
-                <viewController storyboardIdentifier="EditProduct" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Lyz-9B-zEv" customClass="ProductDetailsViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProduct" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Lyz-9B-zEv" customClass="ProductDetailsViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tb0-9M-R92">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -354,7 +354,7 @@
         <!--Orders-->
         <scene sceneID="aHA-SH-eyN">
             <objects>
-                <tableViewController storyboardIdentifier="OrderList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CTC-4i-27Y" customClass="OrderListViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="OrderList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CTC-4i-27Y" customClass="OrderListViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="WVE-dX-Yhd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -417,7 +417,7 @@
         <!--Edit order-->
         <scene sceneID="jiF-X7-9FX">
             <objects>
-                <viewController storyboardIdentifier="EditOrder" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N3m-kc-dA8" customClass="OrderDetailsViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditOrder" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N3m-kc-dA8" customClass="OrderDetailsViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U2X-l2-zd5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -581,7 +581,7 @@
         <!--Select-->
         <scene sceneID="HI6-jC-ILN">
             <objects>
-                <tableViewController storyboardIdentifier="SelectObject" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dOy-Vo-cGV" customClass="SelectViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ItemSelector" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dOy-Vo-cGV" customClass="SelectViewController" customModule="Project3" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rDR-He-gHo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -688,7 +688,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gGM-i4-8Me"/>
+        <segue reference="1LS-Ar-7tJ"/>
         <segue reference="DY9-IY-FKR"/>
         <segue reference="qPp-Bm-Irg"/>
         <segue reference="1j6-LV-kXx"/>

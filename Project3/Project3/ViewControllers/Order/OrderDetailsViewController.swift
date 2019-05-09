@@ -183,33 +183,41 @@ class OrderDetailsViewController: UIViewController {
         
         do{
             if(customer != nil){
-                let jsonData = try jsonEncoder.encode(customer)
-                let jsonString: String = String(data: jsonData, encoding: .utf8)!
-                print("Encoded customer: \(jsonString)")
-                coder.encode(jsonString, forKey: "ORDER_CUSTOMER")
+                try? encodeCustom(modelObject: customer!, jsonEncoder: jsonEncoder, coder: coder, key: "CUSTOMER_ORDER")
             }
             
             if(product != nil){
-                let jsonData = try jsonEncoder.encode(product)
-                let jsonString = String(data: jsonData, encoding: .utf8)!
-                print("Encoded product: \(jsonString)")
-                coder.encode(jsonString, forKey: "ORDER_PRODUCT")
+                try? encodeCustom(modelObject: product!, jsonEncoder: jsonEncoder, coder: coder, key: "PRODUCT_ORDER")
+
             }
             
             if(order != nil){
-                let jsonData = try jsonEncoder.encode(order)
-                let jsonString = String(data: jsonData, encoding: .utf8)!
-                print("Encoded order: \(jsonString)")
-                coder.encode(jsonString, forKey: "ORDER")
+                try? encodeCustom(modelObject: order!, jsonEncoder: jsonEncoder, coder: coder, key: "ORDER")
             }
             
-        } catch let parseError as NSError {
-            print("JSONSerialization error: \(parseError.localizedDescription)\n")
         }
  
         coder.encode(totalPrice.description, forKey: "ORDER_TOTAL")
         coder.encode(quantity.description, forKey: "ORDER_QUANTITY")
         coder.encode(isForUpdate, forKey: "ORDER_UPDATE")
+    }
+    
+    func encodeCustom(modelObject: Any, jsonEncoder: JSONEncoder, coder: NSCoder, key: String) throws{
+        var jsonData: Data? = nil
+        var jsonString: String? = nil
+        
+        if (key == "CUSTOMER_ORDER") {
+            jsonData = try jsonEncoder.encode(modelObject as! CustomerModel)
+        } else if (key == "PRODUCT_ORDER") {
+            jsonData = try jsonEncoder.encode(modelObject as! ProductModel)
+        } else {
+            jsonData = try jsonEncoder.encode(modelObject as! OrderModel)
+        }
+        jsonString = String(data: jsonData!, encoding: .utf8)!
+        
+        print("Encoded \(key): \(jsonString ?? "hola")")
+        
+        coder.encode(jsonString, forKey: key)
     }
     
     override func decodeRestorableState(with coder: NSCoder) {
@@ -231,34 +239,32 @@ class OrderDetailsViewController: UIViewController {
         //todo: encapsular en una funcion aparte para tenerlo más mono
         let jsonDecoder = JSONDecoder()
         do {
-            var coderData = coder.decodeObject(forKey: "ORDER_CUSTOMER")
-            if(coderData != nil){
-                let jsonString = coderData as! String
-                let jsonData = jsonString.data(using: .utf8)
-                
-                self.customer = try jsonDecoder.decode(CustomerModel.self, from: jsonData!)
-            }
-            
-            coderData = coder.decodeObject(forKey: "ORDER_PRODUCT")
-            if(coderData != nil) {
-                let jsonString = coderData as! String
-                let jsonData = jsonString.data(using: .utf8)
-                
-                self.product = try jsonDecoder.decode(ProductModel.self, from: jsonData!)
-            }
-
-            coderData = coder.decodeObject(forKey: "ORDER")
-            if(coderData != nil){
-                let jsonString = coderData as! String
-                let jsonData = jsonString.data(using: .utf8)
-                
-                self.order = try jsonDecoder.decode(OrderModel.self, from: jsonData!)
-            }
-            
-            print("cast succesful")
+            try decodeCustom(jsonDecoder: jsonDecoder, coder: coder, key: "CUSTOMER_ORDER")
+            try decodeCustom(jsonDecoder: jsonDecoder, coder: coder, key: "PRODUCT_ORDER")
+            try decodeCustom(jsonDecoder: jsonDecoder, coder: coder, key: "ORDER")
         } catch let parseError as NSError {
             print("JSONSerialization error: \(parseError.localizedDescription)\n")
         }
         stepper.value = Double(quantity)
         datePicker.date = date!
-    }}
+    }
+    func decodeCustom(jsonDecoder: JSONDecoder, coder: NSCoder, key: String) throws {
+        let coderData = coder.decodeObject(forKey: key)
+        if(coderData != nil){
+            print("\(key) found...")
+            let jsonString = coderData as! String
+            let jsonData = jsonString.data(using: .utf8)
+            
+            if(key == "CUSTOMER_ORDER") {
+                self.customer = try jsonDecoder.decode(CustomerModel.self, from: jsonData!)
+                print("Customer decoded\n")
+            } else if (key == "PRODUCT_ORDER") {
+                self.product = try jsonDecoder.decode(ProductModel.self, from: jsonData!)
+                print("Product decoded\n")
+            } else {
+                self.order = try jsonDecoder.decode(OrderModel.self, from: jsonData!)
+                print("Order decoded\n")
+            }
+        }
+    }
+}

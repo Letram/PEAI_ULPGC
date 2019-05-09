@@ -14,12 +14,18 @@ class CustomerListViewController: UITableViewController {
     }
         
     let customerService = CustomerQueryService()
+    let soapCustomerService = SOAPCustomerQueryService()
+    
     var queryResults: [CustomerModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         customerService.delegate = self
         getAll()
+        
+        soapCustomerService.getAll() { _, _ in
+            print("Hola")
+        }
 
     }
     

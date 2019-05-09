@@ -19,23 +19,15 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
     var customerResults: [CustomerModel] = []
     var productResults: [ProductModel] = []
     
-    //para un fetched de tipo genérico
-    //var cosa: NSFetchedResultsController<NSFetchRequestResult>? = nil
-    //uiapplication.share.delegate as! appdelegate -> persistentStore.context
     override func viewDidLoad() {
         super.viewDidLoad()
 
         customerResults = CustomerQueryService.staticCustomers
         productResults = ProductQueryService.staticProducts
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    /*
+    
     override func viewDidAppear(_ animated: Bool) {
         if(customerSelected != nil){
             let indexPath = lookForCustomer(customer: customerSelected!)
@@ -45,18 +37,20 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
             self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.top)
         }
     }
- */
+ 
     func lookForCustomer(customer: CustomerModel) -> IndexPath{
         var indexPath = NSIndexPath()
         for section in 0..<self.tableView.numberOfSections{
             
-            for row in 0..<tableView.numberOfRows(inSection: section) {
+            for row in 0..<self.tableView.numberOfRows(inSection: section) {
                 
                 let indexPathAux = NSIndexPath(row: row, section: section)
                 if(customerResults[indexPathAux.row].IDCustomer == customer.IDCustomer){
                     indexPath = indexPathAux
                 }
+                
             }
+            
         }
         return indexPath as IndexPath
     }
@@ -65,7 +59,7 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         var indexPath = NSIndexPath()
         for section in 0..<self.tableView.numberOfSections{
             
-            for row in 0..<tableView.numberOfRows(inSection: section) {
+            for row in 0..<self.tableView.numberOfRows(inSection: section) {
                 
                 let indexPathAux = NSIndexPath(row: row, section: section)
                 if(productResults[indexPathAux.row].IDProduct == product.IDProduct){
@@ -136,15 +130,67 @@ class SelectViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         return cell
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        
+        let jsonEncoder = JSONEncoder()
+        
+        do{
+            if(customerSelected != nil){
+                try? encodeCustom(modelObject: customerSelected!, jsonEncoder: jsonEncoder, coder: coder, key: "SELECT_CUSTOMER")
+            }
+            
+            if(productSelected != nil){
+                try? encodeCustom(modelObject: productSelected!, jsonEncoder: jsonEncoder, coder: coder, key: "SELECT_PRODUCT")
+            }
+        }
+        coder.encode(entitySelected, forKey: "ENTITY")
+        
     }
-    */
-
+    
+    func encodeCustom(modelObject: Any, jsonEncoder: JSONEncoder, coder: NSCoder, key: String) throws{
+        var jsonData: Data? = nil
+        var jsonString: String? = nil
+        
+        if (key == "SELECT_CUSTOMER") {
+            jsonData = try jsonEncoder.encode(modelObject as! CustomerModel)
+        } else if (key == "SELECT_PRODUCT") {
+            jsonData = try jsonEncoder.encode(modelObject as! ProductModel)
+        }
+        jsonString = String(data: jsonData!, encoding: .utf8)!
+        
+        print("Encoded \(key): \(jsonString ?? "hola")")
+        
+        coder.encode(jsonString, forKey: key)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        entitySelected = coder.decodeObject(forKey: "ENTITY") as! String
+        
+        let jsonDecoder = JSONDecoder()
+        do {
+            try decodeCustom(jsonDecoder: jsonDecoder, coder: coder, key: "SELECT_CUSTOMER")
+            try decodeCustom(jsonDecoder: jsonDecoder, coder: coder, key: "SELECT_PRODUCT")
+            
+        } catch let parseError as NSError {
+            print("JSONSerialization error: \(parseError.localizedDescription)\n")
+        }
+    }
+    
+    func decodeCustom(jsonDecoder: JSONDecoder, coder: NSCoder, key: String) throws {
+        let coderData = coder.decodeObject(forKey: key)
+        if(coderData != nil){
+            print("\(key) found...\n")
+            let jsonString = coderData as! String
+            let jsonData = jsonString.data(using: .utf8)
+            
+            if(key == "CUSTOMER_ORDER") {
+                self.customerSelected = try jsonDecoder.decode(CustomerModel.self, from: jsonData!)
+                print("Customer decoded")
+            } else if (key == "PRODUCT_ORDER") {
+                self.productSelected = try jsonDecoder.decode(ProductModel.self, from: jsonData!)
+                print("Product decoded")
+            }
+        }
+    }
 }

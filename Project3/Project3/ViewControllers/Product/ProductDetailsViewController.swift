@@ -84,7 +84,15 @@ class ProductDetailsViewController: UIViewController {
     }
     
     func numeric(value: String) -> Bool{
-        return value.matches("[0-9]*(,.){0,1}[0-9]?")
+        if(!value.matches("^[0-9]+\\.?[0-9]*$")){
+            let alert = UIAlertController(title: "The price must be a number", message: nil, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+            return false
+        }
+        return true
     }
 
     // MARK: - Codificación/Decodificación del estado

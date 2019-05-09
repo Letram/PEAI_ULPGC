@@ -95,7 +95,7 @@ class OrderQueryService: QueryServiceInterface {
                         
                     } else if lastCustomerName != previewCustomerName! {
                         customerOrders.append(CustomerOrders(customerName: lastCustomerName, idCustomer: lastCustomerID, customerOrders: orders))
-                        print("\(lastCustomerName) has \(orders.count) orders!")
+                        //print("\(lastCustomerName) has \(orders.count) orders!")
                         
                         orders = []
                         lastCustomerName = previewCustomerName!
@@ -113,7 +113,7 @@ class OrderQueryService: QueryServiceInterface {
                     )
                     if(index == orderArray.count-1){
                         customerOrders.append(CustomerOrders(customerName: lastCustomerName, idCustomer: lastCustomerID, customerOrders: orders))
-                        print("\(lastCustomerName) has \(orders.count) orders!")
+                        //print("\(lastCustomerName) has \(orders.count) orders!")
                         
                         orders = []
                         lastCustomerName = previewCustomerName!

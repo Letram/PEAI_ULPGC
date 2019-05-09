@@ -2,7 +2,7 @@ import Foundation
 
 class WebData {
     static let SERVER_URL = URL(string: "http://appstip.iatext.ulpgc.es/ventas/server.php?")
-    
+    static let SERVER_URN = "urn://ulpgc.masterii.moviles/QueryCustomers"
     static let CUSTOMER_GETALL = "QueryCustomers"
     static let CUSTOMER_INSERT = "InsertCustomer"
     static let CUSTOMER_UPDATE = "UpdateCustomer"
