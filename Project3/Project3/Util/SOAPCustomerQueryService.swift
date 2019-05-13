@@ -45,11 +45,11 @@ class SOAPCustomerQueryService {
         dataTask?.cancel()
         dataTask = session.dataTask(with: req, completionHandler: {(data:Data?, response: URLResponse?, error: Error?) -> Void in
             // Esto es solo para ver en la consola cómo es la respuesta
-            print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
+            //print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!)
             
-            self.parser = XMLParser(data: data!)
-            self.parser?.delegate = (self as! XMLParserDelegate)
-            self.parser?.parse()
+            //self.parser = XMLParser(data: data!)
+            //self.parser?.delegate = (self as! XMLParserDelegate)
+            //self.parser?.parse()
             
         })
         dataTask?.resume()

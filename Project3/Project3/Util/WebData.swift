@@ -1,5 +1,6 @@
 import Foundation
 
+//MARK: parametros a tener en cuenta para conexiones SOAP y JSON
 class WebData {
     static let SERVER_URL = URL(string: "http://appstip.iatext.ulpgc.es/ventas/server.php?")
     static let SERVER_URN = "urn://ulpgc.masterii.moviles/QueryCustomers"

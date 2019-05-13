@@ -8,6 +8,7 @@ class OrderQueryService: QueryServiceInterface {
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
     var customerOrders: [CustomerOrders] = []
+    
     var insertedId: Int? = nil
     var updateResultReq: Bool? = false
     var deleteResultReq: Bool? = false
@@ -95,7 +96,7 @@ class OrderQueryService: QueryServiceInterface {
                         
                     } else if lastCustomerName != previewCustomerName! {
                         customerOrders.append(CustomerOrders(customerName: lastCustomerName, idCustomer: lastCustomerID, customerOrders: orders))
-                        //print("\(lastCustomerName) has \(orders.count) orders!")
+                        print("\(lastCustomerName) has \(orders.count) orders!")
                         
                         orders = []
                         lastCustomerName = previewCustomerName!
@@ -111,19 +112,20 @@ class OrderQueryService: QueryServiceInterface {
                         quantity: Int(previewQty!)!,
                         idOrder: Int(previewOid!)!)
                     )
-                    if(index == orderArray.count-1){
-                        customerOrders.append(CustomerOrders(customerName: lastCustomerName, idCustomer: lastCustomerID, customerOrders: orders))
-                        //print("\(lastCustomerName) has \(orders.count) orders!")
-                        
-                        orders = []
-                        lastCustomerName = previewCustomerName!
-                    }
+                }
+                if(index == orderArray.count-1){
+                    customerOrders.append(CustomerOrders(customerName: lastCustomerName, idCustomer: lastCustomerID, customerOrders: orders))
+                    print("\(lastCustomerName) has \(orders.count) orders!")
+                    
+                    orders = []
+                    lastCustomerName = previewCustomerName!
                 }
             }
             else {
                 errorMessage += "Problem parsing orderAux\n"
             }
         }
+        print("done")
     }
     
     private func valid(pid: String?, uid: String?, date: String?) -> Bool{
@@ -261,15 +263,6 @@ class OrderQueryService: QueryServiceInterface {
                             let customerOrderAux = CustomerOrders(customerName: orderAux.customer.name, idCustomer: orderAux.customer.IDCustomer, customerOrders: [orderAux])
                             self.customerOrders.append(customerOrderAux)
                         }
-                        /*
-                        for (customerOrderObj) in self.customerOrders{
-                            var customerOrdersOfObj = customerOrderObj.customerOrders
-                            if let orderIndex = customerOrdersOfObj.firstIndex(where: {$0.IDOrder == orderAux.IDOrder}){
-                                customerOrdersOfObj[orderIndex] = orderAux
-                            }
-                            customerOrderObj.customerOrders = customerOrdersOfObj
-                        }
-                        */
                     }
                     self.customerOrders = self.customerOrders.filter({$0.customerOrders.count > 0})
                     DispatchQueue.main.async {

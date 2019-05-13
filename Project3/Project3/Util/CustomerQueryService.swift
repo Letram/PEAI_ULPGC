@@ -77,6 +77,7 @@ class CustomerQueryService : QueryServiceInterface{
         }
     }
     
+
     func insert(params: JsonDict, completion: @escaping insertResult) {
         dataTask?.cancel()
         

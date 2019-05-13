@@ -105,11 +105,11 @@ class OrderDetailsViewController: UIViewController {
             switch segue.identifier {
             case "productSegue":
                 vc.setFetch(entity: "Product")
-                vc.setProduct(entity: self.product ?? nil)
+                vc.entityID = (self.product?.IDProduct) ?? -1
                 break
             default:
                 vc.setFetch(entity: "Customer")
-                vc.setCustomer(entity: self.customer ?? nil)
+                vc.entityID = self.customer?.IDCustomer ?? -1
                 break
             }
         }

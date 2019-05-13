@@ -20,9 +20,11 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getAll()
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getAll()
     }
     
     //MARK: - Consultas
@@ -37,7 +39,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     }
     
     func insert(code: String, date: String, idProduct: Int, idCustomer: Int, quantity: Int) {
-        
         var params: [String: Any] = [:]
         
         params["code"] = code
@@ -96,9 +97,11 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         let cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath)
 
         // Configure the cell...
-        
-        cell.textLabel!.text = queryResults[indexPath.section].customerOrders[indexPath.row].code
-        cell.detailTextLabel?.text = queryResults[indexPath.section].customerOrders[indexPath.row].product.name
+        if(indexPath.section < queryResults.count && indexPath.row < queryResults[indexPath.section].customerOrders.count){
+            cell.textLabel!.text = queryResults[indexPath.section].customerOrders[indexPath.row].code
+            cell.detailTextLabel?.text = queryResults[indexPath.section].customerOrders[indexPath.row].product.name
+        }
+
         
         return cell
     }
@@ -151,7 +154,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         } else {
             let dateFormat = DateFormatter()
             dateFormat.dateFormat = "yyyy-MM-dd"
-            
             update(code: vc.code, date: dateFormat.string(from: vc.date!), idProduct: (vc.product?.IDProduct)!, idCustomer: (vc.customer?.IDCustomer)!, idOrder: (vc.order?.IDOrder)!, quantity: Int(vc.quantity))
             vc.isForUpdate = false
         }

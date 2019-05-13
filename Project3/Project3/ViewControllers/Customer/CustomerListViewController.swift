@@ -22,10 +22,10 @@ class CustomerListViewController: UITableViewController {
 
         customerService.delegate = self
         getAll()
-        
+        /*
         soapCustomerService.getAll() { _, _ in
             print("Hola")
-        }
+        }*/
 
     }
     
