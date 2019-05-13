@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB2CBAFB2284750B004AAF78 /* SOAPCustomerQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CBAFA2284750B004AAF78 /* SOAPCustomerQueryService.swift */; };
 		FB64265E2270CD2C00421E27 /* CustomerQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */; };
 		FB6426602270CD4600421E27 /* QueryServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB64265F2270CD4600421E27 /* QueryServiceInterface.swift */; };
 		FB6426632270CFF600421E27 /* WebData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6426622270CFF600421E27 /* WebData.swift */; };
@@ -33,7 +32,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FB2CBAFA2284750B004AAF78 /* SOAPCustomerQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOAPCustomerQueryService.swift; sourceTree = "<group>"; };
 		FB64265D2270CD2C00421E27 /* CustomerQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQueryService.swift; sourceTree = "<group>"; };
 		FB64265F2270CD4600421E27 /* QueryServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryServiceInterface.swift; sourceTree = "<group>"; };
 		FB6426622270CFF600421E27 /* WebData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebData.swift; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 				FB6426622270CFF600421E27 /* WebData.swift */,
 				FBC4E858227B0FFF00FAEAB5 /* ProductQueryService.swift */,
 				FBC4E85A227B30E800FAEAB5 /* OrderQueryService.swift */,
-				FB2CBAFA2284750B004AAF78 /* SOAPCustomerQueryService.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -242,7 +239,6 @@
 				FBC4E85B227B30E800FAEAB5 /* OrderQueryService.swift in Sources */,
 				FB6426632270CFF600421E27 /* WebData.swift in Sources */,
 				FBC8CED5227C90390071C310 /* CustomerOrders.swift in Sources */,
-				FB2CBAFB2284750B004AAF78 /* SOAPCustomerQueryService.swift in Sources */,
 				FBC4E857227B0D5600FAEAB5 /* DBModel.swift in Sources */,
 				FBC644452242C3170062095A /* OrderListViewController.swift in Sources */,
 				FBD0225822786EE3000630FE /* ProductModel.swift in Sources */,

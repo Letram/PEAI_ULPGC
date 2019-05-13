@@ -489,7 +489,7 @@
                                             <segue destination="dOy-Vo-cGV" kind="show" identifier="productSegue" id="1LS-Ar-7tJ"/>
                                         </connections>
                                     </button>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="QH7-vM-zhs">
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="QH7-vM-zhs">
                                         <rect key="frame" x="0.0" y="67" width="414" height="215"/>
                                         <date key="date" timeIntervalSinceReferenceDate="574799783.13282394">
                                             <!--2019-03-20 18:36:23 +0000-->
