@@ -1,0 +1,123 @@
+/* Class = "UIBarButtonItem"; title = "done"; ObjectID = "3C2-P7-g19"; */
+"3C2-P7-g19.title" = "Terminado";
+
+/* Class = "UIBarButtonItem"; title = "done"; ObjectID = "5in-pg-Hha"; */
+"5in-pg-Hha.title" = "Terminado";
+
+/* Class = "UILabel"; text = "Name:"; ObjectID = "5Ro-i8-n2R"; */
+"5Ro-i8-n2R.text" = "Nombre";
+
+/* Class = "UINavigationItem"; title = "Edit customer"; ObjectID = "6ia-eQ-hYC"; */
+"6ia-eQ-hYC.title" = "Editar usuario";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "55O-Oj-BCz"; */
+"55O-Oj-BCz.text" = "Título";
+
+/* Class = "UINavigationItem"; title = "Edit product"; ObjectID = "A5A-cd-gSb"; */
+"A5A-cd-gSb.title" = "Editar producto";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "aZI-uN-FVz"; */
+"aZI-uN-FVz.title" = "Cancelar";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "bfa-oC-GKx"; */
+"bfa-oC-GKx.title" = "Cancelar";
+
+/* Class = "UIBarButtonItem"; title = "done"; ObjectID = "bMM-F4-VTX"; */
+"bMM-F4-VTX.title" = "Terminado";
+
+/* Class = "UILabel"; text = "Total:"; ObjectID = "BR3-kx-5fm"; */
+"BR3-kx-5fm.text" = "Total:";
+
+/* Class = "UINavigationItem"; title = "Products"; ObjectID = "dgs-2Q-8ht"; */
+"dgs-2Q-8ht.title" = "Productos";
+
+/* Class = "UILabel"; text = "Code:"; ObjectID = "Dlc-oB-cKM"; */
+"Dlc-oB-cKM.text" = "Código:";
+
+/* Class = "UITabBarItem"; title = "Customers"; ObjectID = "Ecd-qg-ncQ"; */
+"Ecd-qg-ncQ.title" = "Clientes";
+
+/* Class = "UINavigationItem"; title = "Edit order"; ObjectID = "EMt-k5-s6u"; */
+"EMt-k5-s6u.title" = "Editar pedido";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "FjW-YI-3WG"; */
+"FjW-YI-3WG.text" = "Título";
+
+/* Class = "UINavigationItem"; title = "Orders"; ObjectID = "FkE-Rl-8eO"; */
+"FkE-Rl-8eO.title" = "Pedidos";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "GYf-aw-hUt"; */
+"GYf-aw-hUt.title" = "Cancelar";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "HPn-ry-6N0"; */
+"HPn-ry-6N0.text" = "Subtítulo";
+
+/* Class = "UILabel"; text = "Price:"; ObjectID = "jCD-nd-lNL"; */
+"jCD-nd-lNL.text" = "Precio:";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "KLp-1h-bka"; */
+"KLp-1h-bka.title" = "Editar";
+
+/* Class = "UIBarButtonItem"; title = "+"; ObjectID = "ksT-Dz-uzE"; */
+"ksT-Dz-uzE.title" = "+";
+
+/* Class = "UITabBarItem"; title = "Orders"; ObjectID = "Lcn-nD-3oi"; */
+"Lcn-nD-3oi.title" = "Pedidos";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "m1S-4q-rsY"; */
+"m1S-4q-rsY.title" = "Editar";
+
+/* Class = "UIBarButtonItem"; title = "done"; ObjectID = "onB-QD-4dX"; */
+"onB-QD-4dX.title" = "Terminado";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "p2N-WC-3jg"; */
+"p2N-WC-3jg.text" = "Titulo";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "qi6-9l-e12"; */
+"qi6-9l-e12.title" = "Cancelar";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "qVB-MV-ewT"; */
+"qVB-MV-ewT.text" = "Titulo";
+
+/* Class = "UILabel"; text = "Quantity:"; ObjectID = "RG8-y5-b74"; */
+"RG8-y5-b74.text" = "Cantidad:";
+
+/* Class = "UILabel"; text = "Name:"; ObjectID = "tWY-Xs-nNs"; */
+"tWY-Xs-nNs.text" = "Nombre:";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "UHa-wm-g8U"; */
+"UHa-wm-g8U.text" = "Detalles";
+
+/* Class = "UITabBarItem"; title = "Products"; ObjectID = "ULW-RU-2yQ"; */
+"ULW-RU-2yQ.title" = "Productos";
+
+/* Class = "UIBarButtonItem"; title = "+"; ObjectID = "UoH-LW-REB"; */
+"UoH-LW-REB.title" = "+";
+
+/* Class = "UILabel"; text = "Description:"; ObjectID = "V0T-9J-SLf"; */
+"V0T-9J-SLf.text" = "Descripción:";
+
+/* Class = "UINavigationItem"; title = "Customers"; ObjectID = "veP-zM-ilQ"; */
+"veP-zM-ilQ.title" = "Clientes";
+
+/* Class = "UILabel"; text = "Address:"; ObjectID = "VGo-38-eoM"; */
+"VGo-38-eoM.text" = "Dirección:";
+
+/* Class = "UINavigationItem"; title = "Select"; ObjectID = "vHo-Iv-lAt"; */
+"vHo-Iv-lAt.title" = "Seleccionar";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "WxQ-TA-BEN"; */
+"WxQ-TA-BEN.normalTitle" = "Seleccionar";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "X3I-CK-TI1"; */
+"X3I-CK-TI1.title" = "Editar";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "XFG-o2-AEk"; */
+"XFG-o2-AEk.normalTitle" = "Seleccionar";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "Zx9-LC-Zfy"; */
+"Zx9-LC-Zfy.text" = "Subtitulo";
+
+/* Class = "UIBarButtonItem"; title = "+"; ObjectID = "ZZK-XY-nrS"; */
+"ZZK-XY-nrS.title" = "+";
+

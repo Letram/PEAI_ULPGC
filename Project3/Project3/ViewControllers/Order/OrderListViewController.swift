@@ -7,13 +7,12 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
     @IBAction func editBtnTapped(_ sender: UIBarButtonItem) {
         if(self.tableView.isEditing){
             self.tableView.setEditing(false, animated:true)
-            editBtn.title = "Edit"
+            editBtn.title = NSLocalizedString("Edit", comment: "")
         }else{
             self.tableView.setEditing(true, animated:true)
-            editBtn.title = "Done"
+            editBtn.title = NSLocalizedString("Done", comment: "")
         }
     }
-    var context: NSManagedObjectContext? = nil
     
     let orderService = OrderQueryService()
     var queryResults: [CustomerOrders] = []
@@ -128,7 +127,6 @@ class OrderListViewController: UITableViewController, NSFetchedResultsController
         // Pass the selected object to the new view controller.
         let vc = segue.destination as! OrderDetailsViewController
         if(segue.identifier == "create" || segue.identifier == "edit"){
-            vc.context = context
             if(segue.identifier == "edit"){
                 let currentOrder = queryResults[(tableView.indexPathForSelectedRow?.section)!].customerOrders[(tableView.indexPathForSelectedRow?.row)!]
                 vc.code = currentOrder.code

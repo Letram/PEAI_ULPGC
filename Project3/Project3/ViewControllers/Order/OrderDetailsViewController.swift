@@ -11,7 +11,6 @@ import CoreData
 
 class OrderDetailsViewController: UIViewController {
 
-    var context: NSManagedObjectContext? = nil
 
     @IBOutlet weak var qField: UITextField!
     @IBOutlet weak var priceField: UITextField!
@@ -101,7 +100,6 @@ class OrderDetailsViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if(segue.identifier == "productSegue" || segue.identifier == "customerSegue"){
             let vc = segue.destination as! SelectViewController
-            vc.context = context
             switch segue.identifier {
             case "productSegue":
                 vc.setFetch(entity: "Product")
@@ -152,7 +150,9 @@ class OrderDetailsViewController: UIViewController {
         quantity = Int16(qField.text!)!
     }
     @IBAction func doneBtnTapped(_ sender: UIBarButtonItem) {
-        if(!orderValid()){}
+        if(!orderValid()){
+            showAlert()
+        }
         else{
             code = codeField.text!
             date = datePicker.date
@@ -161,10 +161,18 @@ class OrderDetailsViewController: UIViewController {
     }
     
     func orderValid() -> Bool{
-        if(customer == nil || product == nil || codeField.text == "" ){
+        if(customer == nil || product == nil || codeField.text == "" || quantity <= 0){
             return false
         }
         return true
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: NSLocalizedString("Data entered is not valid", comment: ""), message: nil, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
     }
     
     // MARK: - Codificación/Decodificación del estado
@@ -223,9 +231,6 @@ class OrderDetailsViewController: UIViewController {
     override func decodeRestorableState(with coder: NSCoder) {
         super.decodeRestorableState(with: coder)
         
-        
-        self.context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
         code = coder.decodeObject(forKey: "ORDER_CODE") as! String
         date = coder.decodeObject(forKey: "ORDER_DATE") as? Date
         totalPrice = Decimal(string: coder.decodeObject(forKey: "ORDER_TOTAL") as! String) ?? 0

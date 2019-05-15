@@ -11,7 +11,6 @@ import CoreData
 
 class SelectViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
-    var context: NSManagedObjectContext? = nil
     
     var entitySelected: String = "Customer"
     var entityID: Int = -1

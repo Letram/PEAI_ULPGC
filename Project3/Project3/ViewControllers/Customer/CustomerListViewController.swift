@@ -6,15 +6,14 @@ class CustomerListViewController: UITableViewController {
     @IBAction func editBtnTapped(_ sender: Any) {
         if(self.tableView.isEditing){
             self.tableView.setEditing(false, animated:true)
-            editButton.title = "Edit"
+            editButton.title = NSLocalizedString("Edit", comment: "")
         }else{
             self.tableView.setEditing(true, animated:true)
-            editButton.title = "Done"
+            editButton.title = NSLocalizedString("Done", comment: "")
         }
     }
         
     let customerService = CustomerQueryService()
-    let soapCustomerService = SOAPCustomerQueryService()
     
     var queryResults: [CustomerModel] = []
     override func viewDidLoad() {
@@ -22,10 +21,6 @@ class CustomerListViewController: UITableViewController {
 
         customerService.delegate = self
         getAll()
-        /*
-        soapCustomerService.getAll() { _, _ in
-            print("Hola")
-        }*/
 
     }
     

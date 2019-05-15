@@ -58,15 +58,10 @@ class ProductDetailsViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-/*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
- */
+
     @IBAction func doneBtnTapped(_ sender: Any) {
         if(!productValid()){
-            
+            showAlert()
         }
         else{
             productNameText = productNameField.text!
@@ -83,9 +78,17 @@ class ProductDetailsViewController: UIViewController {
         return true
     }
     
+    func showAlert() {
+        let alert = UIAlertController(title: NSLocalizedString("Data entered is not valid", comment: ""), message: nil, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
     func numeric(value: String) -> Bool{
         if(!value.matches("^[0-9]+\\.?[0-9]*$")){
-            let alert = UIAlertController(title: "The price must be a number", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: NSLocalizedString("Price must be a number", comment: ""), message: nil, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             

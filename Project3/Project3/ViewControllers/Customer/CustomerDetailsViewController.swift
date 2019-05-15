@@ -17,6 +17,7 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func doneBtnPressed(_ sender: UIBarButtonItem) {
         if(!customerValid()){
+            showAlert()
         }
         else{
             customerNameText = customerName.text!
@@ -24,6 +25,15 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
             performSegue(withIdentifier: "unwindInsertWithSegue", sender: self)
         }
     }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: NSLocalizedString("Data entered is not valid", comment: ""), message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
     @IBOutlet weak var customerAddress: UITextField!
     @IBOutlet weak var customerName: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -60,7 +70,6 @@ class CustomerDetailsViewController: UIViewController, UITextFieldDelegate {
         customerName.text = customerNameText
     }
     
-    //Preguntar por el first responder y manejarlo
     func customerValid() -> Bool{
         if(customerName.text! == "" || customerAddress.text! == ""){
             return false

@@ -18,13 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        //Tenemos que escalar desde fuera hasta dentro para inyectarle a la vista que queremos el contexto para usar el coreadata. En este caso tenemos que llegar hasta el viewcontroller de las asignaturas para inyectarle el contexto y usar el coredata
-        
-
-        
-        //Order core-data injection
-        (((window?.rootViewController as! UITabBarController).viewControllers![2] as! UINavigationController).viewControllers[0] as! OrderListViewController).context = persistentContainer.viewContext
-        
         return true
     }
 

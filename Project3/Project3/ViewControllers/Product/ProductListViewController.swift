@@ -6,10 +6,10 @@ class ProductListViewController: UITableViewController {
     @IBAction func editBtnTapped(_ sender: Any) {
         if(self.tableView.isEditing){
             self.tableView.setEditing(false, animated:true)
-            editBtn.title = "Edit"
+            editBtn.title = NSLocalizedString("Edit", comment: "")
         }else{
             self.tableView.setEditing(true, animated:true)
-            editBtn.title = "Done"
+            editBtn.title = NSLocalizedString("Done", comment: "")
         }
     }
     
