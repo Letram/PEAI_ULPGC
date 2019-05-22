@@ -106,7 +106,7 @@ extension AnalogClockView {
 extension AnalogClockView {
     func addImageLayer() {
         let width = ((self.frame.width/2)-20)*2
-        imageLayer = setUpLayer(backgroundColor: .clear, anchorPointX: 0.5, anchorPointY: 0.5, xPosition: layerXPosition, yPosition: layerYPosition, frame: CGRect(x: 0, y: 0, width: width, height: width), contents: UIImage(named: "ClockFace.png")?.cgImage)
+        imageLayer = setUpLayer(backgroundColor: .clear, anchorPointX: 0.5, anchorPointY: 0.5, xPosition: layerXPosition, yPosition: layerYPosition, frame: CGRect(x: 0, y: 0, width: width, height: width), contents: UIImage(named: "ClockFace.jpg")?.cgImage)
         layer.addSublayer(imageLayer)
     }
     func addHourLayer() {
