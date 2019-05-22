@@ -12,6 +12,9 @@
 		FB08F6E7229400E5008BB983 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB08F6E5229400E5008BB983 /* Main.storyboard */; };
 		FB08F6E9229400E7008BB983 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB08F6E8229400E7008BB983 /* Assets.xcassets */; };
 		FB08F6EC229400E7008BB983 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB08F6EA229400E7008BB983 /* LaunchScreen.storyboard */; };
+		FBC1ECD92295657500C45A79 /* AnalogClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1ECD62295657500C45A79 /* AnalogClockView.swift */; };
+		FBC1ECDA2295657500C45A79 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1ECD82295657500C45A79 /* Date+Extension.swift */; };
+		FBC1ECDC229565FB00C45A79 /* ClockFace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FBC1ECDB229565FB00C45A79 /* ClockFace.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		FB08F6E8229400E7008BB983 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB08F6EB229400E7008BB983 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB08F6ED229400E7008BB983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBC1ECD62295657500C45A79 /* AnalogClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalogClockView.swift; path = "../../../Project5-help/AnalogClock-master/AnalogClock/Source/AnalogClockView.swift"; sourceTree = "<group>"; };
+		FBC1ECD82295657500C45A79 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		FBC1ECDB229565FB00C45A79 /* ClockFace.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ClockFace.jpg; path = "../../Project5-help/AnalogClock-master/ClockFace.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,8 @@
 		FB08F6E0229400E5008BB983 /* Project4 */ = {
 			isa = PBXGroup;
 			children = (
+				FBC1ECDB229565FB00C45A79 /* ClockFace.jpg */,
+				FBC1ECD52295654400C45A79 /* AnalogClock */,
 				FB08F6E1229400E5008BB983 /* AppDelegate.swift */,
 				FB08F6E3229400E5008BB983 /* ViewController.swift */,
 				FB08F6E5229400E5008BB983 /* Main.storyboard */,
@@ -62,6 +70,24 @@
 				FB08F6ED229400E7008BB983 /* Info.plist */,
 			);
 			path = Project4;
+			sourceTree = "<group>";
+		};
+		FBC1ECD52295654400C45A79 /* AnalogClock */ = {
+			isa = PBXGroup;
+			children = (
+				FBC1ECD62295657500C45A79 /* AnalogClockView.swift */,
+				FBC1ECD72295657500C45A79 /* Extension */,
+			);
+			path = AnalogClock;
+			sourceTree = "<group>";
+		};
+		FBC1ECD72295657500C45A79 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FBC1ECD82295657500C45A79 /* Date+Extension.swift */,
+			);
+			name = Extension;
+			path = "../../../Project5-help/AnalogClock-master/AnalogClock/Source/Extension";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +151,7 @@
 				FB08F6EC229400E7008BB983 /* LaunchScreen.storyboard in Resources */,
 				FB08F6E9229400E7008BB983 /* Assets.xcassets in Resources */,
 				FB08F6E7229400E5008BB983 /* Main.storyboard in Resources */,
+				FBC1ECDC229565FB00C45A79 /* ClockFace.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +162,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC1ECD92295657500C45A79 /* AnalogClockView.swift in Sources */,
+				FBC1ECDA2295657500C45A79 /* Date+Extension.swift in Sources */,
 				FB08F6E4229400E5008BB983 /* ViewController.swift in Sources */,
 				FB08F6E2229400E5008BB983 /* AppDelegate.swift in Sources */,
 			);
