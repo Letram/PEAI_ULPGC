@@ -6,30 +6,47 @@ class ViewController: UIViewController {
     @IBOutlet weak var clock: UIView!
     let motionManager = CMMotionManager()
     let operationQueue = OperationQueue()
+    
+    var animationSpeed = 1
+    //screen dimensions
+    var bounds: [CGFloat] = [0, 0, UIScreen.main.bounds.width, UIScreen.main.bounds.height]
+    
+    //new values of position
     var newX: CGFloat = 0.0
     var newY: CGFloat = 0.0
     
-    var bounds: [CGFloat] = [0, 0, UIScreen.main.bounds.width, UIScreen.main.bounds.height]
+    //last increment added to the position
+    var xIncrement: CGFloat = 0.0
+    var yIncrement: CGFloat = 0.0
     
-    var newValues: [CGFloat] = [0,0]
-    var newRot: CGFloat = 0.0
-    var radians: CGFloat = 0.0
-    let tolerance: [CGFloat] = [-0.02, 0.02]
-    let translationalSpeed: [CGFloat] = [0.002, 0.75]
+    //last rotation to add to the image using accelerometer (newrot) and gravity (radians)
+    var accRot: CGFloat = 0.0
+    var graRot: CGFloat = 0.0
+    
+    //limits of the values in which we are using accelerometer instead of gravity. It usually happens when the device is on a table or in horizontal position
+    var minTol: CGFloat = -0.025
+    var maxTol: CGFloat = 0.025
+    
+    //limits of the speed of the image.
+    var minSpeed: CGFloat = 0.002
+    var maxSpeed: CGFloat = 0.75
+    
     var movSpeed: CGFloat = 0.002
     
-    let rotationalSpeed = 0.1
+    let maxInclination: Double = Double.pi/2
+    var inclinationAlpha: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if self.motionManager.isDeviceMotionAvailable {
             
-            self.motionManager.startDeviceMotionUpdates(using: .xArbitraryCorrectedZVertical, to: self.operationQueue, withHandler: { (data: CMDeviceMotion?, error: Error?) in
+            self.motionManager.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: self.operationQueue, withHandler: { (data: CMDeviceMotion?, error: Error?) in
                 if error == nil {
                     self.updatePosition(xValue: CGFloat((data?.attitude.roll)!) ,yValue: CGFloat((data?.attitude.pitch)!))
-                    self.radians = CGFloat(atan2((data?.gravity.x)!, (data?.gravity.y)!) - Double.pi)
-                    self.newRot = CGFloat((data?.attitude.yaw)!)
+                    self.graRot = CGFloat(atan2((data?.gravity.x)!, (data?.gravity.y)!) - Double.pi)
+                    //self.graRot = CGFloat((data?.gravity.z)!)
+                    self.accRot = CGFloat((data?.attitude.yaw)!)
                     self.perform(#selector(ViewController.refresh), on: Thread.main, with: nil, waitUntilDone: false)
                 }
             })
@@ -44,24 +61,28 @@ class ViewController: UIViewController {
         var xPosition = x + xValue*movSpeed
         var yPosition = y + yValue*movSpeed
         
-        //print("xValue: \(xValue)- yValue: \(yValue) - radians: \(self.radians)")
+        //print("xValue: \(xValue)- yValue: \(yValue) - radians: \(self.graRot)")
         
         movSpeed = movSpeed + 0.001
-        movSpeed = clamp(value: movSpeed, limits: translationalSpeed)
+        movSpeed = clamp(value: movSpeed, limits: [minSpeed, maxSpeed])
                 
         if xPosition < (bounds[0] + self.clock.bounds.width/2) {
             xPosition = bounds[0] + self.clock.bounds.width/2
-            movSpeed = translationalSpeed[0]
         }
         if xPosition > (bounds[2] - self.clock.bounds.width/2) {
             xPosition = bounds[2] - self.clock.bounds.width/2
-            movSpeed = translationalSpeed[1]
         }
-        if yPosition < (bounds[1] + self.clock.bounds.height/2) { yPosition = bounds[1] + self.clock.bounds.height/2 }
-        if yPosition > (bounds[3] - self.clock.bounds.height/2) { yPosition = bounds[3] - self.clock.bounds.height/2 }
+        if yPosition < (bounds[1] + self.clock.bounds.height/2) {
+            yPosition = bounds[1] + self.clock.bounds.height/2
+        }
+        if yPosition > (bounds[3] - self.clock.bounds.height/2) {
+            yPosition = bounds[3] - self.clock.bounds.height/2
+        }
         
-        newValues[0] = xPosition
-        newValues[1] = yPosition
+        newX = xPosition
+        newY = yPosition
+        xIncrement = xValue
+        yIncrement = yValue
     }
     
     func clamp (value: CGFloat, limits: [CGFloat]) -> CGFloat {
@@ -73,27 +94,26 @@ class ViewController: UIViewController {
     override var shouldAutorotate : Bool {
         return false
     }
-    
+
     @objc func refresh() {
-        self.clock.center.x = self.newValues[0]
-        self.clock.center.y = self.newValues[1]
-        //let clockRotation: CGFloat = CGFloat(atan2f(Float(self.clock.transform.b), Float(self.clock.transform.a)))
-        //print("Clock rotation: \(clockRotation) - new rotation: \(self.newRot)")
+        self.clock.center.x = self.newX
+        self.clock.center.y = self.newY
         
-        //print("newRot: \(self.newRot) - radiansRot: \(self.radians)")
+        inclinationAlpha = Double(abs(yIncrement))/maxInclination
         
         //todo cuando está puesto en horizontal(sobre la mesa) los valores de esto hacen cosas raras. mirar cuándo es más fiable el newRot (para horizontal) y el radians (para cualquier otra parte)
-        if(isTolerated(values: newValues, tol: tolerance)){
-            print("newRot")
-            self.clock.transform = CGAffineTransform(rotationAngle: self.newRot)
+        if(isTolerated(values: [xIncrement, yIncrement], tol: [minTol, maxTol])){
+            //print("Using accelerometer - accRot: \(degrees(radians: Double(self.accRot))) - graRot: \(degrees(radians: Double((self.graRot) + CGFloat(Double.pi)) * -1)) - xIncr: \(self.xIncrement) - yIncr: \(self.yIncrement)")
+            print("Using accelerometer - accRot: \(degrees(radians: Double(self.accRot))) - graRot: \(degrees(radians: Double((self.graRot) + CGFloat(Double.pi)) * -1)) - alpha: \(inclinationAlpha)")
+            animateRotation(rotation: self.accRot)
         }
         else {
-            print("Radians")
-            self.clock.transform = CGAffineTransform(rotationAngle: self.radians)
+            //print("Using gravity - accRot: \(degrees(radians: Double(self.accRot))) - graRot: \(degrees(radians: Double((self.graRot) + CGFloat(Double.pi)) * -1)) - xIncr: \(self.xIncrement) - yIncr: \(self.yIncrement)")
+            print("Using gravity - accRot: \(degrees(radians: Double(self.accRot))) - graRot: \(degrees(radians: Double((self.graRot) + CGFloat(Double.pi)) * -1)) - alpha: \(inclinationAlpha)")
+            animateRotation(rotation: self.graRot)
         }
     }
     
-    //TODO NO MANDAR LOS NEWVALUES SINO EL XVALUE E YVALUE
     func isTolerated(values: [CGFloat], tol: [CGFloat]) -> Bool {
         if(values[0] < tol[0] || values[0] > tol[1]) {return false}
         if(values[1] < tol[0] || values[1] > tol[1]) {return false}
@@ -104,6 +124,13 @@ class ViewController: UIViewController {
         return 180 / Double.pi * radians
     }
 
-
+    func animateRotation(rotation: CGFloat){
+        UIView.animate(
+            withDuration: Double(animationSpeed) * (1-inclinationAlpha),
+            animations: {
+                self.clock.transform = CGAffineTransform(rotationAngle: rotation)
+            }
+        )
+    }
 }
 
