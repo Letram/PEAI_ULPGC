@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     var maxTol: CGFloat = 0.025
     
     //limits of the speed of the image.
-    var minSpeed: CGFloat = 0.1
+    var minSpeed: CGFloat = 0.3
     var maxSpeed: CGFloat = 1
     
     var acceleration: CGFloat = 0.002
@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         
         print("incrementX: \(xIncrement*acceleration) - incrementY: \(yIncrement*acceleration) - acceleration: \(acceleration)")
         
-        acceleration = acceleration + 0.002
+        acceleration = acceleration + 0.00125
         acceleration = clamp(value: acceleration, limits: [minSpeed, maxSpeed])
         
         print("cceleration: \(acceleration)")
